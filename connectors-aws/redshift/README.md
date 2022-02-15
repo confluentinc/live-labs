@@ -22,7 +22,7 @@ This lab will be utilizing Datagen Source Connector, MySQL CDC Source Connecter,
    <img src="../images/LiveLabs-AWS_S3-Redshift.png" width =75% heigth=75%>
 </div>
 
-----
+---
 ## [Prerequisites](#prerequisites)
 1. Confluent Cloud Account
     * Sign-up for a Confluent Cloud account [here](https://www.confluent.io/confluent-cloud/tryfree/).
@@ -58,7 +58,7 @@ An environment contains Confluent clusters and its deployed components such as C
     * Click **Begin Configuration**.
 
     * Choose **AWS** as your Cloud Provider and your preferred Region.
-        > **Note:** AWS is required as your Cloud Provider since you will be utilizing the fully-managed S3 sink connector for this lab
+        > **Note:** AWS is required as your Cloud Provider since you will be utilizing Redshift in this lab. We recommend you choose Oregon (west2) as the region. 
 
     * Specify a meaningful **Cluster Name** and then review the associated *Configuration & Cost*, *Usage Limits*, and *Uptime SLA* before clicking **Launch Cluster**.
 
@@ -71,8 +71,32 @@ An environment contains Confluent clusters and its deployed components such as C
 1. After creating and saving the API key, you will see this API key in the Confluent Cloud UI in the API keys tab. If you don’t see the API key populate right away, refresh the browser.
 ---
 ## <a name="step4"></a>Step 4: Enable Schema Registery
-1. On the navigation menu, select **Schema Registery** and click **Enable**.
-2. Select **Region**. 
+1. On the navigation menu, select **Schema Registery**.
+1. Click **Set up on my own**.
+1. Choose **AWS** as the cloud provider and a supported **Region**
+1. Click on **Enable Schema Registry**. 
  
 ---
+
+## [Hands-on Lab](#handson)
+
+---
+## <a name="step1"></a>Step 1: Create a ksqlDB application
+> At Confluent we developed ksqlDB, the database purpose-built for stream processing applications. ksqlDB is built on top of Kafka Streams, powerful Java library for enriching, transforming, and processing real-time streams of data. Having Kafka Streams at its core means ksqlDB is built on well-designed and easily understood layers of abstractions. So now, beginners and experts alike can easily unlock and fully leverage the power of Kafka in a fun and accessible way.
+1. On the navigation menu, select **ksqlDB**.
+1. Click on **Create cluster myself**.
+1. Choose **Global access** for the access level and hit **Continue**.
+1. Pick a name or leave the name as is.
+1. Select **1** as the cluster size. 
+1. Hit **Launch Cluster!**. 
+
+
+
+
+
+
+
+
+
+
 
