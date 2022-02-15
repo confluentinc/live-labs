@@ -115,6 +115,103 @@ An environment contains Confluent clusters and its deployed components such as C
   }
 }
 ```
+---
+## <a name="step8"></a>Step 4: Create customers topic
+1. On the navigation menu, select **Topics**.
+> Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
+1. Type **mysql.demo.CUSTOMERS_INFO** as the Topic name.
+1. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and then click on **Create**.
+---
+## <a name="step9"></a>Step 5: Create a MySQL CDC Source connector
+1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
+1. In the search bar search for **MySQL CDC** and select the **MySQL CDC Source** which is a fully-managed source connector. 
+1. Use the following parameters to configure your connector
+```
+{
+  "name": "MySqlCdcSourceConnector_0",
+  "config": {
+    "connector.class": "MySqlCdcSource",
+    "name": "MySqlCdcSourceConnector_0",
+    "kafka.auth.mode": "KAFKA_API_KEY",
+    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.secret": "<add_your_api_secret_key>",
+    "database.hostname": "<will_be_given_during_lab>",
+    "database.port": "3306",
+    "database.user": "<will_be_given_during_lab>",
+    "database.password": "<will_be_given_during_lab>",
+    "database.server.name": "mysql",
+    "database.ssl.mode": "preferred",
+    "snapshot.mode": "when_needed",
+    "output.data.format": "AVRO",
+    "after.state.only": "true",
+    "tasks.max": "1"
+  }
+}
+```
+---
+## <a name="step10"></a>Step 6: Create "users" topic
+1. On the navigation menu, select **Topics**.
+> Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
+1. Type **users** as the Topic name and hit **Create with defaults**. 
+---
+## <a name="step7"></a>Step 3: Create a Datagen Source connector
+1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
+1. In the search bar search for **Datagen** and select the **Datagen Source** which is a fully-managed connector. 
+1. Use the following parameters to configure your connector
+```
+{
+  "name": "DatagenSourceConnector_1",
+  "config": {
+    "connector.class": "DatagenSource",
+    "name": "DatagenSourceConnector_0",
+    "kafka.auth.mode": "KAFKA_API_KEY",
+    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.secret": "<add_your_api_secret_key>",
+    "kafka.topic": "users",
+    "output.data.format": "AVRO",
+    "quickstart": "RATINGS",
+    "tasks.max": "1"
+  }
+}
+```
+---
+## <a name="step11"></a>Step 7: Create AWS services
+1. Navigate to https://aws.amazon.com/console/ and log into your account. 
+> Note: you will need root level permissions in order to complete this lab. 
+1. Create a Redshift cluster and save the `Admin user name` and `Admin user password` since you will need it in later steps. 
+1. Under **Additional configuration** disable **defaults**. 
+1. Make the cluster publicly accessible under **Network and security → Publicly accessible → Enable**.
+1. Using the search bar navigate to **VPC -> Security Groups -> Inbound Rules** and add two new rules for TCP protocol
+```
+Type: Redshift
+Port range: 5430 
+Source: 0.0.0.0/0
+Type: Redshift
+Port range: 5430 
+Source: ::/0
+```
+1. Navigate back to your Redshift cluster and reboot it to ensure the right security policies are applied. 
+1. Once the cluster is in **Available** state use the left handside menu and open `Query Editor` to create a database and a user and give the appropriate permissions 
+```
+CREATE DATABASE <DB_NAME>;
+CREATE USER <DB_USER> PASSWORD '<DB_PASSWORD>';
+GRANT USAGE ON SCHEMA public TO <DB_USER>;
+GRANT CREATE ON SCHEMA public TO <DB_USER>;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO <DB_USER>;
+GRANT ALL ON SCHEMA public TO <DB_USER>;
+GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
