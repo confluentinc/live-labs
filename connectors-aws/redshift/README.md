@@ -19,7 +19,7 @@ This lab will be utilizing Datagen Source Connector, MySQL CDC Source Connecter,
 ## [Architecture Diagram](#architecture-diagram)
 This lab will be utilizing Datagen Source Connector, MySQL CDC Source Connecter,  and AWS Redshift Sink fully-managed connectors. The on-demand version of the lab is available here. 
 <div align="center">
-   <img src="../images/LiveLabs-AWS(S3, Redshift).png" width =75% heigth=75%>
+   <img src="../images/LiveLabs-AWS_S3-Redshift.png" width =75% heigth=75%>
 </div>
 
 ----
