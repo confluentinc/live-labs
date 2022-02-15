@@ -75,13 +75,12 @@ An environment contains Confluent clusters and its deployed components such as C
 1. Click **Set up on my own**.
 1. Choose **AWS** as the cloud provider and a supported **Region**
 1. Click on **Enable Schema Registry**. 
- 
 ---
 
 ## [Hands-on Lab](#handson)
 
 ---
-## <a name="step1"></a>Step 1: Create a ksqlDB application
+## <a name="step5"></a>Step 1: Create a ksqlDB application
 > At Confluent we developed ksqlDB, the database purpose-built for stream processing applications. ksqlDB is built on top of Kafka Streams, powerful Java library for enriching, transforming, and processing real-time streams of data. Having Kafka Streams at its core means ksqlDB is built on well-designed and easily understood layers of abstractions. So now, beginners and experts alike can easily unlock and fully leverage the power of Kafka in a fun and accessible way.
 1. On the navigation menu, select **ksqlDB**.
 1. Click on **Create cluster myself**.
@@ -89,9 +88,33 @@ An environment contains Confluent clusters and its deployed components such as C
 1. Pick a name or leave the name as is.
 1. Select **1** as the cluster size. 
 1. Hit **Launch Cluster!**. 
-
-
-
+---
+## <a name="step6"></a>Step 2: Create "ratings" topic
+1. On the navigation menu, select **Topics**.
+> Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
+1. Type **ratings** as the Topic name and hit **Create with defaults**. 
+---
+## <a name="step7"></a>Step 3: Create a Datagen Source connector
+> Confluent offers 120+ pre-built [connectors](https://www.confluent.io/product/confluent-connectors/), enabling you to modernize your entire data architecture even faster. These connectors also provide you peace-of-mind with enterprise-grade security, reliability, compatibility, and support.
+1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
+1. In the search bar search for **Datagen** and select the **Datagen Source** which is a fully-managed connector. 
+1. Use the following parameters to configure your connector
+```
+{
+  "name": "DatagenSourceConnector_0",
+  "config": {
+    "connector.class": "DatagenSource",
+    "name": "DatagenSourceConnector_0",
+    "kafka.auth.mode": "KAFKA_API_KEY",
+    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.secret": "<add_your_api_secret_key>",
+    "kafka.topic": "ratings",
+    "output.data.format": "AVRO",
+    "quickstart": "RATINGS",
+    "tasks.max": "1"
+  }
+}
+```
 
 
 
