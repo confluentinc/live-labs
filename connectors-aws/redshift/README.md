@@ -179,6 +179,7 @@ An environment contains Confluent clusters and its deployed components such as C
 1. Navigate to https://aws.amazon.com/console/ and log into your account. 
 > Note: you will need root level permissions in order to complete this lab. 
 1. Create a Redshift cluster and save the `Admin user name` and `Admin user password` since you will need it in later steps. 
+> The Redshift cluster has to be in same same region as your Confluent Cloud cluster. 
 1. Under **Additional configuration** disable **defaults**. 
 1. Make the cluster publicly accessible under **Network and security → Publicly accessible → Enable**.
 1. Using the search bar navigate to **VPC -> Security Groups -> Inbound Rules** and add two new rules for TCP protocol
@@ -201,6 +202,260 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO <DB_USER>;
 GRANT ALL ON SCHEMA public TO <DB_USER>;
 GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 ```
+> For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-amazon-redshift-sink.html)
+
+1. Create a S3 bucket
+> The S3 has to be in same same region as your Confluent Cloud cluster. 
+1. Create an **IAM Policy** and attach it to an **IAM User**. 
+1. Create a key pair for the IAM User you just created and download the file to use it in later steps. 
+```
+{
+   "Version":"2012-10-17",
+   "Statement":[
+      {
+         "Effect":"Allow",
+         "Action":[
+            "s3:ListAllMyBuckets"
+         ],
+         "Resource":"arn:aws:s3:::*"
+      },
+      {
+         "Effect":"Allow",
+         "Action":[
+            "s3:ListBucket",
+            "s3:GetBucketLocation"
+         ],
+         "Resource":"arn:aws:s3:::<bucket-name>"
+      },
+      {
+         "Effect":"Allow",
+         "Action":[
+            "s3:PutObject",
+            "s3:GetObject",
+            "s3:AbortMultipartUpload",
+            "s3:ListMultipartUploadParts",
+            "s3:ListBucketMultipartUploads"
+
+         ],
+         "Resource":"arn:aws:s3:::<bucket-name>/*"
+      }
+   ]
+}
+```
+> For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-s3-sink.html)
+1. For DynamoDB you can either reuse the **IAM User** from S3 or create a new one. 
+1. Create another **IAM Policy** and another **IAM User**. 
+1. Create a key pair for the IAM User you just created and download the file to use it in later steps.
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "<optional-identifier>",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:CreateTable",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Scan",
+                "dynamodb:DescribeTable"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+> For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-amazon-dynamo-db-sink.html)
+---
+## <a name="step12"></a>Step 8: Enrich data streams with ksqlDB
+Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
+
+With ksqlDB, you have the ability to leverage streams and tables from your topics in Confluent. A stream in ksqlDB is a topic with a schema and it records the history of what has happened in the world as a sequence of events. 
+
+1. Navigate to confluent.cloud 
+1. Use the left handside menu and go to the ksqlDB application you created at the beginning of the lab
+> You can interact with ksqlDB through the Editor. You can create a stream by using the CREATE STREAM statement and a table using the CREATE TABLE statement. If you’re interested in learning more about ksqlDB and the differences between streams and tables, I recommend reading these two blogs [here] (https://www.confluent.io/blog/kafka-streams-tables-part-3-event-processing-fundamentals/) and [here] (https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/) or watch ksqlDB 101 course on Confluent Developer [webiste] (https://developer.confluent.io/learn-kafka/ksqldb/intro/). 
+
+To write streaming queries against topics, you will need to register the topics with ksqlDB as a stream and/or table.
+
+1. Create a ksqlDB stream from `ratings` topic
+`CREATE STREAM RATINGS_OG WITH (KAFKA_TOPIC='ratings', VALUE_FORMAT='AVRO');`
+1. Change auto.offset.reset** to **Earliest** and see what's inside the `RATINGS_OG` stream by running the following query
+`SELECT * FROM RATINGS_OG EMIT CHANGES;`
+1. Create a new stream that doesn't include message from `test` channel.
+```
+CREATE STREAM RATINGS_LIVE AS 
+    SELECT *
+    FROM RATINGS_OG
+    WHERE LCASE(CHANNEL) NOT LIKE '%test%'
+    EMIT CHANGES;
+```
+1. See what's inside `RATINGS_LIVE` stream by running the following query. 
+`SELECT * FROM RATINGS_LIVE EMIT CHANGES;`
+1. Stop the running query by clicking on **Stop**.
+1. Create a stream from customers topic
+```
+CREATE STREAM CUSTOMERS_INFORMATION
+WITH (KAFKA_TOPIC ='mysql.demo.CUSTOMERS_INFO',
+      KEY_FORMAT  ='JSON',
+      VALUE_FORMAT='AVRO');
+```
+1. Create **customers** table based on **customers_information** stream you just created. 
+```
+CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
+    SELECT id                            AS customer_id,
+           LATEST_BY_OFFSET(first_name)  AS first_name,
+           LATEST_BY_OFFSET(last_name)   AS last_name,
+           LATEST_BY_OFFSET(dob)         AS dob,
+           LATEST_BY_OFFSET(email)       AS email,
+           LATEST_BY_OFFSET(gender)      AS gender,
+           LATEST_BY_OFFSET(club_status) AS club_status
+    FROM    CUSTOMERS_INFORMATION 
+    GROUP BY id;
+```
+1. Check to see what's inside the **customers** table by running the following query. 
+`SELECT * FROM CUSTOMERS_INFORMATION;`
+1. Now that we have a stream of ratings data and customer information, we can perform a join query to enrich our data stream. 
+1. Create a new stream by running the following statement
+```
+CREATE STREAM RATINGS_WITH_CUSTOMER_DATA WITH (KAFKA_TOPIC='ratings-enriched') AS
+    SELECT C.CUSTOMER_ID,
+        C.FIRST_NAME + ' ' + C.LAST_NAME AS FULL_NAME,
+        C.DOB,
+        C.GENDER,
+        C.CLUB_STATUS,
+        C.EMAIL,
+        R.RATING_ID,
+        R.MESSAGE,
+        R.STARS,
+        R.CHANNEL,
+        TIMESTAMPTOSTRING(R.ROWTIME,'yyyy-MM-dd''T''HH:mm:ss.SSSZ') AS RATING_TS
+    FROM RATINGS_LIVE R
+        INNER JOIN CUSTOMERS C
+        ON R.USER_ID = C.CUSTOMER_ID
+EMIT CHANGES;
+```
+1. Change the **auto.offset.reset** to **Earliest** and see what's inside the newly created stream by running the following command
+`SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;`
+1. Stop the running query by clicking on **Stop**.
+---
+## <a name="step13"></a>Step 9: Connect Redshift sink to Confluent Cloud
+1. The next step is to sink data from Confluent Cloud into Redshift using the fully-managed Redshift Sink connector. The connector will send real time data into Redshift.
+1. First, you will create the connector that will automatically create a Redshift table and populate that table with the data from the **ratings-enriched** topic within Confluent Cloud. From the Confluent Cloud UI, click on the Data Integration tab on the navigation menu and select **+Add connector**. Search and click on the Redshift Sink icon.
+1. Enter the following configuration details. The remaining fields can be left blank.
+```
+{
+  "name": "Redshift_RatingsMasked",
+  "config": {
+    "connector.class": "RedshiftSink",
+    "name": "Redshift_RatingsMasked",
+    "input.data.format": "AVRO",
+    "kafka.auth.mode": "KAFKA_API_KEY",
+    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.secret": "<add_your_api_secret_key>",
+    "topics": "ratings-enriched",
+    "aws.redshift.domain": "<add_your_redshift_cluster_endpoint>",
+    "aws.redshift.port": "5439",
+    "aws.redshift.user": "<add_the_username_you_created_earlier>",
+    "aws.redshift.password": "<add_the_corresponding_password>",
+    "aws.redshift.database": "<name_of_the_database_you_created_earlier>",
+    "auto.create": "true",
+    "auto.evolve": "true",
+    "tasks.max": "1",
+    "transforms": "Transform,Transform2 ",
+    "transforms.Transform.type": "org.apache.kafka.connect.transforms.Cast$Value",
+    "transforms.Transform.spec": "DOB:string",
+    "transforms.Transform2.type": "org.apache.kafka.connect.transforms.MaskField$Value",
+    "transforms.Transform2.fields": "DOB",
+    "transforms.Transform2.replacement": "<xx-xx-xxxx>"
+  }
+}
+```
+1. In this lab, we decided to mask customer's date of birth before sinking the stream to Redshift. We are leverage Single Message Transforms (SMT) to achieve this goal. Since date of birth is of type `DATE` and we want to replace it with a string pattern, we will achieve our goal in a 2 step process. First, we will caste the date of birth from `DATE` to `String`, then we will replace that `String` value with a pattern we have pre-defined. 
+> For more information on Single Message Transforms (SMT) refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/single-message-transforms.html).
+1. Click on **Next**.
+1. Before launching the connector, you will be brought to the summary page. Once you have reviewed the configs and everything looks good, select **Launch**.
+1. This should return you to the main Connectors landing page. Wait for your newly created connector to change status from **Provisioning** to **Running**.
+1. The instructor will show you how to query the Redshift database and verify the data exist. 
+---
+## <a name="step14"></a>Step 10: Connect S3 sink to Confluent Cloud
+1. For this use case we only want to store the ratings_live stream in S3 and not the customers' information. 
+1. Use the left handside menu and navigate to **Data Integration** and go to **Connectors**. Click on **+Add connector**. Search for **S3** and click on the S3 Sink icon.
+1. Enter the following configuration details. The remaining fields can be left blank.
+```
+{
+  "name": "S3_SINKConnector_0",
+  "config": {
+    "topics": pksqlc-***RATINGS_LIVE",
+    "input.data.format": "AVRO",
+    "connector.class": "S3_SINK",
+    "name": "S3_SINKConnector_0",
+    "kafka.auth.mode": "KAFKA_API_KEY",
+    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.secret": "<add_your_api_secret_key>",
+    "aws.access.key.id": "<add_access_key_for_IAM_user>",
+    "aws.secret.access.key": "<add_secret_access_key_for_IAM_user>",
+    "s3.bucket.name": "<bucket_name>",
+    "output.data.format": "JSON",
+    "time.interval": "HOURLY",
+    "flush.size": "1000",
+    "tasks.max": "1"
+  }
+}
+```
+1. The instructor will show you how to verify data exists in S3. 
+---
+## <a name="step15"></a>Step 11: Connect DynamoDB sink to Confluent Cloud
+1. For this use case, we will be streaming the **users** topic to DynamoDB database. 
+1. We decided to use `userid` as the **hash key** and `regionid` as the **sort key** in DynamoDB.
+1. Additionally, we will use Single Message Transforms (SMT) to convert the timestamp to `String`.
+1. Enter the following configuration details. The remaining fields can be left blank. 
+```
+{
+  "name": "DynamoDbSinkConnector_0",
+  "config": {
+    "topics": "users",
+    "input.data.format": "AVRO",
+    "connector.class": "DynamoDbSink",
+    "name": "DynamoDbSinkConnector_0",
+    "kafka.auth.mode": "KAFKA_API_KEY",
+    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.secret": "<add_your_api_secret_key>",
+    "aws.access.key.id": "<add_access_key_for_IAM_user>",
+    "aws.secret.access.key": "<add_secret_access_key_for_IAM_user>",
+    "aws.dynamodb.pk.hash": "value.userid",
+    "aws.dynamodb.pk.sort": "value.regionid",
+    "table.name.format": "confluent-${topic}",
+    "tasks.max": "1",
+    "transforms": "timestamp ",
+    "transforms.timestamp.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+    "transforms.timestamp.target.type": "string",
+    "transforms.timestamp.field": "registertime",
+    "transforms.timestamp.format": "yyyy-MM-dd"
+  }
+}
+```
+1. The instructor will show you how to verify data exists in DynamoDB table.
+---
+## <a name="step16"></a>Step 12: Clean up resources
+Deleting the resources you created during this workshop will prevent you from incurring additional charges.
+1. The first item to delete is the ksqlDB application. Select the Delete button under Actions and enter the Application Name to confirm the deletion.
+1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
+1. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
+1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
+1. Go to https://aws.amazon.com/console/ and delete Redshift cluster, DynamoDB table, and S3 bucket. Additionally, you can delete IAM policy and users you created for this lab. 
+---
+## <a name="step17"></a>Confluent Resources and Further Testing
+
+Here are some links to check out if you are interested in further testing:
+
+* Confluent Cloud [Basics](https://docs.confluent.io/cloud/current/client-apps/cloud-basics.html)
+
+* [Quickstart](https://docs.confluent.io/cloud/current/get-started/index.html) with Confluent Cloud
+
+* Confluent Cloud ksqlDB [Quickstart](https://docs.confluent.io/cloud/current/get-started/ksql.html)
+
+* Confluent Developer [website] (https://developer.confluent.io/)
+
 
 
 
