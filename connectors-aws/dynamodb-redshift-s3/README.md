@@ -1,5 +1,5 @@
 <div align="center" padding=25px>
-   <img src="../images/banner.png" width =75% heigth=75%>
+   <img src="../../images/banner.png" width =75% heigth=75%>
 </div>
 
 # <div align="center">Building end-to-end streaming data pipeline with Confluent Cloud</div>
