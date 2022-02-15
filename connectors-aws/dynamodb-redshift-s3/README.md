@@ -1,4 +1,4 @@
-<div align="center">
+<div align="center" padding=25px>
    <img src="../images/banner.png" width =75% heigth=75%>
 </div>
 
