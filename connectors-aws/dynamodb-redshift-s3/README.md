@@ -7,7 +7,7 @@ For this lab, we have two fictional companies.
 1. An airline company: stores customer information in a MySQL database. Also, it has a website that customers can submit feedback in real time. 
   * The analytics team decided to use AWS Redshift, which is a Cloud Data Warehouse. They want to be able to react to customers feedback as they become availabe. For example if a customer with Platinum club status had a bad experience, they want to reach out to them and sort things out. This team doesn't want to go to two locations to get their data, they want the data to become available to them in a format and location they decided is the right choice for them. 
   * The AI team wants to use real world data to train and test their models. They don't want to go and find this data, so we are providing the customer rating data for them in AWS S3, which is ideal for long term storage of large amount of data. 
-1. A media company: recently they have seen a huge growth and their database is struggling to keep up. They concluded that AWS DynamoDB which is highly scalable NoSQL database is the right choice for them, so they are migrating their users' information to DynamoDB. 
+2. A media company: recently they have seen a huge growth and their database is struggling to keep up. They concluded that AWS DynamoDB which is highly scalable NoSQL database is the right choice for them, so they are migrating their users' information to DynamoDB. 
 To keep things simple, we will utlize Datagen Source Connector to generate both **ratings** and **users** data ourseleves. Additionally, we will use MySQL CDC Source Connecter, AWS Redshift, S3, and DynamoDB Sink fully-managed connectors. The on-demand version of the lab is available here. 
 
 ---
@@ -18,13 +18,27 @@ To keep things simple, we will utlize Datagen Source Connector to generate both 
 1. [Create an environment and cluster](#step2)
 1. [Create an API key pair](#step3)
 1. [Enable Schema registery](#step4)
-
+1. [Create a ksqlDB application](#step5)
+1. [Create "ratings" topic](#step6)
+1. [Create a Datagen Source connector](#step7)
+1. [Create customers topic](#step8)
+1. [Create a MySQL CDC Source connector](#step9)
+1. [Create "users" topic](#step10)
+1. [Create a Datagen Source connector](#step11)
+1. [Create AWS services](#step12)
+1. [Enrich data streams with ksqlDB](#step13)
+1. [Connect Redshift sink to Confluent Cloud](#step14)
+1. [Connect S3 sink to Confluent Cloud](#step15)
+1. [Connect DynamoDB sink to Confluent Cloud](#step16)
+1. [Clean up resources](#step17)
 ---
 
 ## [Architecture Diagram](#architecture-diagram)
 This lab will be utilizing Datagen Source Connector, MySQL CDC Source Connecter,  and AWS Redshift Sink fully-managed connectors. The on-demand version of the lab is available here. 
 <div align="center">
    <img src="../images/LiveLabs-AWS_S3-Redshift.png" width =75% heigth=75%>
+
+
    <img src="../images/LiveLabs-AWS_DynamoDB.png" width =75% heigth=75%>
 </div>
 
@@ -35,11 +49,11 @@ This lab will be utilizing Datagen Source Connector, MySQL CDC Source Connecter,
     * Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”, then enter payment details under “Payment details & contacts”.
 
     > **Note:** You will create resources during this workshop that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the workshop. More details on the specifics can be found [here](https://www.confluent.io/confluent-cloud/tryfree/).
-1. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
+2. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
     * portquiz.net:443
     * portquiz.net:9092
     
-1. Sign up for an AWS account [here](https://aws.amazon.com/account/).
+3. Sign up for an AWS account [here](https://aws.amazon.com/account/).
 
 ---
 ## <a name="step1"></a>Step 1: Log into Confluent Cloud
@@ -56,7 +70,7 @@ An environment contains Confluent clusters and its deployed components such as C
     * Specify a meaningful `name` for your environment and then click **Create**.
         > **Note:** It will take a few minutes to assign the resources to make this new environment available for use.
 
-1. Now that you have an environment, let's create a cluster. Select **Create Cluster**.
+2. Now that you have an environment, let's create a cluster. Select **Create Cluster**.
     > **Note**: Confluent Cloud clusters are available in 3 types: **Basic**, **Standard**, and **Dedicated**. Basic is intended for development use cases so you should use that for this lab. Basic clusters only support single zone availability. Standard and Dedicated clusters are intended for production use and support Multi-zone deployments. If you’re interested in learning more about the different types of clusters and their associated features and limits, refer to this [documentation](https://docs.confluent.io/current/cloud/clusters/cluster-types.html).
 
     * Choose the **Basic** cluster type.
@@ -98,7 +112,7 @@ An environment contains Confluent clusters and its deployed components such as C
 ## <a name="step6"></a>Step 2: Create "ratings" topic
 1. On the navigation menu, select **Topics**.
 > Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
-1. Type **ratings** as the Topic name and hit **Create with defaults**. 
+2. Type **ratings** as the Topic name and hit **Create with defaults**. 
 ---
 ## <a name="step7"></a>Step 3: Create a Datagen Source connector
 > Confluent offers 120+ pre-built [connectors](https://www.confluent.io/product/confluent-connectors/), enabling you to modernize your entire data architecture even faster. These connectors also provide you peace-of-mind with enterprise-grade security, reliability, compatibility, and support.
@@ -125,8 +139,8 @@ An environment contains Confluent clusters and its deployed components such as C
 ## <a name="step8"></a>Step 4: Create customers topic
 1. On the navigation menu, select **Topics**.
 > Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
-1. Type **mysql.demo.CUSTOMERS_INFO** as the Topic name.
-1. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and then click on **Create**.
+2. Type **mysql.demo.CUSTOMERS_INFO** as the Topic name.
+3. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and then click on **Create**.
 ---
 ## <a name="step9"></a>Step 5: Create a MySQL CDC Source connector
 1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
@@ -158,9 +172,9 @@ An environment contains Confluent clusters and its deployed components such as C
 ## <a name="step10"></a>Step 6: Create "users" topic
 1. On the navigation menu, select **Topics**.
 > Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
-1. Type **users** as the Topic name and hit **Create with defaults**. 
+2. Type **users** as the Topic name and hit **Create with defaults**. 
 ---
-## <a name="step7"></a>Step 3: Create a Datagen Source connector
+## <a name="step7"></a>Step 7: Create a Datagen Source connector
 1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
 1. In the search bar search for **Datagen** and select the **Datagen Source** which is a fully-managed connector. 
 1. Use the following parameters to configure your connector
@@ -181,14 +195,14 @@ An environment contains Confluent clusters and its deployed components such as C
 }
 ```
 ---
-## <a name="step11"></a>Step 7: Create AWS services
+## <a name="step11"></a>Step 8: Create AWS services
 1. Navigate to https://aws.amazon.com/console/ and log into your account. 
 > Note: you will need root level permissions in order to complete this lab. 
-1. Create a Redshift cluster and save the `Admin user name` and `Admin user password` since you will need it in later steps. 
+2. Create a Redshift cluster and save the `Admin user name` and `Admin user password` since you will need it in later steps. 
 > The Redshift cluster has to be in same same region as your Confluent Cloud cluster. 
-1. Under **Additional configuration** disable **defaults**. 
-1. Make the cluster publicly accessible under **Network and security → Publicly accessible → Enable**.
-1. Using the search bar navigate to **VPC -> Security Groups -> Inbound Rules** and add two new rules for TCP protocol
+3. Under **Additional configuration** disable **defaults**. 
+4. Make the cluster publicly accessible under **Network and security → Publicly accessible → Enable**.
+5. Using the search bar navigate to **VPC -> Security Groups -> Inbound Rules** and add two new rules for TCP protocol
 ```
 Type: Redshift
 Port range: 5430 
@@ -197,8 +211,8 @@ Type: Redshift
 Port range: 5430 
 Source: ::/0
 ```
-1. Navigate back to your Redshift cluster and reboot it to ensure the right security policies are applied. 
-1. Once the cluster is in **Available** state use the left handside menu and open `Query Editor` to create a database and a user and give the appropriate permissions 
+6. Navigate back to your Redshift cluster and reboot it to ensure the right security policies are applied. 
+7. Once the cluster is in **Available** state use the left handside menu and open `Query Editor` to create a database and a user and give the appropriate permissions 
 ```
 CREATE DATABASE <DB_NAME>;
 CREATE USER <DB_USER> PASSWORD '<DB_PASSWORD>';
@@ -210,10 +224,10 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 ```
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-amazon-redshift-sink.html)
 
-1. Create a S3 bucket
+8. Create a S3 bucket
 > The S3 has to be in same same region as your Confluent Cloud cluster. 
-1. Create an **IAM Policy** and attach it to an **IAM User**. 
-1. Create a key pair for the IAM User you just created and download the file to use it in later steps. 
+9. Create an **IAM Policy** and attach it to an **IAM User**. 
+10. Create a key pair for the IAM User you just created and download the file to use it in later steps. 
 ```
 {
    "Version":"2012-10-17",
@@ -249,9 +263,9 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 }
 ```
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-s3-sink.html)
-1. For DynamoDB you can either reuse the **IAM User** from S3 or create a new one. 
-1. Create another **IAM Policy** and another **IAM User**. 
-1. Create a key pair for the IAM User you just created and download the file to use it in later steps.
+11. For DynamoDB you can either reuse the **IAM User** from S3 or create a new one. 
+12. Create another **IAM Policy** and another **IAM User**. 
+13. Create a key pair for the IAM User you just created and download the file to use it in later steps.
 ```
 {
     "Version": "2012-10-17",
@@ -272,22 +286,26 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 ```
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-amazon-dynamo-db-sink.html)
 ---
-## <a name="step12"></a>Step 8: Enrich data streams with ksqlDB
+## <a name="step12"></a>Step 9: Enrich data streams with ksqlDB
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
 With ksqlDB, you have the ability to leverage streams and tables from your topics in Confluent. A stream in ksqlDB is a topic with a schema and it records the history of what has happened in the world as a sequence of events. 
 
 1. Navigate to confluent.cloud 
-1. Use the left handside menu and go to the ksqlDB application you created at the beginning of the lab
+2. Use the left handside menu and go to the ksqlDB application you created at the beginning of the lab
 > You can interact with ksqlDB through the Editor. You can create a stream by using the CREATE STREAM statement and a table using the CREATE TABLE statement. If you’re interested in learning more about ksqlDB and the differences between streams and tables, I recommend reading these two blogs [here] (https://www.confluent.io/blog/kafka-streams-tables-part-3-event-processing-fundamentals/) and [here] (https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/) or watch ksqlDB 101 course on Confluent Developer [webiste] (https://developer.confluent.io/learn-kafka/ksqldb/intro/). 
 
 To write streaming queries against topics, you will need to register the topics with ksqlDB as a stream and/or table.
 
-1. Create a ksqlDB stream from `ratings` topic
+3. Create a ksqlDB stream from `ratings` topic.
+
 `CREATE STREAM RATINGS_OG WITH (KAFKA_TOPIC='ratings', VALUE_FORMAT='AVRO');`
-1. Change **auto.offset.reset** to **Earliest** and see what's inside the `RATINGS_OG` stream by running the following query
+
+4. Change **auto.offset.reset** to **Earliest** and see what's inside the `RATINGS_OG` stream by running the following query.
+
 `SELECT * FROM RATINGS_OG EMIT CHANGES;`
-1. Create a new stream that doesn't include message from `test` channel.
+
+5. Create a new stream that doesn't include message from `test` channel.
 ```
 CREATE STREAM RATINGS_LIVE AS 
     SELECT *
@@ -295,17 +313,20 @@ CREATE STREAM RATINGS_LIVE AS
     WHERE LCASE(CHANNEL) NOT LIKE '%test%'
     EMIT CHANGES;
 ```
-1. See what's inside `RATINGS_LIVE` stream by running the following query. 
+6. See what's inside `RATINGS_LIVE` stream by running the following query. 
+
 `SELECT * FROM RATINGS_LIVE EMIT CHANGES;`
-1. Stop the running query by clicking on **Stop**.
-1. Create a stream from customers topic
+
+7. Stop the running query by clicking on **Stop**.
+
+8. Create a stream from customers topic
 ```
 CREATE STREAM CUSTOMERS_INFORMATION
 WITH (KAFKA_TOPIC ='mysql.demo.CUSTOMERS_INFO',
       KEY_FORMAT  ='JSON',
       VALUE_FORMAT='AVRO');
 ```
-1. Create **customers** table based on **customers_information** stream you just created. 
+9. Create **customers** table based on **customers_information** stream you just created. 
 ```
 CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     SELECT id                            AS customer_id,
@@ -318,10 +339,13 @@ CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     FROM    CUSTOMERS_INFORMATION 
     GROUP BY id;
 ```
-1. Check to see what's inside the **customers** table by running the following query. 
+10. Check to see what's inside the **customers** table by running the following query. 
+
 `SELECT * FROM CUSTOMERS_INFORMATION;`
-1. Now that we have a stream of ratings data and customer information, we can perform a join query to enrich our data stream. 
-1. Create a new stream by running the following statement
+
+11. Now that we have a stream of ratings data and customer information, we can perform a join query to enrich our data stream. 
+
+12. Create a new stream by running the following statement
 ```
 CREATE STREAM RATINGS_WITH_CUSTOMER_DATA WITH (KAFKA_TOPIC='ratings-enriched') AS
     SELECT C.CUSTOMER_ID,
@@ -340,14 +364,16 @@ CREATE STREAM RATINGS_WITH_CUSTOMER_DATA WITH (KAFKA_TOPIC='ratings-enriched') A
         ON R.USER_ID = C.CUSTOMER_ID
 EMIT CHANGES;
 ```
-1. Change the **auto.offset.reset** to **Earliest** and see what's inside the newly created stream by running the following command
+13. Change the **auto.offset.reset** to **Earliest** and see what's inside the newly created stream by running the following command
+
 `SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;`
-1. Stop the running query by clicking on **Stop**.
+
+14. Stop the running query by clicking on **Stop**.
 ---
-## <a name="step13"></a>Step 9: Connect Redshift sink to Confluent Cloud
+## <a name="step13"></a>Step 10: Connect Redshift sink to Confluent Cloud
 1. The next step is to sink data from Confluent Cloud into Redshift using the fully-managed Redshift Sink connector. The connector will send real time data into Redshift.
-1. First, you will create the connector that will automatically create a Redshift table and populate that table with the data from the **ratings-enriched** topic within Confluent Cloud. From the Confluent Cloud UI, click on the Data Integration tab on the navigation menu and select **+Add connector**. Search and click on the Redshift Sink icon.
-1. Enter the following configuration details. The remaining fields can be left blank.
+2. First, you will create the connector that will automatically create a Redshift table and populate that table with the data from the **ratings-enriched** topic within Confluent Cloud. From the Confluent Cloud UI, click on the Data Integration tab on the navigation menu and select **+Add connector**. Search and click on the Redshift Sink icon.
+3. Enter the following configuration details. The remaining fields can be left blank.
 ```
 {
   "name": "RedshiftSinkConnector_0",
@@ -376,17 +402,17 @@ EMIT CHANGES;
   }
 }
 ```
-1. In this lab, we decided to mask customer's date of birth before sinking the stream to Redshift. We are leverage Single Message Transforms (SMT) to achieve this goal. Since date of birth is of type `DATE` and we want to replace it with a string pattern, we will achieve our goal in a 2 step process. First, we will caste the date of birth from `DATE` to `String`, then we will replace that `String` value with a pattern we have pre-defined. 
+4. In this lab, we decided to mask customer's date of birth before sinking the stream to Redshift. We are leverage Single Message Transforms (SMT) to achieve this goal. Since date of birth is of type `DATE` and we want to replace it with a string pattern, we will achieve our goal in a 2 step process. First, we will caste the date of birth from `DATE` to `String`, then we will replace that `String` value with a pattern we have pre-defined. 
 > For more information on Single Message Transforms (SMT) refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/single-message-transforms.html).
-1. Click on **Next**.
-1. Before launching the connector, you will be brought to the summary page. Once you have reviewed the configs and everything looks good, select **Launch**.
-1. This should return you to the main Connectors landing page. Wait for your newly created connector to change status from **Provisioning** to **Running**.
-1. The instructor will show you how to query the Redshift database and verify the data exist. 
+5. Click on **Next**.
+6. Before launching the connector, you will be brought to the summary page. Once you have reviewed the configs and everything looks good, select **Launch**.
+7. This should return you to the main Connectors landing page. Wait for your newly created connector to change status from **Provisioning** to **Running**.
+8. The instructor will show you how to query the Redshift database and verify the data exist. 
 ---
-## <a name="step14"></a>Step 10: Connect S3 sink to Confluent Cloud
+## <a name="step14"></a>Step 11: Connect S3 sink to Confluent Cloud
 1. For this use case we only want to store the ratings_live stream in S3 and not the customers' information. 
-1. Use the left handside menu and navigate to **Data Integration** and go to **Connectors**. Click on **+Add connector**. Search for **S3** and click on the S3 Sink icon.
-1. Enter the following configuration details. The remaining fields can be left blank.
+2. Use the left handside menu and navigate to **Data Integration** and go to **Connectors**. Click on **+Add connector**. Search for **S3** and click on the S3 Sink icon.
+3. Enter the following configuration details. The remaining fields can be left blank.
 ```
 {
   "name": "S3_SINKConnector_0",
@@ -408,13 +434,13 @@ EMIT CHANGES;
   }
 }
 ```
-1. The instructor will show you how to verify data exists in S3. 
+4. The instructor will show you how to verify data exists in S3. 
 ---
-## <a name="step15"></a>Step 11: Connect DynamoDB sink to Confluent Cloud
+## <a name="step15"></a>Step 12: Connect DynamoDB sink to Confluent Cloud
 1. For this use case, we will be streaming the **users** topic to DynamoDB database. 
-1. We decided to use `userid` as the **hash key** and `regionid` as the **sort key** in DynamoDB.
-1. Additionally, we will use Single Message Transforms (SMT) to convert the timestamp to `String`.
-1. Enter the following configuration details. The remaining fields can be left blank. 
+2. We decided to use `userid` as the **hash key** and `regionid` as the **sort key** in DynamoDB.
+3. Additionally, we will use Single Message Transforms (SMT) to convert the timestamp to `String`.
+4. Enter the following configuration details. The remaining fields can be left blank. 
 ```
 {
   "name": "DynamoDbSinkConnector_0",
@@ -440,9 +466,9 @@ EMIT CHANGES;
   }
 }
 ```
-1. The instructor will show you how to verify data exists in DynamoDB table.
+5. The instructor will show you how to verify data exists in DynamoDB table.
 ---
-## <a name="step16"></a>Step 12: Clean up resources
+## <a name="step16"></a>Step 13: Clean up resources
 Deleting the resources you created during this workshop will prevent you from incurring additional charges.
 1. The first item to delete is the ksqlDB application. Select the Delete button under Actions and enter the Application Name to confirm the deletion.
 1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
