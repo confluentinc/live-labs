@@ -213,7 +213,7 @@ Source: ::/0
 ```
 6. Navigate back to your Redshift cluster and reboot it to ensure the right security policies are applied. 
 7. Once the cluster is in **Available** state use the left handside menu and open `Query Editor` to create a database and a user and give the appropriate permissions 
-```
+```SQL
 CREATE DATABASE <DB_NAME>;
 CREATE USER <DB_USER> PASSWORD '<DB_PASSWORD>';
 GRANT USAGE ON SCHEMA public TO <DB_USER>;
@@ -298,15 +298,17 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
 To write streaming queries against topics, you will need to register the topics with ksqlDB as a stream and/or table.
 
 3. Create a ksqlDB stream from `ratings` topic.
-
-`CREATE STREAM RATINGS_OG WITH (KAFKA_TOPIC='ratings', VALUE_FORMAT='AVRO');`
+```SQL
+CREATE STREAM RATINGS_OG WITH (KAFKA_TOPIC='ratings', VALUE_FORMAT='AVRO');
+```
 
 4. Change **auto.offset.reset** to **Earliest** and see what's inside the `RATINGS_OG` stream by running the following query.
-
-`SELECT * FROM RATINGS_OG EMIT CHANGES;`
+```SQL
+SELECT * FROM RATINGS_OG EMIT CHANGES;
+```
 
 5. Create a new stream that doesn't include message from `test` channel.
-```
+```SQL
 CREATE STREAM RATINGS_LIVE AS 
     SELECT *
     FROM RATINGS_OG
@@ -314,20 +316,21 @@ CREATE STREAM RATINGS_LIVE AS
     EMIT CHANGES;
 ```
 6. See what's inside `RATINGS_LIVE` stream by running the following query. 
-
-`SELECT * FROM RATINGS_LIVE EMIT CHANGES;`
+```SQL
+SELECT * FROM RATINGS_LIVE EMIT CHANGES;
+```
 
 7. Stop the running query by clicking on **Stop**.
 
 8. Create a stream from customers topic
-```
+```SQL
 CREATE STREAM CUSTOMERS_INFORMATION
 WITH (KAFKA_TOPIC ='mysql.demo.CUSTOMERS_INFO',
       KEY_FORMAT  ='JSON',
       VALUE_FORMAT='AVRO');
 ```
 9. Create **customers** table based on **customers_information** stream you just created. 
-```
+```SQL
 CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     SELECT id                            AS customer_id,
            LATEST_BY_OFFSET(first_name)  AS first_name,
@@ -340,13 +343,14 @@ CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     GROUP BY id;
 ```
 10. Check to see what's inside the **customers** table by running the following query. 
-
-`SELECT * FROM CUSTOMERS_INFORMATION;`
+```SQL
+SELECT * FROM CUSTOMERS_INFORMATION;
+```
 
 11. Now that we have a stream of ratings data and customer information, we can perform a join query to enrich our data stream. 
 
 12. Create a new stream by running the following statement
-```
+```SQL
 CREATE STREAM RATINGS_WITH_CUSTOMER_DATA WITH (KAFKA_TOPIC='ratings-enriched') AS
     SELECT C.CUSTOMER_ID,
         C.FIRST_NAME + ' ' + C.LAST_NAME AS FULL_NAME,
@@ -365,8 +369,9 @@ CREATE STREAM RATINGS_WITH_CUSTOMER_DATA WITH (KAFKA_TOPIC='ratings-enriched') A
 EMIT CHANGES;
 ```
 13. Change the **auto.offset.reset** to **Earliest** and see what's inside the newly created stream by running the following command
-
-`SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;`
+```SQL
+SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
+```
 
 14. Stop the running query by clicking on **Stop**.
 ---
