@@ -1,4 +1,8 @@
-# <div align="center">Confluent Cloud fully-managed connectors: AWS Redshift Sink</div>
+<div align="center">
+   <img src="../images/banner.png" width =75% heigth=75%>
+</div>
+
+# <div align="center">Building end-to-end streaming data pipeline with Confluent Cloud</div>
 ## <div align="center">Lab Guide</div>
 
 > Confluent offers 120+ pre-built [connectors](https://www.confluent.io/product/confluent-connectors/), enabling you to modernize your entire data architecture even faster. These connectors also provide you peace-of-mind with enterprise-grade security, reliability, compatibility, and support.
