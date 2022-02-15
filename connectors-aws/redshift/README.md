@@ -3,7 +3,7 @@
 
 > Confluent offers 120+ pre-built [connectors](https://www.confluent.io/product/confluent-connectors/), enabling you to modernize your entire data architecture even faster. These connectors also provide you peace-of-mind with enterprise-grade security, reliability, compatibility, and support.
 
-This lab will be utilizing Datagen Source Connector, MySQL CDC Source Connecter,  and AWS S3 Sink fully-managed connectors. The on-demand version of the lab is available here. 
+This lab will be utilizing Datagen Source Connector, MySQL CDC Source Connecter,  and AWS Redshift Sink fully-managed connectors. The on-demand version of the lab is available here. 
 
 ---
 
@@ -17,9 +17,9 @@ This lab will be utilizing Datagen Source Connector, MySQL CDC Source Connecter,
 ---
 
 ## [Architecture Diagram](#architecture-diagram)
-In this workshop we will populate an Apache Kafka Topic with sample data using fully-managed Datagen Source connector. Then, we will create a fully-managed AWS S3 Sink connector and dump all that data in there. 
+This lab will be utilizing Datagen Source Connector, MySQL CDC Source Connecter,  and AWS Redshift Sink fully-managed connectors. The on-demand version of the lab is available here. 
 <div align="center">
-   <img src="./images/LiveLabs-AWS(S3, Redshift).png" width =75% heigth=75%>
+   <img src="../images/LiveLabs-AWS(S3, Redshift).png" width =75% heigth=75%>
 </div>
 
 ----
