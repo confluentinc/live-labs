@@ -37,11 +37,13 @@ To keep things simple, we will utlize Datagen Source Connector to generate both 
 
 ## [Architecture Diagram](#architecture-diagram)
 This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB). The on-demand version of the lab is available here. 
-<div align="center"> FictionAir
+<div align="center"> 
+FictionAir
    <img src="../images/LiveLabs-AWS_S3-Redshift.png" width =75% heigth=75%>
 </div>
 
-<div align="center"> FictionMedia
+<div align="center"> 
+FictionMedia
    <img src="../images/LiveLabs-AWS_DynamoDB.png" width =75% heigth=75%>
 </div>
 ---
