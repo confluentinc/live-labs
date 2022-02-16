@@ -5,10 +5,8 @@
 # <div align="center">Building end-to-end streaming data pipeline with Confluent Cloud</div>
 ## <div align="center">Lab Guide</div>
 
-> Confluent offers 120+ pre-built [connectors](https://www.confluent.io/product/confluent-connectors/), enabling you to modernize your entire data architecture even faster. These connectors also provide you peace-of-mind with enterprise-grade security, reliability, compatibility, and support.
-
 For this lab, we have two fictional companies. 
-1. An airline company: stores customer information in a MySQL database. Also, it has a website that customers can submit feedback in real time. 
+1. An airline company: stores customer information in a MySQL database. It also has a website that customers can submit feedback in real time. 
   * The analytics team decided to use AWS Redshift, which is a Cloud Data Warehouse. They want to be able to react to customers feedback as they become availabe. For example if a customer with Platinum club status had a bad experience, they want to reach out to them and sort things out. This team doesn't want to go to two locations to get their data, they want the data to become available to them in a format and location they decided is the right choice for them. 
   * The AI team wants to use real world data to train and test their models. They don't want to go and find this data, so we are providing the customer rating data for them in AWS S3, which is ideal for long term storage of large amount of data. 
 2. A media company: recently they have seen a huge growth and their database is struggling to keep up. They concluded that AWS DynamoDB which is highly scalable NoSQL database is the right choice for them, so they are migrating their users' information to DynamoDB. 
@@ -38,14 +36,14 @@ To keep things simple, we will utlize Datagen Source Connector to generate both 
 ---
 
 ## [Architecture Diagram](#architecture-diagram)
-This lab will be utilizing Datagen Source Connector, MySQL CDC Source Connecter,  and AWS Redshift Sink fully-managed connectors. The on-demand version of the lab is available here. 
-<div align="center">
+This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB). The on-demand version of the lab is available here. 
+<div align="center"> FictionAir
    <img src="../images/LiveLabs-AWS_S3-Redshift.png" width =75% heigth=75%>
-
-
-   <img src="../images/LiveLabs-AWS_DynamoDB.png" width =75% heigth=75%>
 </div>
 
+<div align="center"> FictionMedia
+   <img src="../images/LiveLabs-AWS_DynamoDB.png" width =75% heigth=75%>
+</div>
 ---
 ## [Prerequisites](#prerequisites)
 1. Confluent Cloud Account
