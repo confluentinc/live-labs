@@ -49,10 +49,10 @@ This lab will be utilizing Datagen Source Connector, MySQL CDC Source Connecter,
 ---
 ## [Prerequisites](#prerequisites)
 1. Confluent Cloud Account
-    * Sign-up for a Confluent Cloud account [here](https://www.confluent.io/confluent-cloud/tryfree/).
+    * Sign-up for a Confluent Cloud account [here](https://www.confluent.io/get-started/).
     * Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”, then enter payment details under “Payment details & contacts”.
 
-    > **Note:** You will create resources during this workshop that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the workshop. More details on the specifics can be found [here](https://www.confluent.io/confluent-cloud/tryfree/).
+    > **Note:** You will create resources during this workshop that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the workshop. More details on the specifics can be found [here](https://www.confluent.io/get-started/).
 2. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
     * portquiz.net:443
     * portquiz.net:9092
