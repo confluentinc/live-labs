@@ -50,19 +50,23 @@ This lab will be utilizing two fully-managed source connectors (Datagen and MySQ
 
 ---
 ## [Prerequisites](#prerequisites)
-### Sign up for Confluent Cloud Account
-    * Sign-up for a Confluent Cloud account [here](https://www.confluent.io/get-started/).
-    * Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”, then enter payment details under “Payment details & contacts”.
 
-    > **Note:** You will create resources during this lab that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the lab. More details on the specifics can be found [here](https://www.confluent.io/get-started/).
+### Sign up for Confluent Cloud Account
+1. Sign up for a Confluent Cloud account [here](https://www.confluent.io/get-started/).
+
+2. Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”, then enter payment details under “Payment details & contacts”.
+
+> **Note:** You will create resources during this lab that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the lab. More details on the specifics can be found [here](https://www.confluent.io/get-started/).
 
 ### Test Network Connectivity
-    * Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
-      * portquiz.net:443
-      * portquiz.net:9092
+
+1. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
+  * portquiz.net:443
+  * portquiz.net:9092
     
 ## Sign up for AWS account
-    * In order to complete this lab, you need to have an AWS account that has root level permissions. Sign up for an AWS account [here](https://aws.amazon.com/account/).
+
+1. In order to complete this lab, you need to have an AWS account that has root level permissions. Sign up for an AWS account [here](https://aws.amazon.com/account/).
 
 ---
 ## <a name="step1"></a>Step 1: Log into Confluent Cloud
