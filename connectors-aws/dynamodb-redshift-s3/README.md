@@ -50,16 +50,19 @@ This lab will be utilizing two fully-managed source connectors (Datagen and MySQ
 
 ---
 ## [Prerequisites](#prerequisites)
-1. Confluent Cloud Account
+### Sign up for Confluent Cloud Account
     * Sign-up for a Confluent Cloud account [here](https://www.confluent.io/get-started/).
     * Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”, then enter payment details under “Payment details & contacts”.
 
     > **Note:** You will create resources during this lab that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the lab. More details on the specifics can be found [here](https://www.confluent.io/get-started/).
-2. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
-    * portquiz.net:443
-    * portquiz.net:9092
+
+### Test Network Connectivity
+    * Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
+      * portquiz.net:443
+      * portquiz.net:9092
     
-3. Sign up for an AWS account [here](https://aws.amazon.com/account/).
+## Sign up for AWS account
+    * In order to complete this lab, you need to have an AWS account that has root level permissions. Sign up for an AWS account [here](https://aws.amazon.com/account/).
 
 ---
 ## <a name="step1"></a>Step 1: Log into Confluent Cloud
@@ -234,8 +237,7 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 
 8. Create an S3 bucket.
 > The S3 has to be in same same region as your Confluent Cloud cluster. 
-9. Create an **IAM Policy** and attach it to an **IAM User**. 
-10. Create a key pair for the IAM User you just created and download the file to use it in later steps. 
+9. Create an **IAM Policy** with the following configuration and name it `confluent-s3-demo-policy`.  
 ```
 {
    "Version":"2012-10-17",
@@ -265,16 +267,23 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
             "s3:ListBucketMultipartUploads"
 
          ],
-         "Resource":"arn:aws:s3:::<bucket-name>/*"
+         "Resource": [
+            "arn:aws:s3:::<bucket-name>",
+            "arn:aws:s3:::<bucket-name>/*"
+          ]
       }
    ]
 }
 ```
+10. Create an **IAM User** and name it `confluent-s3-demo-user`. and attach the above policy to it. 
+
+11. Attach `confluent-s3-demo-policy` policy to `confluent-s3-demo-user` user. 
+
+12. Create a key pair for `confluent-s3-demo-user` user and download the file to use it in later steps. 
+
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-s3-sink.html)
 
-11. For DynamoDB you can either reuse the **IAM User** from S3 or create a new one. 
-12. Create another **IAM Policy** and another **IAM User**. 
-13. Create a key pair for the IAM User you just created in previouse step and download the file to use it in later steps.
+13. Create a new **IAM Policy** with the following configurations and name it `confluent-dynamodb-demo-policy`. 
 ```
 {
     "Version": "2012-10-17",
@@ -293,6 +302,13 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
     ]
 }
 ```
+
+14. Create another **IAM User** and name it `confluent-dynamodb-demo-user`. This one will be used for DynamoDB.
+
+15. Attach `confluent-dynamodb-demo-policy` policy to `confluent-dynamodb-demo-user` user. 
+
+16. Create a key pair for `confluent-dynamodb-demo-user` user and download the file to use it in later steps.
+
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-amazon-dynamo-db-sink.html)
 ---
 ## <a name="step12"></a>Step 9: Enrich data streams with ksqlDB
@@ -438,8 +454,8 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "kafka.auth.mode": "KAFKA_API_KEY",
     "kafka.api.key": "<dd_your_api_key>",
     "kafka.api.secret": "<add_your_api_secret_key>",
-    "aws.access.key.id": "<add_access_key_for_IAM_user>",
-    "aws.secret.access.key": "<add_secret_access_key_for_IAM_user>",
+    "aws.access.key.id": "<add_access_key_for_confluent-s3-demo-user>",
+    "aws.secret.access.key": "<add_secret_access_key_for_confluent-s3-demo-user>",
     "s3.bucket.name": "<bucket_name>",
     "output.data.format": "JSON",
     "time.interval": "HOURLY",
@@ -466,8 +482,8 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "kafka.auth.mode": "KAFKA_API_KEY",
     "kafka.api.key": "<dd_your_api_key>",
     "kafka.api.secret": "<add_your_api_secret_key>",
-    "aws.access.key.id": "<add_access_key_for_IAM_user>",
-    "aws.secret.access.key": "<add_secret_access_key_for_IAM_user>",
+    "aws.access.key.id": "<add_access_key_for_confluent-dynamodb-demo-user>",
+    "aws.secret.access.key": "<add_secret_access_key_for_confluent-dynamodb-demo-user>",
     "aws.dynamodb.pk.hash": "value.userid",
     "aws.dynamodb.pk.sort": "value.regionid",
     "table.name.format": "confluent-${topic}",
