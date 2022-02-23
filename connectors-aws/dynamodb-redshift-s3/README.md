@@ -11,7 +11,7 @@ For this lab, we have two fictional companies.
   * The AI team wants to use real world data to train and test their AI models. They don't want to go and find this data, so we are providing the customer rating data to them in AWS S3, which is a great solution to store large amounts of data for a long time.
 2. A media company: recently their userbase grew significantly and their database is struggling to keep up. They concluded that AWS DynamoDB, a highly scalable NoSQL database, is the right choice for them, so they are migrating their users' information to DynamoDB. 
 
-To keep things simple, we will utlize Datagen Source Connector to generate both **ratings** and **users** data ourseleves. Additionally, we will use MySQL CDC Source Connecter, AWS Redshift, S3, and DynamoDB Sink fully-managed connectors.  
+To keep things simple, we will utilize Datagen Source Connector to generate both **ratings** and **users** data ourseleves. Additionally, we will use MySQL CDC Source Connecter, AWS Redshift, S3, and DynamoDB Sink fully-managed connectors.  
 
 ---
 
@@ -79,7 +79,7 @@ This lab will be utilizing two fully-managed source connectors (Datagen and MySQ
 An environment contains Confluent clusters and its deployed components such as Connect, ksqlDB, and Schema Registry. You have the ability to create different environments based on your company's requirements. Confluent has seen companies use environments to separate Development/Testing, Pre-Production, and Production clusters.
 
 1. Click **+ Add environment**.
-    > **Note:** There is a *default* environment ready in your account upon account creation. You can use this *default* environment for the purpose of this workshop if you do not wish to create an additional environment.
+    > **Note:** There is a *default* environment ready in your account upon account creation. You can use this *default* environment for the purpose of this lab if you do not wish to create an additional environment.
 
     * Specify a meaningful `name` for your environment and then click **Create**.
         > **Note:** It will take a few minutes to assign the resources to make this new environment available for use.
@@ -141,7 +141,7 @@ An environment contains Confluent clusters and its deployed components such as C
     "connector.class": "DatagenSource",
     "name": "DatagenSourceConnector_0",
     "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.key": "<add_your_api_key>",
     "kafka.api.secret": "<add_your_api_secret_key>",
     "kafka.topic": "ratings",
     "output.data.format": "AVRO",
@@ -168,7 +168,7 @@ An environment contains Confluent clusters and its deployed components such as C
     "connector.class": "MySqlCdcSource",
     "name": "MySqlCdcSourceConnector_0",
     "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.key": "<add_your_api_key>",
     "kafka.api.secret": "<add_your_api_secret_key>",
     "database.hostname": "<will_be_given_during_lab>",
     "database.port": "3306",
@@ -200,7 +200,7 @@ An environment contains Confluent clusters and its deployed components such as C
     "connector.class": "DatagenSource",
     "name": "DatagenSourceConnector_0",
     "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.key": "<add_your_api_key>",
     "kafka.api.secret": "<add_your_api_secret_key>",
     "kafka.topic": "users",
     "output.data.format": "AVRO",
@@ -240,7 +240,7 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 ```
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-amazon-redshift-sink.html)
 
-8. Create an S3 bucket.
+8. Create an S3 bucket and name it `confluent-bucket-demo`.
 > The S3 has to be in same same region as your Confluent Cloud cluster. 
 9. Create an **IAM Policy** with the following configuration and name it `confluent-s3-demo-policy`.  
 ```
@@ -260,7 +260,7 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
             "s3:ListBucket",
             "s3:GetBucketLocation"
          ],
-         "Resource":"arn:aws:s3:::<bucket-name>"
+         "Resource":"arn:aws:s3:::confluent-bucket-demo"
       },
       {
          "Effect":"Allow",
@@ -273,8 +273,8 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 
          ],
          "Resource": [
-            "arn:aws:s3:::<bucket-name>",
-            "arn:aws:s3:::<bucket-name>/*"
+            "arn:aws:s3:::confluent-bucket-demo",
+            "arn:aws:s3:::confluent-bucket-demo/*"
           ]
       }
    ]
@@ -359,7 +359,7 @@ WITH (KAFKA_TOPIC ='mysql.demo.CUSTOMERS_INFO',
       KEY_FORMAT  ='JSON',
       VALUE_FORMAT='AVRO');
 ```
-9. Create **customers** table based on **customers_information** stream you just created. 
+9. Create `customers` table based on `customers_information` stream you just created. 
 ```SQL
 CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     SELECT id                            AS customer_id,
@@ -372,9 +372,9 @@ CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     FROM    CUSTOMERS_INFORMATION 
     GROUP BY id;
 ```
-10. Check to see what's inside the **customers** table by running the following query. 
+10. Check to see what's inside the `customers` table by running the following query. 
 ```SQL
-SELECT * FROM CUSTOMERS_INFORMATION;
+SELECT * FROM CUSTOMERS;
 ```
 
 11. Now that we have a stream of ratings data and customer information, we can perform a join query to enrich our data stream. 
@@ -433,7 +433,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "transforms.Transform.spec": "DOB:string",
     "transforms.Transform2.type": "org.apache.kafka.connect.transforms.MaskField$Value",
     "transforms.Transform2.fields": "DOB",
-    "transforms.Transform2.replacement": "<xx-xx-xxxx>"
+    "transforms.Transform2.replacement": "<xxxx-xx-xx>"
   }
 }
 ```
@@ -445,7 +445,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 8. The instructor will show you how to query the Redshift database and verify the data exist. 
 ---
 ## <a name="step14"></a>Step 11: Connect S3 sink to Confluent Cloud
-1. For this use case we only want to store the ratings_live stream in S3 and not the customers' information. 
+1. For this use case we only want to store the `ratings_live` stream in S3 and not the customers' information. 
 2. Use the left handside menu and navigate to **Data Integration** and go to **Connectors**. Click on **+Add connector**. Search for **S3** and click on the S3 Sink icon.
 3. Enter the following configuration details. The remaining fields can be left blank.
 ```
@@ -461,7 +461,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "kafka.api.secret": "<add_your_api_secret_key>",
     "aws.access.key.id": "<add_access_key_for_confluent-s3-demo-user>",
     "aws.secret.access.key": "<add_secret_access_key_for_confluent-s3-demo-user>",
-    "s3.bucket.name": "<bucket_name>",
+    "s3.bucket.name": "confluent-bucket-demo",
     "output.data.format": "JSON",
     "time.interval": "HOURLY",
     "flush.size": "1000",
@@ -505,7 +505,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 ---
 ## <a name="step16"></a>Step 13: Clean up resources
 Deleting the resources you created during this lab will prevent you from incurring additional charges.
-1. The first item to delete is the ksqlDB application. Select the Delete button under Actions and enter the Application Name to confirm the deletion.
+1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
 1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
 1. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
 1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
