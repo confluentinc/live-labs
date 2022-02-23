@@ -240,7 +240,7 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 ```
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-amazon-redshift-sink.html)
 
-8. Create an S3 bucket.
+8. Create an S3 bucket and name it `confluent-bucket-demo`.
 > The S3 has to be in same same region as your Confluent Cloud cluster. 
 9. Create an **IAM Policy** with the following configuration and name it `confluent-s3-demo-policy`.  
 ```
@@ -260,7 +260,7 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
             "s3:ListBucket",
             "s3:GetBucketLocation"
          ],
-         "Resource":"arn:aws:s3:::<bucket-name>"
+         "Resource":"arn:aws:s3:::confluent-bucket-demo"
       },
       {
          "Effect":"Allow",
@@ -273,8 +273,8 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 
          ],
          "Resource": [
-            "arn:aws:s3:::<bucket-name>",
-            "arn:aws:s3:::<bucket-name>/*"
+            "arn:aws:s3:::confluent-bucket-demo",
+            "arn:aws:s3:::confluent-bucket-demo/*"
           ]
       }
    ]
@@ -433,7 +433,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "transforms.Transform.spec": "DOB:string",
     "transforms.Transform2.type": "org.apache.kafka.connect.transforms.MaskField$Value",
     "transforms.Transform2.fields": "DOB",
-    "transforms.Transform2.replacement": "<xx-xx-xxxx>"
+    "transforms.Transform2.replacement": "<xxxx-xx-xx>"
   }
 }
 ```
@@ -461,7 +461,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "kafka.api.secret": "<add_your_api_secret_key>",
     "aws.access.key.id": "<add_access_key_for_confluent-s3-demo-user>",
     "aws.secret.access.key": "<add_secret_access_key_for_confluent-s3-demo-user>",
-    "s3.bucket.name": "<bucket_name>",
+    "s3.bucket.name": "confluent-bucket-demo",
     "output.data.format": "JSON",
     "time.interval": "HOURLY",
     "flush.size": "1000",

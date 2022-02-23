@@ -107,7 +107,7 @@ An environment contains Confluent clusters and its deployed components such as C
 ## <a name="step4"></a>Step 4: Enable Schema Registery
 1. On the navigation menu, select **Schema Registery**.
 1. Click **Set up on my own**.
-1. Choose **AWS** as the cloud provider and a supported **Region**
+1. Choose **GCP** as the cloud provider and a supported **Region**
 1. Click on **Enable Schema Registry**. 
 ---
 
@@ -216,7 +216,7 @@ An environment contains Confluent clusters and its deployed components such as C
 > You should have a valid project in Google Cloud in order to complete this lab. 
 3. Use the 3 dots next to your project name and click on **Create a new dataset** with following configuration. 
 ```
-Dataset ID: enriched-ratings
+Dataset ID: confluent-bigquery-demo
 Data location: same as your Confluent Cloud Cluster (in this lab us-west-4)
 ```
 4. Click on **CREATE DATASET**.
@@ -225,7 +225,7 @@ Data location: same as your Confluent Cloud Cluster (in this lab us-west-4)
 
 5. Create a **Cloud Storage** bucket with the following configuration and leave the remaining fields as default.
 ```
-Name: confluent-bucket
+Name: confluent-bucket-demo
 Location type: Region. Pick the same region as your Confluent Cloud cluster. (In this lab we use us-west-4).
 Storage class: Standard
 ```
@@ -235,7 +235,7 @@ Storage class: Standard
 
 7. Create a **BigTable** instance with the following configurations and leave the remaining fields as default.
 ```
-Instance name: confluent-bigtable
+Instance name: confluent-bigtable-demo
 Instance ID: <auto_generated>
 Storage type: SSD
 Location: Region. Pick the same region as your Confluent Cloud cluster. (In this lab we use us-west-4).
@@ -392,7 +392,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "transforms.Transform.spec": "DOB:string",
     "transforms.Transform3.type": "org.apache.kafka.connect.transforms.MaskField$Value",
     "transforms.Transform3.fields": "DOB",
-    "transforms.Transform3.replacement": "<xx-xx-xxxx>"
+    "transforms.Transform3.replacement": "<xxxx-xx-xx>"
   }
 }
 
