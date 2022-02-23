@@ -450,7 +450,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "kafka.api.secret": "<add_your_api_secret_key>",
     "gcp.bigtable.credentials.json": "<add_the_JSON_key_created_earlier>",
     "gcp.bigtable.project.id": "<add_your_gcp_project_id>",
-    "gcp.bigtable.instance.id": "confluent-bigtable",
+    "gcp.bigtable.instance.id": "confluent-bigtable-demo",
     "insert.mode": "UPSERT",
     "table.name.format": "confluent-${topic}",
     "bigtable.row.key.definition": "userid,regionid",
