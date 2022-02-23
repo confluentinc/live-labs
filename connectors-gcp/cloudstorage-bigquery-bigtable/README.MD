@@ -11,7 +11,7 @@ For this lab, we have two fictional companies.
   * The AI team wants to use real world data to train and test their AI models. They don't want to go and find this data, so we are providing the customer rating data to them in GCP Cloud Storage, which is a great solution to store large amounts of data for a long time.
 2. A media company: recently their userbase grew significantly and their database is struggling to keep up. They concluded that GCP BigTable, a highly scalable NoSQL database, is the right choice for them, so they are migrating their users' information to BigTable. 
 
-To keep things simple, we will utlize Datagen Source Connector to generate both **ratings** and **users** data ourseleves. Additionally, we will use MySQL CDC Source Connecter, GCP BigQuery, Cloud Storage, and BigTable fully-managed connectors.  
+To keep things simple, we will utilize Datagen Source Connector to generate both **ratings** and **users** data ourseleves. Additionally, we will use MySQL CDC Source Connecter, GCP BigQuery, Cloud Storage, and BigTable fully-managed connectors.  
 
 ---
 
@@ -79,7 +79,7 @@ This lab will be utilizing two fully-managed source connectors (Datagen and MySQ
 An environment contains Confluent clusters and its deployed components such as Connect, ksqlDB, and Schema Registry. You have the ability to create different environments based on your company's requirements. Confluent has seen companies use environments to separate Development/Testing, Pre-Production, and Production clusters.
 
 1. Click **+ Add environment**.
-    > **Note:** There is a *default* environment ready in your account upon account creation. You can use this *default* environment for the purpose of this workshop if you do not wish to create an additional environment.
+    > **Note:** There is a *default* environment ready in your account upon account creation. You can use this *default* environment for the purpose of this lab if you do not wish to create an additional environment.
 
     * Specify a meaningful `name` for your environment and then click **Create**.
         > **Note:** It will take a few minutes to assign the resources to make this new environment available for use.
@@ -141,7 +141,7 @@ An environment contains Confluent clusters and its deployed components such as C
     "connector.class": "DatagenSource",
     "name": "DatagenSourceConnector_0",
     "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.key": "<add_your_api_key>",
     "kafka.api.secret": "<add_your_api_secret_key>",
     "kafka.topic": "ratings",
     "output.data.format": "AVRO",
@@ -168,7 +168,7 @@ An environment contains Confluent clusters and its deployed components such as C
     "connector.class": "MySqlCdcSource",
     "name": "MySqlCdcSourceConnector_0",
     "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.key": "<add_your_api_key>",
     "kafka.api.secret": "<add_your_api_secret_key>",
     "database.hostname": "<will_be_given_during_lab>",
     "database.port": "3306",
@@ -200,7 +200,7 @@ An environment contains Confluent clusters and its deployed components such as C
     "connector.class": "DatagenSource",
     "name": "DatagenSourceConnector_0",
     "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<dd_your_api_key>",
+    "kafka.api.key": "<add_your_api_key>",
     "kafka.api.secret": "<add_your_api_secret_key>",
     "kafka.topic": "users",
     "output.data.format": "AVRO",
@@ -217,7 +217,7 @@ An environment contains Confluent clusters and its deployed components such as C
 3. Use the 3 dots next to your project name and click on **Create a new dataset** with following configuration. 
 ```
 Dataset ID: confluent-bigquery-demo
-Data location: same as your Confluent Cloud Cluster (in this lab us-west-4)
+Data location: same as your Confluent Cloud Cluster (in this lab us-west-4).
 ```
 4. Click on **CREATE DATASET**.
 
@@ -226,7 +226,7 @@ Data location: same as your Confluent Cloud Cluster (in this lab us-west-4)
 5. Create a **Cloud Storage** bucket with the following configuration and leave the remaining fields as default.
 ```
 Name: confluent-bucket-demo
-Location type: Region. Pick the same region as your Confluent Cloud cluster. (In this lab we use us-west-4).
+Location type: Region. Pick the same region as your Confluent Cloud cluster (In this lab we use us-west-4).
 Storage class: Standard
 ```
 6. Click on **CREATE**.
@@ -238,13 +238,13 @@ Storage class: Standard
 Instance name: confluent-bigtable-demo
 Instance ID: <auto_generated>
 Storage type: SSD
-Location: Region. Pick the same region as your Confluent Cloud cluster. (In this lab we use us-west-4).
+Location: Region. Pick the same region as your Confluent Cloud cluster (In this lab we use us-west-4).
 ```
 8. Click on **CREATE**.
 
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-gcp-bigtable-sink.html)
 
-9. You need to create a GCP account so the Confluent Connectors can access GCP resources. For the purpose of this lab, we will create 1 account and assign 3 roles to it. However, you should always follow best practices for production workloads. 
+9. You need to create a GCP Service Account so the Confluent Connectors can access GCP resources. For the purpose of this lab, we will create 1 Service Account and assign 3 roles to it. However, you should always follow best practices for production workloads. 
 
 10. Use the search bar and search for **IAM & Admin** and click on the result.  
 
@@ -320,7 +320,7 @@ WITH (KAFKA_TOPIC ='mysql.demo.CUSTOMERS_INFO',
       KEY_FORMAT  ='JSON',
       VALUE_FORMAT='AVRO');
 ```
-9. Create **customers** table based on **customers_information** stream you just created. 
+9. Create `customers` table based on `customers_information` stream you just created. 
 ```SQL
 CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     SELECT id                            AS customer_id,
@@ -333,9 +333,9 @@ CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     FROM    CUSTOMERS_INFORMATION 
     GROUP BY id;
 ```
-10. Check to see what's inside the **customers** table by running the following query. 
+10. Check to see what's inside the `customers` table by running the following query. 
 ```SQL
-SELECT * FROM CUSTOMERS_INFORMATION;
+SELECT * FROM CUSTOMERS;
 ```
 
 11. Now that we have a stream of ratings data and customer information, we can perform a join query to enrich our data stream. 
@@ -405,7 +405,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 8. The instructor will show you how to query the BigQuery database and verify the data exist. 
 ---
 ## <a name="step14"></a>Step 11: Connect Cloud Storage sink to Confluent Cloud
-1. For this use case we only want to store the ratings_live stream in Cloud Storage and not the customers' information. 
+1. For this use case we only want to store the `ratings_live` stream in Cloud Storage and not the customers' information. 
 2. Use the left handside menu and navigate to **Data Integration** and go to **Connectors**. Click on **+Add connector**. Search for **Google Cloud Storage Sink** and click on the Google Cloud Storage Sink icon.
 3. Enter the following configuration details. The remaining fields can be left blank.
 ```
@@ -420,7 +420,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "kafka.api.key": "<add_your_api_key>",
     "kafka.api.secret": "<add_your_api_secret_key>",
     "gcs.credentials.config": "<add_the_JSON_key_created_earlier>”,
-    "gcs.bucket.name": "<add_you_bucket_name>",
+    "gcs.bucket.name": "confluent-bucket-demo",
     "output.data.format": "JSON",
     "time.interval": "HOURLY",
     "flush.size": "1000",
@@ -470,7 +470,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 ---
 ## <a name="step16"></a>Step 13: Clean up resources
 Deleting the resources you created during this lab will prevent you from incurring additional charges.
-1. The first item to delete is the ksqlDB application. Select the Delete button under Actions and enter the Application Name to confirm the deletion.
+1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
 1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
 1. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
 1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
