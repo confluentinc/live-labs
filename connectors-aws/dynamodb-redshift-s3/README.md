@@ -155,7 +155,7 @@ An environment contains Confluent clusters and its deployed components such as C
 1. On the navigation menu, select **Topics**.
 > Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
 2. Type **mysql.demo.CUSTOMERS_INFO** as the Topic name. The name of the topic is crucial so make sure you use the exact name and capitalization. 
-3. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and then click on **Create**.
+3. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and **Retention time → Indefinite** and then click on **Create**.
 ---
 ## <a name="step9"></a>Step 5: Create a MySQL CDC Source connector
 1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
