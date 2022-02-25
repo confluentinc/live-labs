@@ -204,7 +204,7 @@ An environment contains Confluent clusters and its deployed components such as C
     "kafka.api.secret": "<add_your_api_secret_key>",
     "kafka.topic": "users",
     "output.data.format": "AVRO",
-    "quickstart": "RATINGS",
+    "quickstart": "USERS",
     "tasks.max": "1"
   }
 }
@@ -213,11 +213,13 @@ An environment contains Confluent clusters and its deployed components such as C
 ## <a name="step11"></a>Step 8: Create AWS services
 1. Navigate to https://aws.amazon.com/console/ and log into your account. 
 > Note: you will need root level permissions in order to complete this lab. 
-2. Create a Redshift cluster and save the `Admin user name` and `Admin user password` since you will need it in later steps. 
+
+### Redshift
+1. Create a Redshift cluster and save the `Admin user name` and `Admin user password` since you will need it in later steps. 
 > The Redshift cluster has to be in same same region as your Confluent Cloud cluster. 
-3. Under **Additional configuration** disable **defaults**. 
-4. Make the cluster publicly accessible under **Network and security → Publicly accessible → Enable**.
-5. Using the search bar navigate to **VPC -> Security Groups -> Inbound Rules** and add two new rules for TCP protocol
+2. Under **Additional configuration** disable **defaults**. 
+3. Make the cluster publicly accessible under **Network and security → Publicly accessible → Enable**.
+4. Using the search bar navigate to **VPC -> Security Groups -> Inbound Rules** and add two new rules for TCP protocol
 ```
 Type: Redshift
 Port range: 5430 
@@ -227,8 +229,8 @@ Type: Redshift
 Port range: 5430 
 Source: ::/0
 ```
-6. Navigate back to your Redshift cluster and reboot it to ensure the right security policies are applied. 
-7. Once the cluster is in **Available** state use the left handside menu and open `Query Editor v2` to create a database and a user and give the appropriate permissions. 
+5. Navigate back to your Redshift cluster and reboot it to ensure the right security policies are applied. 
+6. Once the cluster is in **Available** state use the left handside menu and open `Query Editor v2` to create a database and a user and give the appropriate permissions. 
 ```SQL
 CREATE DATABASE <DB_NAME>;
 CREATE USER <DB_USER> PASSWORD '<DB_PASSWORD>';
@@ -240,9 +242,12 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 ```
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-amazon-redshift-sink.html)
 
-8. Create an S3 bucket and name it `confluent-bucket-demo`.
+### S3
+1. Create an S3 bucket and name it `confluent-bucket-demo`.
 > The S3 has to be in same same region as your Confluent Cloud cluster. 
-9. Create an **IAM Policy** with the following configuration and name it `confluent-s3-demo-policy`.  
+
+### IAM Policy and User
+1. Create an **IAM Policy** with the following configuration and name it `confluent-s3-demo-policy`.  
 ```
 {
    "Version":"2012-10-17",
@@ -280,15 +285,15 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
    ]
 }
 ```
-10. Create an **IAM User** and name it `confluent-s3-demo-user`. and attach the above policy to it. 
+2. Create an **IAM User** and name it `confluent-s3-demo-user`. and attach the above policy to it. 
 
-11. Attach `confluent-s3-demo-policy` policy to `confluent-s3-demo-user` user. 
+3. Attach `confluent-s3-demo-policy` policy to `confluent-s3-demo-user` user. 
 
-12. Create a key pair for `confluent-s3-demo-user` user and download the file to use it in later steps. 
+4. Create a key pair for `confluent-s3-demo-user` user and download the file to use it in later steps. 
 
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-s3-sink.html)
 
-13. Create a new **IAM Policy** with the following configurations and name it `confluent-dynamodb-demo-policy`. 
+5. Create a new **IAM Policy** with the following configurations and name it `confluent-dynamodb-demo-policy`. 
 ```
 {
     "Version": "2012-10-17",
@@ -308,11 +313,11 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 }
 ```
 
-14. Create another **IAM User** and name it `confluent-dynamodb-demo-user`. This one will be used for DynamoDB.
+6. Create another **IAM User** and name it `confluent-dynamodb-demo-user`. This one will be used for DynamoDB.
 
-15. Attach `confluent-dynamodb-demo-policy` policy to `confluent-dynamodb-demo-user` user. 
+7. Attach `confluent-dynamodb-demo-policy` policy to `confluent-dynamodb-demo-user` user. 
 
-16. Create a key pair for `confluent-dynamodb-demo-user` user and download the file to use it in later steps.
+8. Create a key pair for `confluent-dynamodb-demo-user` user and download the file to use it in later steps.
 
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-amazon-dynamo-db-sink.html)
 ---

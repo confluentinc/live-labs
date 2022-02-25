@@ -204,64 +204,72 @@ An environment contains Confluent clusters and its deployed components such as C
     "kafka.api.secret": "<add_your_api_secret_key>",
     "kafka.topic": "users",
     "output.data.format": "AVRO",
-    "quickstart": "RATINGS",
+    "quickstart": "USERS",
     "tasks.max": "1"
   }
 }
 ```
 ---
 ## <a name="step11"></a>Step 8: Create GCP services
+
+### BigQuery
 1. Navigate to https://console.cloud.google.com and log into your account. 
 2. Use the search bar and search for **BigQuery**
 > You should have a valid project in Google Cloud in order to complete this lab. 
 3. Use the 3 dots next to your project name and click on **Create a new dataset** with following configuration. 
 ```
-Dataset ID: confluent-bigquery-demo
+Dataset ID: confluent_bigquery_demo
 Data location: same as your Confluent Cloud Cluster (in this lab us-west-4).
 ```
 4. Click on **CREATE DATASET**.
 
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-gcp-bigquery-sink.html).
 
-5. Create a **Cloud Storage** bucket with the following configuration and leave the remaining fields as default.
+### Cloud Storage
+
+1. Create a **Cloud Storage** bucket with the following configuration and leave the remaining fields as default.
 ```
 Name: confluent-bucket-demo
 Location type: Region. Pick the same region as your Confluent Cloud cluster (In this lab we use us-west-4).
 Storage class: Standard
 ```
-6. Click on **CREATE**.
+2. Click on **CREATE**.
 
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-gcs-sink.html).
 
-7. Create a **BigTable** instance with the following configurations and leave the remaining fields as default.
+### BigTable
+
+1. Create a **BigTable** instance with the following configurations and leave the remaining fields as default.
 ```
 Instance name: confluent-bigtable-demo
 Instance ID: <auto_generated>
 Storage type: SSD
 Location: Region. Pick the same region as your Confluent Cloud cluster (In this lab we use us-west-4).
 ```
-8. Click on **CREATE**.
+2. Click on **CREATE**.
 
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-gcp-bigtable-sink.html)
 
-9. You need to create a GCP Service Account so the Confluent Connectors can access GCP resources. For the purpose of this lab, we will create 1 Service Account and assign 3 roles to it. However, you should always follow best practices for production workloads. 
+### Service Accounts
 
-10. Use the search bar and search for **IAM & Admin** and click on the result.  
+1. You need to create a GCP Service Account so the Confluent Connectors can access GCP resources. For the purpose of this lab, we will create 1 Service Account and assign 3 roles to it. However, you should always follow best practices for production workloads. 
 
-11. Expand the left hand side menu and go to Service Accounts and click on the **Create Service Account** and enter the following 
+2. Use the search bar and search for **IAM & Admin** and click on the result.  
+
+3. Expand the left hand side menu and go to Service Accounts and click on the **Create Service Account** and enter the following 
 ```
 Service account name: confluent-demo 
 Description: Account to be used during Confluent Cloud Live Lab
 Role: BigQuery Admin, Bigtable Administrator, Storage Admin
 ```
 
-12. Click **Grant** and then **Done**.
+4. Click **Grant** and then **Done**.
 
-13. Once the account is created, click on the 3 dots in **Actions** columns and hit **Manage Keys**.
+5. Once the account is created, click on the 3 dots in **Actions** columns and hit **Manage Keys**.
 
-14. Click on **Add Key** and then on **Create a new key**. 
+6. Click on **Add Key** and then on **Create a new key**. 
 
-15. Select `JSON` as key type. Keep this key somewhere safe as you will need it in later steps. The key resembles the example below:
+7. Select `JSON` as key type. Keep this key somewhere safe as you will need it in later steps. The key resembles the example below:
 ```
 {
  "type": "service_account",
@@ -383,7 +391,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "kafka.api.secret": "<add_your_api_secret_key>",
     "keyfile": "<add_the_JSON_key_created_earlier>",
     "project": "<add_your_gcp_project_id>",
-    "datasets": "enriched_ratings",
+    "datasets": "confluent_bigquery_demo",
     "auto.create.tables": "true",
     "auto.update.schemas": "true",
     "tasks.max": "1",
