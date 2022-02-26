@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CloudStorage Bigquery Bigtable on Confluent Live Labs</title>
-    <link>/gcp/cloudstorage-bigquery-bigtable/</link>
+    <link>https://chuck-confluent.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/</link>
     <description>Recent content in CloudStorage Bigquery Bigtable on Confluent Live Labs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Feb 2022 06:28:04 +0000</lastBuildDate><atom:link href="/gcp/cloudstorage-bigquery-bigtable/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Feb 2022 06:28:04 +0000</lastBuildDate><atom:link href="https://chuck-confluent.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

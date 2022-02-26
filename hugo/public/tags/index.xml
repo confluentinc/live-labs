@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Confluent Live Labs</title>
-    <link>/tags/</link>
+    <link>https://chuck-confluent.github.io/live-labs/tags/</link>
     <description>Recent content in Tags on Confluent Live Labs</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://chuck-confluent.github.io/live-labs/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
