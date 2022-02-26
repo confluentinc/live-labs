@@ -18,7 +18,7 @@
 	"title": "",
 	"tags": [],
 	"description": "",
-	"content": "Confluent Live Labs "
+	"content": "Confluent Live Labs ![banner]( {{ \u0026ldquo;/images/banner.png\u0026rdquo; | absURL }})\n"
 },
 {
 	"uri": "https://chuck-confluent.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/",
