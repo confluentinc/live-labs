@@ -1,6 +1,7 @@
 baseURL = 'https://chuck-confluent.github.io/live-labs/'
 languageCode = 'en-us'
 title = 'Confluent Live Labs'
+canonifyURLs = true
 
 theme = "hugo-theme-learn"
 

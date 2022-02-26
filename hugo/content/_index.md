@@ -1,3 +1,3 @@
 # Confluent Live Labs
 
-![banner]( {{ "/images/banner.png" | absURL }})
+![banner](/images/banner.png)
