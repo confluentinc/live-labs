@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Confluent Live Labs</title>
+    <link>/</link>
+    <description>Recent content on Confluent Live Labs</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 26 Feb 2022 06:28:04 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Test</title>
+      <link>/aws/test/</link>
+      <pubDate>Sat, 26 Feb 2022 04:24:38 +0000</pubDate>
+      
+      <guid>/aws/test/</guid>
+      <description>Hello hello</description>
+    </item>
+    
+    <item>
+      <title>Build An End-to-End Streaming Data Pipeline with Confluent Cloud</title>
+      <link>/aws/dynamodb-redshift-s3/</link>
+      <pubDate>Sat, 26 Feb 2022 04:19:59 +0000</pubDate>
+      
+      <guid>/aws/dynamodb-redshift-s3/</guid>
+      <description>Agenda  Log into Confluent Cloud Create an environment and cluster Create an API key pair Enable Schema registery Create a ksqlDB application Create &amp;ldquo;ratings&amp;rdquo; topic Create a Datagen Source connector Create customers topic Create a MySQL CDC Source connector Create &amp;ldquo;users&amp;rdquo; topic Create a Datagen Source connector Create AWS services Enrich data streams with ksqlDB Connect Redshift sink to Confluent Cloud Connect S3 sink to Confluent Cloud Connect DynamoDB sink to Confluent Cloud Clean up resources   Architecture Diagram This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB).</description>
+    </item>
+    
+  </channel>
+</rss>
