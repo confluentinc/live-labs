@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gcp on Confluent Live Labs</title>
+    <link>/gcp/</link>
+    <description>Recent content in Gcp on Confluent Live Labs</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 26 Feb 2022 04:49:32 +0000</lastBuildDate><atom:link href="/gcp/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>
