@@ -8,7 +8,7 @@
 
 
     <link rel="shortcut icon" href="https://confluentinc.github.io/live-labs/images/favicon.png" type="image/x-icon" />
-    <title> :: Confluent Live Labs</title>
+    <title>AWS :: Confluent Live Labs</title>
 
     
     <link href="https://confluentinc.github.io/live-labs/css/nucleus.css?1646074555" rel="stylesheet">
@@ -36,7 +36,7 @@
     </style>
     
   </head>
-  <body class="" data-url="https://confluentinc.github.io/live-labs/">
+  <body class="" data-url="https://confluentinc.github.io/live-labs/aws/">
     <nav id="sidebar" class="">
 
 
@@ -155,6 +155,44 @@
       </a>
       
       
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/gcp/cloudstorage-bigquery-bigtable/" title="CloudStorage Bigquery Bigtable" class="dd-item
+        
+        
+        
+        ">
+      <a href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/">
+          CloudStorage Bigquery Bigtable
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
     </li>
   
  
@@ -169,8 +207,8 @@
   
     
     <li data-nav-id="/aws/" title="AWS" class="dd-item
-        
-        
+        parent
+        active
         
         ">
       <a href="https://confluentinc.github.io/live-labs/aws/">
@@ -178,6 +216,58 @@
           
       </a>
       
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/aws/test/" title="Test" class="dd-item ">
+        <a href="https://confluentinc.github.io/live-labs/aws/test/">
+        Test
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/aws/dynamodb-redshift-s3/" title="Build An End-to-End Streaming Data Pipeline with Confluent Cloud" class="dd-item ">
+        <a href="https://confluentinc.github.io/live-labs/aws/dynamodb-redshift-s3/">
+        Build An End-to-End Streaming Data Pipeline with Confluent Cloud
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
       
     </li>
   
@@ -205,25 +295,78 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
               
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            <a href='https://confluentinc.github.io/live-labs/'></a> > AWS
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+              </div>
+            </div>
+            
         <div id="head-tags">
         
         </div>
+        
+          <div id="chapter">
         
         <div id="body-inner">
           
 
         
 
-<span id="sidebar-toggle-span">
-<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
-</span>
 
- 
-<h1 id="confluent-live-labs">Confluent Live Labs</h1>
+
+	<h3 id="aws">AWS</h3>
+<h1 id="build-an-end-to-end-streaming-data-pipeline-with-confluent-cloud">Build An End-to-End Streaming Data Pipeline with Confluent Cloud</h1>
 <p><img src="https://confluentinc.github.io/live-labs/images/banner.png" alt="banner"></p>
-<p>test</p>
+<p>For this lab, we have two fictional companies.</p>
+<ol>
+<li>An airline company: stores customer information in a MySQL database. It also has a website that customers can submit feedback in real time.</li>
+</ol>
+<ul>
+<li>The analytics team decided to use AWS Redshift, a Cloud Data Warehouse. They want to be able to react to customers feedback as they become availabe. For example if a customer with Platinum club status had a bad experience, they want to reach out to them and sort things out. This team doesn&rsquo;t want to go to two different sources to get their data, they want the data to become available to them in a format and location they decided is the right choice for them.</li>
+<li>The AI team wants to use real world data to train and test their AI models. They don&rsquo;t want to go and find this data, so we are providing the customer rating data to them in AWS S3, which is a great solution to store large amounts of data for a long time.</li>
+</ul>
+<ol start="2">
+<li>A media company: recently their userbase grew significantly and their database is struggling to keep up. They concluded that AWS DynamoDB, a highly scalable NoSQL database, is the right choice for them, so they are migrating their users&rsquo; information to DynamoDB.</li>
+</ol>
+<p>To keep things simple, we will utilize Datagen Source Connector to generate both <strong>ratings</strong> and <strong>users</strong> data ourseleves. Additionally, we will use MySQL CDC Source Connecter, AWS Redshift, S3, and DynamoDB Sink fully-managed connectors.</p>
+
+
+
+
+
+<footer class=" footline" >
 	
-  
+</footer>
+
+        
+            </div> 
         
         </div>
         
@@ -263,6 +406,57 @@
 
                     
                     
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
                     
 
                     
@@ -287,6 +481,9 @@
                     
             
         
+                    
+            
+        
 
         
 
@@ -294,8 +491,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/" title="CloudStorage Bigquery Bigtable"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="https://confluentinc.github.io/live-labs/gcp/" title="Gcp" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="https://confluentinc.github.io/live-labs/aws/test/" title="Test" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -327,4 +526,3 @@
 
   </body>
 </html>
-
