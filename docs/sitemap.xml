@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://chuck-confluent.github.io/live-labs/gcp/</loc>
+    <lastmod>2022-02-26T04:49:32+00:00</lastmod>
+  </url><url>
+    <loc>https://chuck-confluent.github.io/live-labs/aws/</loc>
+    <lastmod>2022-02-26T04:16:06+00:00</lastmod>
+  </url><url>
+    <loc>https://chuck-confluent.github.io/live-labs/</loc>
+    <lastmod>2022-02-26T06:28:04+00:00</lastmod>
+    <priority>0</priority>
+  </url><url>
+    <loc>https://chuck-confluent.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/</loc>
+    <lastmod>2022-02-26T06:28:04+00:00</lastmod>
+  </url><url>
+    <loc>https://chuck-confluent.github.io/live-labs/aws/test/</loc>
+    <lastmod>2022-02-26T04:24:38+00:00</lastmod>
+  </url><url>
+    <loc>https://chuck-confluent.github.io/live-labs/aws/dynamodb-redshift-s3/</loc>
+    <lastmod>2022-02-26T04:19:59+00:00</lastmod>
+  </url><url>
+    <loc>https://chuck-confluent.github.io/live-labs/categories/</loc>
+  </url><url>
+    <loc>https://chuck-confluent.github.io/live-labs/tags/</loc>
+  </url>
+</urlset>
