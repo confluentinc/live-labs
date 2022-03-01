@@ -6,46 +6,7 @@
     <description>Recent content on Confluent Live Labs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Feb 2022 15:47:59 -0800</lastBuildDate><atom:link href="https://confluentinc.github.io/live-labs/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Architecture Diagrams</title>
-      <link>https://confluentinc.github.io/live-labs/aws/architecture/</link>
-      <pubDate>Mon, 28 Feb 2022 14:35:58 -0800</pubDate>
-      
-      <guid>https://confluentinc.github.io/live-labs/aws/architecture/</guid>
-      <description>This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB).
-FictionAir FictionMedia </description>
-    </item>
-    
-    <item>
-      <title>Prerequisites</title>
-      <link>https://confluentinc.github.io/live-labs/aws/prerequisites/</link>
-      <pubDate>Mon, 28 Feb 2022 14:38:56 -0800</pubDate>
-      
-      <guid>https://confluentinc.github.io/live-labs/aws/prerequisites/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Prerequisites</title>
-      <link>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/preprequisites/</link>
-      <pubDate>Mon, 28 Feb 2022 15:45:33 -0800</pubDate>
-      
-      <guid>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/preprequisites/</guid>
-      <description>Sign up for Confluent Cloud Account   Sign up for a Confluent Cloud account here.
-  Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing &amp;amp; payment”, then enter payment details under “Payment details &amp;amp; contacts”.
-   Note: You will create resources during this lab that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud.</description>
-    </item>
-    
-    <item>
-      <title>Test</title>
-      <link>https://confluentinc.github.io/live-labs/aws/test/</link>
-      <pubDate>Sat, 26 Feb 2022 04:24:38 +0000</pubDate>
-      
-      <guid>https://confluentinc.github.io/live-labs/aws/test/</guid>
-      <description>Hello hello</description>
-    </item>
-    
+    <lastBuildDate>Mon, 28 Feb 2022 20:03:59 -0800</lastBuildDate><atom:link href="https://confluentinc.github.io/live-labs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Architecture Diagrams</title>
       <link>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/architecture-diagrams/</link>
@@ -59,12 +20,72 @@ BigTable    FictionAir FictionMedia </description>
     </item>
     
     <item>
+      <title>Architecture Diagrams</title>
+      <link>https://confluentinc.github.io/live-labs/aws/architecture/</link>
+      <pubDate>Mon, 28 Feb 2022 14:35:58 -0800</pubDate>
+      
+      <guid>https://confluentinc.github.io/live-labs/aws/architecture/</guid>
+      <description>This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB).
+FictionAir FictionMedia </description>
+    </item>
+    
+    <item>
+      <title>Prerequisites</title>
+      <link>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/preprequisites/</link>
+      <pubDate>Mon, 28 Feb 2022 15:45:33 -0800</pubDate>
+      
+      <guid>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/preprequisites/</guid>
+      <description>Test Network Connectivity  Ports 443 and 9092 need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:   http://portquiz.net:443 http://portquiz.net:9092  Sign up for GCP account  In order to complete this lab, you need to have a GCP account. Sign up for an account here: https://cloud.google.com/  Confluent Cloud &amp;ndash; Sign Up and Create Resources Sign Up   Sign up for a Confluent Cloud account: https://www.</description>
+    </item>
+    
+    <item>
+      <title>Prerequisites</title>
+      <link>https://confluentinc.github.io/live-labs/aws/prerequisites/</link>
+      <pubDate>Mon, 28 Feb 2022 14:38:56 -0800</pubDate>
+      
+      <guid>https://confluentinc.github.io/live-labs/aws/prerequisites/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hands-on Lab</title>
+      <link>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/hands-on-lab/</link>
+      <pubDate>Mon, 28 Feb 2022 19:23:00 -0800</pubDate>
+      
+      <guid>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/hands-on-lab/</guid>
+      <description>Welcome to the live session!
+Step 1: Create a ksqlDB application  At Confluent we developed ksqlDB, the database purpose-built for stream processing applications. ksqlDB is built on top of Kafka Streams, powerful Java library for enriching, transforming, and processing real-time streams of data. Having Kafka Streams at its core means ksqlDB is built on well-designed and easily understood layers of abstractions. So now, beginners and experts alike can easily unlock and fully leverage the power of Kafka in a fun and accessible way.</description>
+    </item>
+    
+    <item>
+      <title>Test</title>
+      <link>https://confluentinc.github.io/live-labs/aws/test/</link>
+      <pubDate>Sat, 26 Feb 2022 04:24:38 +0000</pubDate>
+      
+      <guid>https://confluentinc.github.io/live-labs/aws/test/</guid>
+      <description>Hello hello</description>
+    </item>
+    
+    <item>
+      <title>References</title>
+      <link>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/references/</link>
+      <pubDate>Mon, 28 Feb 2022 20:03:59 -0800</pubDate>
+      
+      <guid>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/references/</guid>
+      <description>Here are some links to check out if you are interested in further learning:
+Confluent Developer Website https://developer.confluent.io/
+Confluent Cloud Basics https://docs.confluent.io/cloud/current/client-apps/cloud-basics.html
+Quickstart with Confluent Cloud https://docs.confluent.io/cloud/current/get-started/index.html
+Confluent Cloud ksqlDB Quickstart https://docs.confluent.io/cloud/current/get-started/ksql.html</description>
+    </item>
+    
+    <item>
       <title>Build An End-to-End Streaming Data Pipeline with Confluent Cloud</title>
       <link>https://confluentinc.github.io/live-labs/aws/dynamodb-redshift-s3/</link>
       <pubDate>Sat, 26 Feb 2022 04:19:59 +0000</pubDate>
       
       <guid>https://confluentinc.github.io/live-labs/aws/dynamodb-redshift-s3/</guid>
-      <description>Agenda  Log into Confluent Cloud Create an environment and cluster Create an API key pair Enable Schema registery Create a ksqlDB application Create &amp;ldquo;ratings&amp;rdquo; topic Create a Datagen Source connector Create customers topic Create a MySQL CDC Source connector Create &amp;ldquo;users&amp;rdquo; topic Create a Datagen Source connector Create AWS services Enrich data streams with ksqlDB Connect Redshift sink to Confluent Cloud Connect S3 sink to Confluent Cloud Connect DynamoDB sink to Confluent Cloud Clean up resources   Architecture Diagram This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB).</description>
+      <description>Agenda  Log into Confluent Cloud Create an environment and cluster Create an API key pair Enable Schema registery Create a ksqlDB application Create &amp;amp;ldquo;ratings&amp;amp;rdquo; topic Create a Datagen Source connector Create customers topic Create a MySQL CDC Source connector Create &amp;amp;ldquo;users&amp;amp;rdquo; topic Create a Datagen Source connector Create AWS services Enrich data streams with ksqlDB Connect Redshift sink to Confluent Cloud Connect S3 sink to Confluent Cloud Connect DynamoDB sink to Confluent Cloud Clean up resources   Architecture Diagram This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB).</description>
     </item>
     
   </channel>

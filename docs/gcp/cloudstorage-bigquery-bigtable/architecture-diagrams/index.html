@@ -8,7 +8,7 @@
 
 
     <link rel="shortcut icon" href="https://confluentinc.github.io/live-labs/images/favicon.png" type="image/x-icon" />
-    <title>Prerequisites :: Confluent Live Labs</title>
+    <title>Architecture Diagrams :: Confluent Live Labs</title>
 
     
     <link href="https://confluentinc.github.io/live-labs/css/nucleus.css?1646107932" rel="stylesheet">
@@ -36,7 +36,7 @@
     </style>
     
   </head>
-  <body class="" data-url="https://confluentinc.github.io/live-labs/aws/prerequisites/">
+  <body class="" data-url="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/architecture-diagrams/">
     <nav id="sidebar" class="">
 
 
@@ -145,7 +145,7 @@
   
     
     <li data-nav-id="/gcp/" title="GCP" class="dd-item
-        
+        parent
         
         
         ">
@@ -174,7 +174,7 @@
   
     
     <li data-nav-id="/gcp/cloudstorage-bigquery-bigtable/" title="Build An End-to-End Streaming Data Pipeline with Confluent Cloud" class="dd-item
-        
+        parent
         
         
         ">
@@ -200,7 +200,7 @@
  
   
     
-      <li data-nav-id="/gcp/cloudstorage-bigquery-bigtable/architecture-diagrams/" title="Architecture Diagrams" class="dd-item ">
+      <li data-nav-id="/gcp/cloudstorage-bigquery-bigtable/architecture-diagrams/" title="Architecture Diagrams" class="dd-item active">
         <a href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/architecture-diagrams/">
         Architecture Diagrams
         
@@ -301,7 +301,7 @@
   
     
     <li data-nav-id="/aws/" title="AWS" class="dd-item
-        parent
+        
         
         
         ">
@@ -310,100 +310,6 @@
           
       </a>
       
-      
-        <ul>
-          
-          
-          
-
-        
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/aws/architecture/" title="Architecture Diagrams" class="dd-item ">
-        <a href="https://confluentinc.github.io/live-labs/aws/architecture/">
-        Architecture Diagrams
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/aws/prerequisites/" title="Prerequisites" class="dd-item active">
-        <a href="https://confluentinc.github.io/live-labs/aws/prerequisites/">
-        Prerequisites
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/aws/test/" title="Test" class="dd-item ">
-        <a href="https://confluentinc.github.io/live-labs/aws/test/">
-        Test
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/aws/dynamodb-redshift-s3/" title="Build An End-to-End Streaming Data Pipeline with Confluent Cloud" class="dd-item ">
-        <a href="https://confluentinc.github.io/live-labs/aws/dynamodb-redshift-s3/">
-        Build An End-to-End Streaming Data Pipeline with Confluent Cloud
-        
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-        
-        </ul>
       
     </li>
   
@@ -469,7 +375,13 @@
             
           
           
-            <a href='https://confluentinc.github.io/live-labs/'></a> > <a href='https://confluentinc.github.io/live-labs/aws/'>AWS</a> > Prerequisites
+            
+            
+          
+          
+            <a href='https://confluentinc.github.io/live-labs/'></a> > <a href='https://confluentinc.github.io/live-labs/gcp/'>GCP</a> > <a href='https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/'>Build An End-to-End Streaming Data Pipeline with Confluent Cloud</a> > Architecture Diagrams
+          
+        
           
         
           
@@ -482,7 +394,12 @@
                 
                     <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents"></nav>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#fictionair">FictionAir</a></li>
+    <li><a href="#fictionmedia">FictionMedia</a></li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -498,13 +415,33 @@
           
             <h1>
               
-              Prerequisites
+              Architecture Diagrams
             </h1>
           
 
         
 
 
+<table>
+<thead>
+<tr>
+<th>Source Connectors</th>
+<th>Sink Connectors</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Datagen<br>MySQL CDC</td>
+<td>
+BigQuery<br>Cloud Storage<br>BigTable</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fictionair">FictionAir</h2>
+<p><img src="https://confluentinc.github.io/live-labs/images/LiveLabs-GCP_BigQuery-CloudStorage.png" alt=""></p>
+<h2 id="fictionmedia">FictionMedia</h2>
+<p><img src="https://confluentinc.github.io/live-labs/images/LiveLabs-GCP_BigTable.png" alt=""></p>
 
 
 <footer class="footline">
@@ -542,8 +479,6 @@
             
                 
                     
-                        
-                        
                     
                 
                 
@@ -560,18 +495,6 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -580,96 +503,6 @@
                     
                     
 
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
                     
                         
             
@@ -722,6 +555,41 @@
                     
             
         
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
                     
             
         
@@ -735,10 +603,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="https://confluentinc.github.io/live-labs/aws/architecture/" title="Architecture Diagrams"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/" title="Build An End-to-End Streaming Data Pipeline with Confluent Cloud"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="https://confluentinc.github.io/live-labs/aws/test/" title="Test" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/preprequisites/" title="Prerequisites" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

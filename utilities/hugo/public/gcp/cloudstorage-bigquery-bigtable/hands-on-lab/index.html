@@ -8,7 +8,7 @@
 
 
     <link rel="shortcut icon" href="https://confluentinc.github.io/live-labs/images/favicon.png" type="image/x-icon" />
-    <title>Build An End-to-End Streaming Data Pipeline with Confluent Cloud :: Confluent Live Labs</title>
+    <title>Hands-on Lab :: Confluent Live Labs</title>
 
     
     <link href="https://confluentinc.github.io/live-labs/css/nucleus.css?1646107932" rel="stylesheet">
@@ -36,7 +36,7 @@
     </style>
     
   </head>
-  <body class="" data-url="https://confluentinc.github.io/live-labs/aws/dynamodb-redshift-s3/">
+  <body class="" data-url="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/hands-on-lab/">
     <nav id="sidebar" class="">
 
 
@@ -145,7 +145,7 @@
   
     
     <li data-nav-id="/gcp/" title="GCP" class="dd-item
-        
+        parent
         
         
         ">
@@ -174,7 +174,7 @@
   
     
     <li data-nav-id="/gcp/cloudstorage-bigquery-bigtable/" title="Build An End-to-End Streaming Data Pipeline with Confluent Cloud" class="dd-item
-        
+        parent
         
         
         ">
@@ -242,7 +242,7 @@
  
   
     
-      <li data-nav-id="/gcp/cloudstorage-bigquery-bigtable/hands-on-lab/" title="Hands-on Lab" class="dd-item ">
+      <li data-nav-id="/gcp/cloudstorage-bigquery-bigtable/hands-on-lab/" title="Hands-on Lab" class="dd-item active">
         <a href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/hands-on-lab/">
         Hands-on Lab
         
@@ -301,7 +301,7 @@
   
     
     <li data-nav-id="/aws/" title="AWS" class="dd-item
-        parent
+        
         
         
         ">
@@ -390,7 +390,7 @@
  
   
     
-      <li data-nav-id="/aws/dynamodb-redshift-s3/" title="Build An End-to-End Streaming Data Pipeline with Confluent Cloud" class="dd-item active">
+      <li data-nav-id="/aws/dynamodb-redshift-s3/" title="Build An End-to-End Streaming Data Pipeline with Confluent Cloud" class="dd-item ">
         <a href="https://confluentinc.github.io/live-labs/aws/dynamodb-redshift-s3/">
         Build An End-to-End Streaming Data Pipeline with Confluent Cloud
         
@@ -469,7 +469,13 @@
             
           
           
-            <a href='https://confluentinc.github.io/live-labs/'></a> > <a href='https://confluentinc.github.io/live-labs/aws/'>AWS</a> > Build An End-to-End Streaming Data Pipeline with Confluent Cloud
+            
+            
+          
+          
+            <a href='https://confluentinc.github.io/live-labs/'></a> > <a href='https://confluentinc.github.io/live-labs/gcp/'>GCP</a> > <a href='https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/'>Build An End-to-End Streaming Data Pipeline with Confluent Cloud</a> > Hands-on Lab
+          
+        
           
         
           
@@ -484,43 +490,26 @@
     <div class="wrapper">
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#agendaagenda"><a href="#agenda">Agenda</a></a></li>
-    <li><a href="#architecture-diagramarchitecture-diagram"><a href="#architecture-diagram">Architecture Diagram</a></a></li>
-    <li><a href="#fictionair">FictionAir</a></li>
-    <li><a href="#fictionmedia">FictionMedia</a></li>
-    <li><a href="#prerequisitesprerequisites"><a href="#prerequisites">Prerequisites</a></a>
+    <li><a href="#step-1-create-a-ksqldb-application">Step 1: Create a ksqlDB application</a></li>
+    <li><a href="#step-2-create-ratings-topic">Step 2: Create &ldquo;ratings&rdquo; topic</a></li>
+    <li><a href="#step-3-create-a-datagen-source-connector">Step 3: Create a Datagen Source connector</a></li>
+    <li><a href="#step-4-create-customers-topic">Step 4: Create customers topic</a></li>
+    <li><a href="#step-5-create-a-mysql-cdc-source-connector">Step 5: Create a MySQL CDC Source connector</a></li>
+    <li><a href="#step-6-create-users-topic">Step 6: Create &ldquo;users&rdquo; topic</a></li>
+    <li><a href="#step-7-create-a-datagen-source-connector">Step 7: Create a Datagen Source connector</a></li>
+    <li><a href="#step-8-create-gcp-services">Step 8: Create GCP services</a>
       <ul>
-        <li><a href="#sign-up-for-confluent-cloud-account">Sign up for Confluent Cloud Account</a></li>
-        <li><a href="#test-network-connectivity">Test Network Connectivity</a></li>
+        <li><a href="#bigquery">BigQuery</a></li>
+        <li><a href="#cloud-storage">Cloud Storage</a></li>
+        <li><a href="#bigtable">BigTable</a></li>
+        <li><a href="#service-accounts">Service Accounts</a></li>
       </ul>
     </li>
-    <li><a href="#sign-up-for-aws-account">Sign up for AWS account</a></li>
-    <li><a href="#a-namestep1astep-1-log-into-confluent-cloud"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 1: Log into Confluent Cloud</a></li>
-    <li><a href="#a-namestep2astep-2-create-an-environment-and-cluster"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 2: Create an environment and cluster</a></li>
-    <li><a href="#a-namestep3astep-3-create-an-api-key-pair"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 3: Create an API key pair</a></li>
-    <li><a href="#a-namestep4astep-4-enable-schema-registery"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 4: Enable Schema Registery</a></li>
-    <li><a href="#hands-on-labhandson"><a href="#handson">Hands-on Lab</a></a></li>
-    <li><a href="#you-have-successfully-completed-the-prep-work-you-can-stop-at-this-point-and-complete-the-remaining-steps-during-the-live-session"><strong>You have successfully completed the prep work. You can stop at this point and complete the remaining steps during the live session</strong></a></li>
-    <li><a href="#a-namestep5astep-1-create-a-ksqldb-application"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 1: Create a ksqlDB application</a></li>
-    <li><a href="#a-namestep6astep-2-create-ratings-topic"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 2: Create &ldquo;ratings&rdquo; topic</a></li>
-    <li><a href="#a-namestep7astep-3-create-a-datagen-source-connector"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 3: Create a Datagen Source connector</a></li>
-    <li><a href="#a-namestep8astep-4-create-customers-topic"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 4: Create customers topic</a></li>
-    <li><a href="#a-namestep9astep-5-create-a-mysql-cdc-source-connector"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 5: Create a MySQL CDC Source connector</a></li>
-    <li><a href="#a-namestep10astep-6-create-users-topic"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 6: Create &ldquo;users&rdquo; topic</a></li>
-    <li><a href="#a-namestep7astep-7-create-a-datagen-source-connector"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 7: Create a Datagen Source connector</a></li>
-    <li><a href="#a-namestep11astep-8-create-aws-services"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 8: Create AWS services</a>
-      <ul>
-        <li><a href="#redshift">Redshift</a></li>
-        <li><a href="#s3">S3</a></li>
-        <li><a href="#iam-policy-and-user">IAM Policy and User</a></li>
-      </ul>
-    </li>
-    <li><a href="#a-namestep12astep-9-enrich-data-streams-with-ksqldb"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 9: Enrich data streams with ksqlDB</a></li>
-    <li><a href="#a-namestep13astep-10-connect-redshift-sink-to-confluent-cloud"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 10: Connect Redshift sink to Confluent Cloud</a></li>
-    <li><a href="#a-namestep14astep-11-connect-s3-sink-to-confluent-cloud"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 11: Connect S3 sink to Confluent Cloud</a></li>
-    <li><a href="#a-namestep15astep-12-connect-dynamodb-sink-to-confluent-cloud"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 12: Connect DynamoDB sink to Confluent Cloud</a></li>
-    <li><a href="#a-namestep16astep-13-clean-up-resources"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 13: Clean up resources</a></li>
-    <li><a href="#a-namestep17aconfluent-resources-and-further-testing"><!-- raw HTML omitted --><!-- raw HTML omitted -->Confluent Resources and Further Testing</a></li>
+    <li><a href="#step-9-enrich-data-streams-with-ksqldb">Step 9: Enrich data streams with ksqlDB</a></li>
+    <li><a href="#step-10-connect-bigquery-sink-to-confluent-cloud">Step 10: Connect BigQuery sink to Confluent Cloud</a></li>
+    <li><a href="#step-11-connect-cloud-storage-sink-to-confluent-cloud">Step 11: Connect Cloud Storage sink to Confluent Cloud</a></li>
+    <li><a href="#step-12-connect-bigtable-sink-to-confluent-cloud">Step 12: Connect BigTable sink to Confluent Cloud</a></li>
+    <li><a href="#step-13-clean-up-resources">Step 13: Clean up resources</a></li>
   </ul>
 </nav>
     </div>
@@ -538,139 +527,15 @@
           
             <h1>
               
-              Build An End-to-End Streaming Data Pipeline with Confluent Cloud
+              Hands-on Lab
             </h1>
           
 
         
 
 
-<hr>
-<h2 id="agendaagenda"><a href="#agenda">Agenda</a></h2>
-<ol>
-<li><a href="#step1">Log into Confluent Cloud</a></li>
-<li><a href="#step2">Create an environment and cluster</a></li>
-<li><a href="#step3">Create an API key pair</a></li>
-<li><a href="#step4">Enable Schema registery</a></li>
-<li><a href="#step5">Create a ksqlDB application</a></li>
-<li><a href="#step6">Create &amp;ldquo;ratings&amp;rdquo; topic</a></li>
-<li><a href="#step7">Create a Datagen Source connector</a></li>
-<li><a href="#step8">Create customers topic</a></li>
-<li><a href="#step9">Create a MySQL CDC Source connector</a></li>
-<li><a href="#step10">Create &amp;ldquo;users&amp;rdquo; topic</a></li>
-<li><a href="#step11">Create a Datagen Source connector</a></li>
-<li><a href="#step12">Create AWS services</a></li>
-<li><a href="#step13">Enrich data streams with ksqlDB</a></li>
-<li><a href="#step14">Connect Redshift sink to Confluent Cloud</a></li>
-<li><a href="#step15">Connect S3 sink to Confluent Cloud</a></li>
-<li><a href="#step16">Connect DynamoDB sink to Confluent Cloud</a></li>
-<li><a href="#step17">Clean up resources</a></li>
-</ol>
-<hr>
-<h2 id="architecture-diagramarchitecture-diagram"><a href="#architecture-diagram">Architecture Diagram</a></h2>
-<p>This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB).</p>
-<h2 id="fictionair">FictionAir</h2>
-<!-- raw HTML omitted -->
-<h2 id="fictionmedia">FictionMedia</h2>
-<!-- raw HTML omitted -->
-<hr>
-<h2 id="prerequisitesprerequisites"><a href="#prerequisites">Prerequisites</a></h2>
-<h3 id="sign-up-for-confluent-cloud-account">Sign up for Confluent Cloud Account</h3>
-<ol>
-<li>
-<p>Sign up for a Confluent Cloud account <a href="https://www.confluent.io/get-started/" target="_blank">here</a>.</p>
-</li>
-<li>
-<p>Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing &amp; payment”, then enter payment details under “Payment details &amp; contacts”.</p>
-</li>
-</ol>
-<blockquote>
-<p><strong>Note:</strong> You will create resources during this lab that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the lab. More details on the specifics can be found <a href="https://www.confluent.io/get-started/" target="_blank">here</a>.</p>
-</blockquote>
-<h3 id="test-network-connectivity">Test Network Connectivity</h3>
-<ol>
-<li>Ports <code>443</code> and <code>9092</code> need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:</li>
-</ol>
-<ul>
-<li>portquiz.net:443</li>
-<li>portquiz.net:9092</li>
-</ul>
-<h2 id="sign-up-for-aws-account">Sign up for AWS account</h2>
-<ol>
-<li>In order to complete this lab, you need to have an AWS account that has root level permissions. Sign up for an AWS account <a href="https://aws.amazon.com/account/" target="_blank">here</a>.</li>
-</ol>
-<hr>
-<h2 id="a-namestep1astep-1-log-into-confluent-cloud"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 1: Log into Confluent Cloud</h2>
-<ol>
-<li>First, access Confluent Cloud sign-in by navigating <a href="https://confluent.cloud" target="_blank">here</a>.</li>
-<li>When provided with the <em>username</em> and <em>password</em> prompts, fill in your credentials.
-<blockquote>
-<p><strong>Note:</strong> If you&rsquo;re logging in for the first time you will see a wizard that will walk you through the some tutorials. Minimize this as you will walk through these steps in this guide.</p>
-</blockquote>
-</li>
-</ol>
-<hr>
-<h2 id="a-namestep2astep-2-create-an-environment-and-cluster"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 2: Create an environment and cluster</h2>
-<p>An environment contains Confluent clusters and its deployed components such as Connect, ksqlDB, and Schema Registry. You have the ability to create different environments based on your company&rsquo;s requirements. Confluent has seen companies use environments to separate Development/Testing, Pre-Production, and Production clusters.</p>
-<ol>
-<li>
-<p>Click <strong>+ Add environment</strong>.</p>
-<blockquote>
-<p><strong>Note:</strong> There is a <em>default</em> environment ready in your account upon account creation. You can use this <em>default</em> environment for the purpose of this lab if you do not wish to create an additional environment.</p>
-</blockquote>
-<ul>
-<li>Specify a meaningful <code>name</code> for your environment and then click <strong>Create</strong>.
-<blockquote>
-<p><strong>Note:</strong> It will take a few minutes to assign the resources to make this new environment available for use.</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li>
-<p>Now that you have an environment, let&rsquo;s create a cluster. Select <strong>Create Cluster</strong>.</p>
-<blockquote>
-<p><strong>Note</strong>: Confluent Cloud clusters are available in 3 types: <strong>Basic</strong>, <strong>Standard</strong>, and <strong>Dedicated</strong>. Basic is intended for development use cases so you should use that for this lab. Basic clusters only support single zone availability. Standard and Dedicated clusters are intended for production use and support Multi-zone deployments. If you’re interested in learning more about the different types of clusters and their associated features and limits, refer to this <a href="https://docs.confluent.io/current/cloud/clusters/cluster-types.html" target="_blank">documentation</a>.</p>
-</blockquote>
-<ul>
-<li>
-<p>Choose the <strong>Basic</strong> cluster type.</p>
-</li>
-<li>
-<p>Click <strong>Begin Configuration</strong>.</p>
-</li>
-<li>
-<p>Choose <strong>AWS</strong> as your Cloud Provider and your preferred Region.</p>
-<blockquote>
-<p><strong>Note:</strong> AWS account with root permissions is required as your Cloud Provider since you will be utilizing Redshift, S3, and DynamoDB in this lab. We recommend you choose Oregon (west2) as the region.</p>
-</blockquote>
-</li>
-<li>
-<p>Specify a meaningful <strong>Cluster Name</strong> and then review the associated <em>Configuration &amp; Cost</em>, <em>Usage Limits</em>, and <em>Uptime SLA</em> before clicking <strong>Launch Cluster</strong>.</p>
-</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="a-namestep3astep-3-create-an-api-key-pair"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 3: Create an API key pair</h2>
-<ol>
-<li>Select API keys on the navigation menu.</li>
-<li>If this is your first API key within your cluster, click <strong>Create key</strong>. If you have set up API keys in your cluster in the past and already have an existing API key, click <strong>+ Add key</strong>.</li>
-<li>Select <strong>Global Access</strong>, then click Next.</li>
-<li>Save your API key and secret - you will need these during the lab.</li>
-<li>After creating and saving the API key, you will see this API key in the Confluent Cloud UI in the API keys tab. If you don’t see the API key populate right away, refresh the browser.</li>
-</ol>
-<hr>
-<h2 id="a-namestep4astep-4-enable-schema-registery"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 4: Enable Schema Registery</h2>
-<ol>
-<li>On the navigation menu, select <strong>Schema Registery</strong>.</li>
-<li>Click <strong>Set up on my own</strong>.</li>
-<li>Choose <strong>AWS</strong> as the cloud provider and a supported <strong>Region</strong></li>
-<li>Click on <strong>Enable Schema Registry</strong>.</li>
-</ol>
-<hr>
-<h2 id="hands-on-labhandson"><a href="#handson">Hands-on Lab</a></h2>
-<h2 id="you-have-successfully-completed-the-prep-work-you-can-stop-at-this-point-and-complete-the-remaining-steps-during-the-live-session"><strong>You have successfully completed the prep work. You can stop at this point and complete the remaining steps during the live session</strong></h2>
-<h2 id="a-namestep5astep-1-create-a-ksqldb-application"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 1: Create a ksqlDB application</h2>
+<p>Welcome to the live session!</p>
+<h2 id="step-1-create-a-ksqldb-application">Step 1: Create a ksqlDB application</h2>
 <blockquote>
 <p>At Confluent we developed ksqlDB, the database purpose-built for stream processing applications. ksqlDB is built on top of Kafka Streams, powerful Java library for enriching, transforming, and processing real-time streams of data. Having Kafka Streams at its core means ksqlDB is built on well-designed and easily understood layers of abstractions. So now, beginners and experts alike can easily unlock and fully leverage the power of Kafka in a fun and accessible way.</p>
 </blockquote>
@@ -683,7 +548,7 @@
 <li>Hit <strong>Launch Cluster!</strong>.</li>
 </ol>
 <hr>
-<h2 id="a-namestep6astep-2-create-ratings-topic"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 2: Create &ldquo;ratings&rdquo; topic</h2>
+<h2 id="step-2-create-ratings-topic">Step 2: Create &ldquo;ratings&rdquo; topic</h2>
 <ol>
 <li>On the navigation menu, select <strong>Topics</strong>.</li>
 </ol>
@@ -694,7 +559,7 @@
 <li>Type <strong>ratings</strong> as the Topic name and hit <strong>Create with defaults</strong>.</li>
 </ol>
 <hr>
-<h2 id="a-namestep7astep-3-create-a-datagen-source-connector"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 3: Create a Datagen Source connector</h2>
+<h2 id="step-3-create-a-datagen-source-connector">Step 3: Create a Datagen Source connector</h2>
 <blockquote>
 <p>Confluent offers 120+ pre-built <a href="https://www.confluent.io/product/confluent-connectors/" target="_blank">connectors</a>, enabling you to modernize your entire data architecture even faster. These connectors also provide you peace-of-mind with enterprise-grade security, reliability, compatibility, and support.</p>
 </blockquote>
@@ -718,7 +583,7 @@
   }
 }
 </code></pre><hr>
-<h2 id="a-namestep8astep-4-create-customers-topic"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 4: Create customers topic</h2>
+<h2 id="step-4-create-customers-topic">Step 4: Create customers topic</h2>
 <ol>
 <li>On the navigation menu, select <strong>Topics</strong>.</li>
 </ol>
@@ -730,7 +595,7 @@
 <li>Click on <strong>Show advanced settings</strong> and under <strong>Storage → Cleanup policy → Compact</strong> and <strong>Retention time → Indefinite</strong> and then click on <strong>Create</strong>.</li>
 </ol>
 <hr>
-<h2 id="a-namestep9astep-5-create-a-mysql-cdc-source-connector"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 5: Create a MySQL CDC Source connector</h2>
+<h2 id="step-5-create-a-mysql-cdc-source-connector">Step 5: Create a MySQL CDC Source connector</h2>
 <ol>
 <li>On the navigation menu, select <strong>Data Integration</strong> and then <strong>Connectors</strong> and <strong>+ Add connector</strong>.</li>
 <li>In the search bar search for <strong>MySQL CDC</strong> and select the <strong>MySQL CDC Source</strong> which is a fully-managed source connector.</li>
@@ -757,7 +622,7 @@
   }
 }
 </code></pre><hr>
-<h2 id="a-namestep10astep-6-create-users-topic"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 6: Create &ldquo;users&rdquo; topic</h2>
+<h2 id="step-6-create-users-topic">Step 6: Create &ldquo;users&rdquo; topic</h2>
 <ol>
 <li>On the navigation menu, select <strong>Topics</strong>.</li>
 </ol>
@@ -768,7 +633,7 @@
 <li>Type <strong>users</strong> as the Topic name and hit <strong>Create with defaults</strong>.</li>
 </ol>
 <hr>
-<h2 id="a-namestep7astep-7-create-a-datagen-source-connector"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 7: Create a Datagen Source connector</h2>
+<h2 id="step-7-create-a-datagen-source-connector">Step 7: Create a Datagen Source connector</h2>
 <ol>
 <li>On the navigation menu, select <strong>Data Integration</strong> and then <strong>Connectors</strong> and <strong>+ Add connector</strong>.</li>
 <li>In the search bar search for <strong>Datagen</strong> and select the <strong>Datagen Source</strong> which is a fully-managed connector.</li>
@@ -789,141 +654,96 @@
   }
 }
 </code></pre><hr>
-<h2 id="a-namestep11astep-8-create-aws-services"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 8: Create AWS services</h2>
+<h2 id="step-8-create-gcp-services">Step 8: Create GCP services</h2>
+<h3 id="bigquery">BigQuery</h3>
 <ol>
-<li>Navigate to <a href="https://aws.amazon.com/console/" target="_blank">https://aws.amazon.com/console/</a> and log into your account.</li>
+<li>Navigate to <a href="https://console.cloud.google.com" target="_blank">https://console.cloud.google.com</a> and log into your account.</li>
+<li>Use the search bar and search for <strong>BigQuery</strong></li>
 </ol>
 <blockquote>
-<p>Note: you will need root level permissions in order to complete this lab.</p>
+<p>You should have a valid project in Google Cloud in order to complete this lab.</p>
 </blockquote>
-<h3 id="redshift">Redshift</h3>
-<ol>
-<li>Create a Redshift cluster and save the <code>Admin user name</code> and <code>Admin user password</code> since you will need it in later steps.</li>
+<ol start="3">
+<li>Use the 3 dots next to your project name and click on <strong>Create a new dataset</strong> with following configuration.</li>
+</ol>
+<pre tabindex="0"><code>Dataset ID: confluent_bigquery_demo
+Data location: same as your Confluent Cloud Cluster (in this lab us-west-4).
+</code></pre><ol start="4">
+<li>Click on <strong>CREATE DATASET</strong>.</li>
 </ol>
 <blockquote>
-<p>The Redshift cluster has to be in same same region as your Confluent Cloud cluster.</p>
+<p>For detailed instructions refer to our <a href="https://docs.confluent.io/cloud/current/connectors/cc-gcp-bigquery-sink.html" target="_blank">documentation</a>.</p>
 </blockquote>
-<ol start="2">
-<li>Under <strong>Additional configuration</strong> disable <strong>defaults</strong>.</li>
-<li>Make the cluster publicly accessible under <strong>Network and security → Publicly accessible → Enable</strong>.</li>
-<li>Using the search bar navigate to <strong>VPC -&gt; Security Groups -&gt; Inbound Rules</strong> and add two new rules for TCP protocol</li>
-</ol>
-<pre tabindex="0"><code>Type: Redshift
-Port range: 5430 
-Source: 0.0.0.0/0
-
-Type: Redshift
-Port range: 5430 
-Source: ::/0
-</code></pre><ol start="5">
-<li>Navigate back to your Redshift cluster and reboot it to ensure the right security policies are applied.</li>
-<li>Once the cluster is in <strong>Available</strong> state use the left handside menu and open <code>Query Editor v2</code> to create a database and a user and give the appropriate permissions.</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">DATABASE</span> <span style="color:#f92672">&lt;</span>DB_NAME<span style="color:#f92672">&gt;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">USER</span> <span style="color:#f92672">&lt;</span>DB_USER<span style="color:#f92672">&gt;</span> PASSWORD <span style="color:#e6db74">&#39;&lt;DB_PASSWORD&gt;&#39;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">GRANT</span> <span style="color:#66d9ef">USAGE</span> <span style="color:#66d9ef">ON</span> <span style="color:#66d9ef">SCHEMA</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">TO</span> <span style="color:#f92672">&lt;</span>DB_USER<span style="color:#f92672">&gt;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">GRANT</span> <span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">ON</span> <span style="color:#66d9ef">SCHEMA</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">TO</span> <span style="color:#f92672">&lt;</span>DB_USER<span style="color:#f92672">&gt;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">GRANT</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">ON</span> <span style="color:#66d9ef">ALL</span> TABLES <span style="color:#66d9ef">IN</span> <span style="color:#66d9ef">SCHEMA</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">TO</span> <span style="color:#f92672">&lt;</span>DB_USER<span style="color:#f92672">&gt;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">GRANT</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">ON</span> <span style="color:#66d9ef">SCHEMA</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">TO</span> <span style="color:#f92672">&lt;</span>DB_USER<span style="color:#f92672">&gt;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">GRANT</span> <span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">ON</span> <span style="color:#66d9ef">DATABASE</span> <span style="color:#f92672">&lt;</span>DB_NAME<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">TO</span> <span style="color:#f92672">&lt;</span>DB_USER<span style="color:#f92672">&gt;</span>;
-</span></span></code></pre></div><blockquote>
-<p>For detailed instructions refer to our <a href="https://docs.confluent.io/cloud/current/connectors/cc-amazon-redshift-sink.html" target="_blank">documentation</a></p>
-</blockquote>
-<h3 id="s3">S3</h3>
+<h3 id="cloud-storage">Cloud Storage</h3>
 <ol>
-<li>Create an S3 bucket and name it <code>confluent-bucket-demo</code>.</li>
+<li>Create a <strong>Cloud Storage</strong> bucket with the following configuration and leave the remaining fields as default.</li>
 </ol>
-<blockquote>
-<p>The S3 has to be in same same region as your Confluent Cloud cluster.</p>
-</blockquote>
-<h3 id="iam-policy-and-user">IAM Policy and User</h3>
-<ol>
-<li>Create an <strong>IAM Policy</strong> with the following configuration and name it <code>confluent-s3-demo-policy</code>.</li>
-</ol>
-<pre tabindex="0"><code>{
-   &#34;Version&#34;:&#34;2012-10-17&#34;,
-   &#34;Statement&#34;:[
-      {
-         &#34;Effect&#34;:&#34;Allow&#34;,
-         &#34;Action&#34;:[
-            &#34;s3:ListAllMyBuckets&#34;
-         ],
-         &#34;Resource&#34;:&#34;arn:aws:s3:::*&#34;
-      },
-      {
-         &#34;Effect&#34;:&#34;Allow&#34;,
-         &#34;Action&#34;:[
-            &#34;s3:ListBucket&#34;,
-            &#34;s3:GetBucketLocation&#34;
-         ],
-         &#34;Resource&#34;:&#34;arn:aws:s3:::confluent-bucket-demo&#34;
-      },
-      {
-         &#34;Effect&#34;:&#34;Allow&#34;,
-         &#34;Action&#34;:[
-            &#34;s3:PutObject&#34;,
-            &#34;s3:GetObject&#34;,
-            &#34;s3:AbortMultipartUpload&#34;,
-            &#34;s3:ListMultipartUploadParts&#34;,
-            &#34;s3:ListBucketMultipartUploads&#34;
-
-         ],
-         &#34;Resource&#34;: [
-            &#34;arn:aws:s3:::confluent-bucket-demo&#34;,
-            &#34;arn:aws:s3:::confluent-bucket-demo/*&#34;
-          ]
-      }
-   ]
-}
+<pre tabindex="0"><code>Name: confluent-bucket-demo
+Location type: Region. Pick the same region as your Confluent Cloud cluster (In this lab we use us-west-4).
+Storage class: Standard
 </code></pre><ol start="2">
-<li>
-<p>Create an <strong>IAM User</strong> and name it <code>confluent-s3-demo-user</code>. and attach the above policy to it.</p>
-</li>
-<li>
-<p>Attach <code>confluent-s3-demo-policy</code> policy to <code>confluent-s3-demo-user</code> user.</p>
-</li>
-<li>
-<p>Create a key pair for <code>confluent-s3-demo-user</code> user and download the file to use it in later steps.</p>
-</li>
+<li>Click on <strong>CREATE</strong>.</li>
 </ol>
 <blockquote>
-<p>For detailed instructions refer to our <a href="https://docs.confluent.io/cloud/current/connectors/cc-s3-sink.html" target="_blank">documentation</a></p>
+<p>For detailed instructions refer to our <a href="https://docs.confluent.io/cloud/current/connectors/cc-gcs-sink.html" target="_blank">documentation</a>.</p>
 </blockquote>
-<ol start="5">
-<li>Create a new <strong>IAM Policy</strong> with the following configurations and name it <code>confluent-dynamodb-demo-policy</code>.</li>
+<h3 id="bigtable">BigTable</h3>
+<ol>
+<li>Create a <strong>BigTable</strong> instance with the following configurations and leave the remaining fields as default.</li>
+</ol>
+<pre tabindex="0"><code>Instance name: confluent-bigtable-demo
+Instance ID: &lt;auto_generated&gt;
+Storage type: SSD
+Location: Region. Pick the same region as your Confluent Cloud cluster (In this lab we use us-west-4).
+</code></pre><ol start="2">
+<li>Click on <strong>CREATE</strong>.</li>
+</ol>
+<blockquote>
+<p>For detailed instructions refer to our <a href="https://docs.confluent.io/cloud/current/connectors/cc-gcp-bigtable-sink.html" target="_blank">documentation</a></p>
+</blockquote>
+<h3 id="service-accounts">Service Accounts</h3>
+<ol>
+<li>
+<p>You need to create a GCP Service Account so the Confluent Connectors can access GCP resources. For the purpose of this lab, we will create 1 Service Account and assign 3 roles to it. However, you should always follow best practices for production workloads.</p>
+</li>
+<li>
+<p>Use the search bar and search for <strong>IAM &amp; Admin</strong> and click on the result.</p>
+</li>
+<li>
+<p>Expand the left hand side menu and go to Service Accounts and click on the <strong>Create Service Account</strong> and enter the following</p>
+</li>
+</ol>
+<pre tabindex="0"><code>Service account name: confluent-demo 
+Description: Account to be used during Confluent Cloud Live Lab
+Role: BigQuery Admin, Bigtable Administrator, Storage Admin
+</code></pre><ol start="4">
+<li>
+<p>Click <strong>Grant</strong> and then <strong>Done</strong>.</p>
+</li>
+<li>
+<p>Once the account is created, click on the 3 dots in <strong>Actions</strong> columns and hit <strong>Manage Keys</strong>.</p>
+</li>
+<li>
+<p>Click on <strong>Add Key</strong> and then on <strong>Create a new key</strong>.</p>
+</li>
+<li>
+<p>Select <code>JSON</code> as key type. Keep this key somewhere safe as you will need it in later steps. The key resembles the example below:</p>
+</li>
 </ol>
 <pre tabindex="0"><code>{
-    &#34;Version&#34;: &#34;2012-10-17&#34;,
-    &#34;Statement&#34;: [
-        {
-            &#34;Sid&#34;: &#34;&lt;optional-identifier&gt;&#34;,
-            &#34;Effect&#34;: &#34;Allow&#34;,
-            &#34;Action&#34;: [
-                &#34;dynamodb:CreateTable&#34;,
-                &#34;dynamodb:BatchWriteItem&#34;,
-                &#34;dynamodb:Scan&#34;,
-                &#34;dynamodb:DescribeTable&#34;
-            ],
-            &#34;Resource&#34;: &#34;*&#34;
-        }
-    ]
+ &#34;type&#34;: &#34;service_account&#34;,
+ &#34;project_id&#34;: &#34;confluent-842583&#34;,
+ &#34;private_key_id&#34;: &#34;...omitted...&#34;,
+ &#34;private_key&#34;: &#34;-----BEGIN PRIVATE ...omitted... =\n-----END PRIVATE KEY-----\n&#34;,
+ &#34;client_email&#34;: &#34;confluent2@confluent-842583.iam.gserviceaccount.com&#34;,
+ &#34;client_id&#34;: &#34;...omitted...&#34;,
+ &#34;auth_uri&#34;: &#34;https://accounts.google.com/oauth2/auth&#34;,
+ &#34;token_uri&#34;: &#34;https://oauth2.googleapis.com/token&#34;,
+ &#34;auth_provider_x509_cert_url&#34;: &#34;https://www.googleapis.com/oauth2/certs&#34;,
+ &#34;client_x509_cert_url&#34;: &#34;https://www.googleapis.com/robot/metadata/confluent2%40confluent-842583.iam.gserviceaccount.com&#34;
 }
-</code></pre><ol start="6">
-<li>
-<p>Create another <strong>IAM User</strong> and name it <code>confluent-dynamodb-demo-user</code>. This one will be used for DynamoDB.</p>
-</li>
-<li>
-<p>Attach <code>confluent-dynamodb-demo-policy</code> policy to <code>confluent-dynamodb-demo-user</code> user.</p>
-</li>
-<li>
-<p>Create a key pair for <code>confluent-dynamodb-demo-user</code> user and download the file to use it in later steps.</p>
-</li>
-</ol>
-<blockquote>
-<p>For detailed instructions refer to our <a href="https://docs.confluent.io/cloud/current/connectors/cc-amazon-dynamo-db-sink.html" target="_blank">documentation</a></p>
-</blockquote>
-<hr>
-<h2 id="a-namestep12astep-9-enrich-data-streams-with-ksqldb"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 9: Enrich data streams with ksqlDB</h2>
+</code></pre><hr>
+<h2 id="step-9-enrich-data-streams-with-ksqldb">Step 9: Enrich data streams with ksqlDB</h2>
 <p>Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.</p>
 <p>With ksqlDB, you have the ability to leverage streams and tables from your topics in Confluent. A stream in ksqlDB is a topic with a schema and it records the history of what has happened in the world as a sequence of events.</p>
 <ol>
@@ -1015,40 +835,38 @@ Source: ::/0
 <li>Stop the running query by clicking on <strong>Stop</strong>.</li>
 </ol>
 <hr>
-<h2 id="a-namestep13astep-10-connect-redshift-sink-to-confluent-cloud"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 10: Connect Redshift sink to Confluent Cloud</h2>
+<h2 id="step-10-connect-bigquery-sink-to-confluent-cloud">Step 10: Connect BigQuery sink to Confluent Cloud</h2>
 <ol>
-<li>The next step is to sink data from Confluent Cloud into Redshift using the fully-managed Redshift Sink connector. The connector will continuosly run and send real time data into Redshift.</li>
-<li>First, you will create the connector that will automatically create a Redshift table and populate that table with the data from the <strong>ratings-enriched</strong> topic within Confluent Cloud. From the Confluent Cloud UI, click on the <strong>Data Integration</strong> tab on the navigation menu and select <strong>+Add connector</strong>. Search and click on the Redshift Sink icon.</li>
+<li>The next step is to sink data from Confluent Cloud into BigQuery using the fully-managed BigQuery Sink connector. The connector will continuosly run and send real time data into BigQuery.</li>
+<li>First, you will create the connector that will automatically create a BigQuery table and populate that table with the data from the <strong>ratings-enriched</strong> topic within Confluent Cloud. From the Confluent Cloud UI, click on the <strong>Data Integration</strong> tab on the navigation menu and select <strong>+Add connector</strong>. Search and click on the BigQuery Sink icon.</li>
 <li>Enter the following configuration details. The remaining fields can be left blank.</li>
 </ol>
 <pre tabindex="0"><code>{
-  &#34;name&#34;: &#34;RedshiftSinkConnector_0&#34;,
+  &#34;name&#34;: &#34;BigQuerySinkConnector_0&#34;,
   &#34;config&#34;: {
-    &#34;connector.class&#34;: &#34;RedshiftSink&#34;,
-    &#34;name&#34;: &#34;RedshiftSinkConnector_0&#34;,
-    &#34;input.data.format&#34;: &#34;AVRO&#34;,
-    &#34;kafka.auth.mode&#34;: &#34;KAFKA_API_KEY&#34;,
-    &#34;kafka.api.key&#34;: &#34;&lt;dd_your_api_key&gt;&#34;,
-    &#34;kafka.api.secret&#34;: &#34;&lt;add_your_api_secret_key&gt;&#34;,
     &#34;topics&#34;: &#34;ratings-enriched&#34;,
-    &#34;aws.redshift.domain&#34;: &#34;&lt;add_your_redshift_cluster_endpoint&gt;&#34;,
-    &#34;aws.redshift.port&#34;: &#34;5439&#34;,
-    &#34;aws.redshift.user&#34;: &#34;&lt;add_the_username_you_created_earlier&gt;&#34;,
-    &#34;aws.redshift.password&#34;: &#34;&lt;add_the_corresponding_password&gt;&#34;,
-    &#34;aws.redshift.database&#34;: &#34;&lt;name_of_the_database_you_created_earlier&gt;&#34;,
-    &#34;auto.create&#34;: &#34;true&#34;,
-    &#34;auto.evolve&#34;: &#34;true&#34;,
+    &#34;input.data.format&#34;: &#34;AVRO&#34;,
+    &#34;connector.class&#34;: &#34;BigQuerySink&#34;,
+    &#34;name&#34;: &#34;BigQuerySinkConnector_0&#34;,
+    &#34;kafka.auth.mode&#34;: &#34;KAFKA_API_KEY&#34;,
+    &#34;kafka.api.key&#34;: &#34;&lt;add_your_api_key&gt;&#34;,
+    &#34;kafka.api.secret&#34;: &#34;&lt;add_your_api_secret_key&gt;&#34;,
+    &#34;keyfile&#34;: &#34;&lt;add_the_JSON_key_created_earlier&gt;&#34;,
+    &#34;project&#34;: &#34;&lt;add_your_gcp_project_id&gt;&#34;,
+    &#34;datasets&#34;: &#34;confluent_bigquery_demo&#34;,
+    &#34;auto.create.tables&#34;: &#34;true&#34;,
+    &#34;auto.update.schemas&#34;: &#34;true&#34;,
     &#34;tasks.max&#34;: &#34;1&#34;,
-    &#34;transforms&#34;: &#34;Transform,Transform2 &#34;,
+    &#34;transforms&#34;: &#34;Transform,Transform3 &#34;,
     &#34;transforms.Transform.type&#34;: &#34;org.apache.kafka.connect.transforms.Cast$Value&#34;,
     &#34;transforms.Transform.spec&#34;: &#34;DOB:string&#34;,
-    &#34;transforms.Transform2.type&#34;: &#34;org.apache.kafka.connect.transforms.MaskField$Value&#34;,
-    &#34;transforms.Transform2.fields&#34;: &#34;DOB&#34;,
-    &#34;transforms.Transform2.replacement&#34;: &#34;&lt;xxxx-xx-xx&gt;&#34;
+    &#34;transforms.Transform3.type&#34;: &#34;org.apache.kafka.connect.transforms.MaskField$Value&#34;,
+    &#34;transforms.Transform3.fields&#34;: &#34;DOB&#34;,
+    &#34;transforms.Transform3.replacement&#34;: &#34;&lt;xxxx-xx-xx&gt;&#34;
   }
 }
 </code></pre><ol start="4">
-<li>In this lab, we decided to mask customer&rsquo;s date of birth before sinking the stream to Redshift. We are leverage Single Message Transforms (SMT) to achieve this goal. Since date of birth is of type <code>DATE</code> and we want to replace it with a string pattern, we will achieve our goal in a 2 step process. First, we will cast the date of birth from <code>DATE</code> to <code>String</code>, then we will replace that <code>String</code> value with a pattern we have pre-defined.</li>
+<li>In this lab, we decided to mask customer&rsquo;s date of birth before sinking the stream to BigQuery. We are leveraging Single Message Transforms (SMT) to achieve this goal. Since date of birth is of type <code>DATE</code> and we want to replace it with a string pattern, we will achieve our goal in a 2 step process. First, we will cast the date of birth from <code>DATE</code> to <code>String</code>, then we will replace that <code>String</code> value with a pattern we have pre-defined.</li>
 </ol>
 <blockquote>
 <p>For more information on Single Message Transforms (SMT) refer to our <a href="https://docs.confluent.io/cloud/current/connectors/single-message-transforms.html" target="_blank">documentation</a> or watch the series by Robin Moffatt, staff developer advocate at Confluent <a href="https://www.youtube.com/watch?v=3Gj_SoyuTYk&amp;list=PL5T99fPsK7pq7LiaaL-S6b7wQqzxyjgya&amp;ab_channel=RobinMoffatt" target="_blank">here</a>.</p>
@@ -1057,28 +875,27 @@ Source: ::/0
 <li>Click on <strong>Next</strong>.</li>
 <li>Before launching the connector, you will be brought to the summary page. Once you have reviewed the configs and everything looks good, select <strong>Launch</strong>.</li>
 <li>This should return you to the main Connectors landing page. Wait for your newly created connector to change status from <strong>Provisioning</strong> to <strong>Running</strong>.</li>
-<li>The instructor will show you how to query the Redshift database and verify the data exist.</li>
+<li>The instructor will show you how to query the BigQuery database and verify the data exist.</li>
 </ol>
 <hr>
-<h2 id="a-namestep14astep-11-connect-s3-sink-to-confluent-cloud"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 11: Connect S3 sink to Confluent Cloud</h2>
+<h2 id="step-11-connect-cloud-storage-sink-to-confluent-cloud">Step 11: Connect Cloud Storage sink to Confluent Cloud</h2>
 <ol>
-<li>For this use case we only want to store the <code>ratings_live</code> stream in S3 and not the customers&rsquo; information.</li>
-<li>Use the left handside menu and navigate to <strong>Data Integration</strong> and go to <strong>Connectors</strong>. Click on <strong>+Add connector</strong>. Search for <strong>S3</strong> and click on the S3 Sink icon.</li>
+<li>For this use case we only want to store the <code>ratings_live</code> stream in Cloud Storage and not the customers&rsquo; information.</li>
+<li>Use the left handside menu and navigate to <strong>Data Integration</strong> and go to <strong>Connectors</strong>. Click on <strong>+Add connector</strong>. Search for <strong>Google Cloud Storage Sink</strong> and click on the Google Cloud Storage Sink icon.</li>
 <li>Enter the following configuration details. The remaining fields can be left blank.</li>
 </ol>
 <pre tabindex="0"><code>{
-  &#34;name&#34;: &#34;S3_SINKConnector_0&#34;,
+  &#34;name&#34;: &#34;GcsSinkConnector_0&#34;,
   &#34;config&#34;: {
-    &#34;topics&#34;: pksqlc-***RATINGS_LIVE&#34;,
+    &#34;topics&#34;: &#34;pksqlc**-RATINGS_LIVE&#34;,
     &#34;input.data.format&#34;: &#34;AVRO&#34;,
-    &#34;connector.class&#34;: &#34;S3_SINK&#34;,
-    &#34;name&#34;: &#34;S3_SINKConnector_0&#34;,
+    &#34;connector.class&#34;: &#34;GcsSink&#34;,
+    &#34;name&#34;: &#34;GcsSinkConnector_0&#34;,
     &#34;kafka.auth.mode&#34;: &#34;KAFKA_API_KEY&#34;,
-    &#34;kafka.api.key&#34;: &#34;&lt;dd_your_api_key&gt;&#34;,
+    &#34;kafka.api.key&#34;: &#34;&lt;add_your_api_key&gt;&#34;,
     &#34;kafka.api.secret&#34;: &#34;&lt;add_your_api_secret_key&gt;&#34;,
-    &#34;aws.access.key.id&#34;: &#34;&lt;add_access_key_for_confluent-s3-demo-user&gt;&#34;,
-    &#34;aws.secret.access.key&#34;: &#34;&lt;add_secret_access_key_for_confluent-s3-demo-user&gt;&#34;,
-    &#34;s3.bucket.name&#34;: &#34;confluent-bucket-demo&#34;,
+    &#34;gcs.credentials.config&#34;: &#34;&lt;add_the_JSON_key_created_earlier&gt;”,
+    &#34;gcs.bucket.name&#34;: &#34;confluent-bucket-demo&#34;,
     &#34;output.data.format&#34;: &#34;JSON&#34;,
     &#34;time.interval&#34;: &#34;HOURLY&#34;,
     &#34;flush.size&#34;: &#34;1000&#34;,
@@ -1086,69 +903,57 @@ Source: ::/0
   }
 }
 </code></pre><ol start="4">
-<li>The instructor will show you how to verify data exists in S3.</li>
+<li>The instructor will show you how to verify data exists in Storage Sink.</li>
 </ol>
 <hr>
-<h2 id="a-namestep15astep-12-connect-dynamodb-sink-to-confluent-cloud"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 12: Connect DynamoDB sink to Confluent Cloud</h2>
+<h2 id="step-12-connect-bigtable-sink-to-confluent-cloud">Step 12: Connect BigTable sink to Confluent Cloud</h2>
 <ol>
-<li>For this use case, we will be streaming the <strong>users</strong> topic to DynamoDB database.</li>
-<li>We decided to use <code>userid</code> as the <strong>hash key</strong> and <code>regionid</code> as the <strong>sort key</strong> in DynamoDB.</li>
+<li>For this use case, we will be streaming the <strong>users</strong> topic to BigTable database.</li>
+<li>We decided to concatenate <code>userid</code> and <code>regionid</code> fields to make the <code>rowkey</code> in BigTable</li>
 <li>Additionally, we will use Single Message Transforms (SMT) to convert the timestamp to <code>String</code>.</li>
 <li>Enter the following configuration details. The remaining fields can be left blank.</li>
 </ol>
 <pre tabindex="0"><code>{
-  &#34;name&#34;: &#34;DynamoDbSinkConnector_0&#34;,
+  &#34;name&#34;: &#34;BigTableSinkConnector_0&#34;,
   &#34;config&#34;: {
     &#34;topics&#34;: &#34;users&#34;,
     &#34;input.data.format&#34;: &#34;AVRO&#34;,
-    &#34;connector.class&#34;: &#34;DynamoDbSink&#34;,
-    &#34;name&#34;: &#34;DynamoDbSinkConnector_0&#34;,
+    &#34;input.key.format&#34;: &#34;STRING&#34;,
+    &#34;connector.class&#34;: &#34;BigTableSink&#34;,
+    &#34;name&#34;: &#34;BigTableSinkConnector_0&#34;,
     &#34;kafka.auth.mode&#34;: &#34;KAFKA_API_KEY&#34;,
-    &#34;kafka.api.key&#34;: &#34;&lt;dd_your_api_key&gt;&#34;,
+    &#34;kafka.api.key&#34;: &#34;&lt;add_your_api_key&gt;&#34;,
     &#34;kafka.api.secret&#34;: &#34;&lt;add_your_api_secret_key&gt;&#34;,
-    &#34;aws.access.key.id&#34;: &#34;&lt;add_access_key_for_confluent-dynamodb-demo-user&gt;&#34;,
-    &#34;aws.secret.access.key&#34;: &#34;&lt;add_secret_access_key_for_confluent-dynamodb-demo-user&gt;&#34;,
-    &#34;aws.dynamodb.pk.hash&#34;: &#34;value.userid&#34;,
-    &#34;aws.dynamodb.pk.sort&#34;: &#34;value.regionid&#34;,
+    &#34;gcp.bigtable.credentials.json&#34;: &#34;&lt;add_the_JSON_key_created_earlier&gt;&#34;,
+    &#34;gcp.bigtable.project.id&#34;: &#34;&lt;add_your_gcp_project_id&gt;&#34;,
+    &#34;gcp.bigtable.instance.id&#34;: &#34;confluent-bigtable-demo&#34;,
+    &#34;insert.mode&#34;: &#34;UPSERT&#34;,
     &#34;table.name.format&#34;: &#34;confluent-${topic}&#34;,
+    &#34;bigtable.row.key.definition&#34;: &#34;userid,regionid&#34;,
+    &#34;bigtable.row.key.delimiter&#34;: &#34;#&#34;,
+    &#34;auto.create.tables&#34;: &#34;true&#34;,
     &#34;tasks.max&#34;: &#34;1&#34;,
-    &#34;transforms&#34;: &#34;timestamp &#34;,
-    &#34;transforms.timestamp.type&#34;: &#34;org.apache.kafka.connect.transforms.TimestampConverter$Value&#34;,
-    &#34;transforms.timestamp.target.type&#34;: &#34;string&#34;,
-    &#34;transforms.timestamp.field&#34;: &#34;registertime&#34;,
-    &#34;transforms.timestamp.format&#34;: &#34;yyyy-MM-dd&#34;
+    &#34;transforms&#34;: &#34;Transform &#34;,
+    &#34;transforms.Transform.type&#34;: &#34;org.apache.kafka.connect.transforms.TimestampConverter$Value&#34;,
+    &#34;transforms.Transform.target.type&#34;: &#34;string&#34;,
+    &#34;transforms.Transform.field&#34;: &#34;registertime&#34;,
+    &#34;transforms.Transform.format&#34;: &#34;yyyy-MM-dd&#34;
   }
 }
 </code></pre><ol start="5">
-<li>The instructor will show you how to verify data exists in DynamoDB table.</li>
+<li>The instructor will show you how to verify data exists in BigTable table.</li>
 </ol>
 <hr>
-<h2 id="a-namestep16astep-13-clean-up-resources"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 13: Clean up resources</h2>
+<h2 id="step-13-clean-up-resources">Step 13: Clean up resources</h2>
 <p>Deleting the resources you created during this lab will prevent you from incurring additional charges.</p>
 <ol>
 <li>The first item to delete is the ksqlDB application. Select the <strong>Delete</strong> button under <strong>Actions</strong> and enter the Application Name to confirm the deletion.</li>
 <li>Delete the all source and sink connectors by navigating to <strong>Connectors</strong> in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.</li>
 <li>Delete the Cluster by going to the <strong>Settings</strong> tab and then selecting <strong>Delete cluster</strong></li>
 <li>Delete the Environment by expanding right hand menu and going to <strong>Environments</strong> tab and then clicking on <strong>Delete</strong> for the associated Environment you would like to delete</li>
-<li>Go to <a href="https://aws.amazon.com/console/" target="_blank">https://aws.amazon.com/console/</a> and delete Redshift cluster, DynamoDB table, and S3 bucket. Additionally, you can delete IAM policy and users you created for this lab.</li>
+<li>Go to <a href="https://console.cloud.google.com" target="_blank">https://console.cloud.google.com</a> and delete BigQuery dataset, BigTable table, and Storage Sink bucket. Additionally, you can delete Service Account User and credential file you created for this lab.</li>
 </ol>
 <hr>
-<h2 id="a-namestep17aconfluent-resources-and-further-testing"><!-- raw HTML omitted --><!-- raw HTML omitted -->Confluent Resources and Further Testing</h2>
-<p>Here are some links to check out if you are interested in further testing:</p>
-<ul>
-<li>
-<p>Confluent Cloud <a href="https://docs.confluent.io/cloud/current/client-apps/cloud-basics.html" target="_blank">Basics</a></p>
-</li>
-<li>
-<p><a href="https://docs.confluent.io/cloud/current/get-started/index.html" target="_blank">Quickstart</a> with Confluent Cloud</p>
-</li>
-<li>
-<p>Confluent Cloud ksqlDB <a href="https://docs.confluent.io/cloud/current/get-started/ksql.html" target="_blank">Quickstart</a></p>
-</li>
-<li>
-<p>Confluent Developer <a href="https://developer.confluent.io/" target="_blank">website</a></p>
-</li>
-</ul>
 
 
 <footer class="footline">
@@ -1186,8 +991,6 @@ Source: ::/0
             
                 
                     
-                        
-                        
                     
                 
                 
@@ -1198,6 +1001,97 @@ Source: ::/0
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
                     
                         
             
@@ -1264,94 +1158,6 @@ Source: ::/0
             
             
                 
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
                     
                 
                 
@@ -1376,10 +1182,10 @@ Source: ::/0
 	 
 	 
 		
-			<a class="nav nav-prev" href="https://confluentinc.github.io/live-labs/aws/test/" title="Test"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/preprequisites/" title="Prerequisites"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="https://confluentinc.github.io/live-labs/aws/architecture/" title="Architecture Diagrams" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/references/" title="References" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

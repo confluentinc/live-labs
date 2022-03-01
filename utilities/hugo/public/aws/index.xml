@@ -41,7 +41,7 @@ FictionAir FictionMedia </description>
       <pubDate>Sat, 26 Feb 2022 04:19:59 +0000</pubDate>
       
       <guid>https://confluentinc.github.io/live-labs/aws/dynamodb-redshift-s3/</guid>
-      <description>Agenda  Log into Confluent Cloud Create an environment and cluster Create an API key pair Enable Schema registery Create a ksqlDB application Create &amp;ldquo;ratings&amp;rdquo; topic Create a Datagen Source connector Create customers topic Create a MySQL CDC Source connector Create &amp;ldquo;users&amp;rdquo; topic Create a Datagen Source connector Create AWS services Enrich data streams with ksqlDB Connect Redshift sink to Confluent Cloud Connect S3 sink to Confluent Cloud Connect DynamoDB sink to Confluent Cloud Clean up resources   Architecture Diagram This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB).</description>
+      <description>Agenda  Log into Confluent Cloud Create an environment and cluster Create an API key pair Enable Schema registery Create a ksqlDB application Create &amp;amp;ldquo;ratings&amp;amp;rdquo; topic Create a Datagen Source connector Create customers topic Create a MySQL CDC Source connector Create &amp;amp;ldquo;users&amp;amp;rdquo; topic Create a Datagen Source connector Create AWS services Enrich data streams with ksqlDB Connect Redshift sink to Confluent Cloud Connect S3 sink to Confluent Cloud Connect DynamoDB sink to Confluent Cloud Clean up resources   Architecture Diagram This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB).</description>
     </item>
     
   </channel>
