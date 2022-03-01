@@ -12,6 +12,7 @@ theme = "hugo-theme-learn"
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
   themeVariant = "confluent"
   DisableShortcutsTitle = true
+  disableMermaid = true
 
 [[Languages.en.menu.shortcuts]]
 name = "<i class='fab fa-fw fa-github'></i> GitHub repo"
