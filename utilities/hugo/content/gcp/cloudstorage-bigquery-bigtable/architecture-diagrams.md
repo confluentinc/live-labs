@@ -1,7 +1,8 @@
 ---
 title: "Architecture Diagrams"
 date: 2022-02-28T15:47:59-08:00
-draft: true
+draft: false
+weight: 1
 ---
 
 
