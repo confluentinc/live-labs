@@ -1,13 +1,12 @@
 +++
-title = "Gcp"
+title = "GCP"
 date = 2022-02-26T04:49:32Z
 weight = 5
 chapter = true
-pre = "<b>X. </b>"
 +++
 
-### Chapter GCP
+### GCP
 
-# Do Stuff
+# Live Labs
 
-Lorem Ipsum.
+{{% children %}}

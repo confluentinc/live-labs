@@ -8,7 +8,7 @@
 
 
     <link rel="shortcut icon" href="https://confluentinc.github.io/live-labs/images/favicon.png" type="image/x-icon" />
-    <title>Categories :: Confluent Live Labs</title>
+    <title>Architecture Diagrams :: Confluent Live Labs</title>
 
     
     <link href="https://confluentinc.github.io/live-labs/css/nucleus.css?1646093674" rel="stylesheet">
@@ -36,7 +36,7 @@
     </style>
     
   </head>
-  <body class="" data-url="https://confluentinc.github.io/live-labs/categories/">
+  <body class="" data-url="https://confluentinc.github.io/live-labs/aws/architecture/">
     <nav id="sidebar" class="">
 
 
@@ -259,7 +259,7 @@
   
     
     <li data-nav-id="/aws/" title="AWS" class="dd-item
-        
+        parent
         
         
         ">
@@ -285,7 +285,7 @@
  
   
     
-      <li data-nav-id="/aws/architecture/" title="Architecture Diagrams" class="dd-item ">
+      <li data-nav-id="/aws/architecture/" title="Architecture Diagrams" class="dd-item active">
         <a href="https://confluentinc.github.io/live-labs/aws/architecture/">
         Architecture Diagrams
         
@@ -423,7 +423,13 @@
             
           
           
-            <a href='https://confluentinc.github.io/live-labs/'></a> > Categories
+            
+            
+          
+          
+            <a href='https://confluentinc.github.io/live-labs/'></a> > <a href='https://confluentinc.github.io/live-labs/aws/'>AWS</a> > Architecture Diagrams
+          
+        
           
         
           
@@ -434,7 +440,12 @@
                 
                     <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#fictionair">FictionAir</a></li>
+    <li><a href="#fictionmedia">FictionMedia</a></li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -450,24 +461,21 @@
           
             <h1>
               
-                category ::
-              
-              Categories
+              Architecture Diagrams
             </h1>
           
 
         
 
 
+<p>This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB).</p>
+<h2 id="fictionair">FictionAir</h2>
+<p><img src="https://confluentinc.github.io/live-labs/images/LiveLabs-AWS_S3-Redshift.png" alt=""></p>
+<h2 id="fictionmedia">FictionMedia</h2>
+<p><img src="https://confluentinc.github.io/live-labs/images/LiveLabs-AWS_DynamoDB.png" alt=""></p>
 
 
-
-<ul>
-	
-</ul>
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
@@ -571,6 +579,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -583,6 +592,7 @@
             
             
                 
+                    
                     
                 
                 
@@ -599,6 +609,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -655,8 +668,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="https://confluentinc.github.io/live-labs/aws/" title="AWS"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="https://confluentinc.github.io/live-labs/gcp/" title="GCP" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="https://confluentinc.github.io/live-labs/aws/prerequisites/" title="Prerequisites" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -688,3 +703,4 @@
 
   </body>
 </html>
+

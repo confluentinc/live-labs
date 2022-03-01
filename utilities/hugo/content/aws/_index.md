@@ -3,10 +3,12 @@ title = "AWS"
 date = 2022-02-26T04:16:06Z
 weight = 5
 chapter = true
-pre = "<b>X. </b>"
 +++
 
 ### AWS
+
+{{% children description="true" %}}
+
 
 # Build An End-to-End Streaming Data Pipeline with Confluent Cloud
 

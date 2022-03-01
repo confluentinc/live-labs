@@ -8,6 +8,25 @@
     <language>en-us</language>
     <lastBuildDate>Sat, 26 Feb 2022 04:16:06 +0000</lastBuildDate><atom:link href="https://confluentinc.github.io/live-labs/aws/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Architecture Diagrams</title>
+      <link>https://confluentinc.github.io/live-labs/aws/architecture/</link>
+      <pubDate>Mon, 28 Feb 2022 14:35:58 -0800</pubDate>
+      
+      <guid>https://confluentinc.github.io/live-labs/aws/architecture/</guid>
+      <description>This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB).
+FictionAir FictionMedia </description>
+    </item>
+    
+    <item>
+      <title>Prerequisites</title>
+      <link>https://confluentinc.github.io/live-labs/aws/prerequisites/</link>
+      <pubDate>Mon, 28 Feb 2022 14:38:56 -0800</pubDate>
+      
+      <guid>https://confluentinc.github.io/live-labs/aws/prerequisites/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Test</title>
       <link>https://confluentinc.github.io/live-labs/aws/test/</link>
       <pubDate>Sat, 26 Feb 2022 04:24:38 +0000</pubDate>

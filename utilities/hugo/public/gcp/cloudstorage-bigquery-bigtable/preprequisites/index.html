@@ -8,7 +8,7 @@
 
 
     <link rel="shortcut icon" href="https://confluentinc.github.io/live-labs/images/favicon.png" type="image/x-icon" />
-    <title>Categories :: Confluent Live Labs</title>
+    <title>Prerequisites :: Confluent Live Labs</title>
 
     
     <link href="https://confluentinc.github.io/live-labs/css/nucleus.css?1646093674" rel="stylesheet">
@@ -36,7 +36,7 @@
     </style>
     
   </head>
-  <body class="" data-url="https://confluentinc.github.io/live-labs/categories/">
+  <body class="" data-url="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/preprequisites/">
     <nav id="sidebar" class="">
 
 
@@ -145,7 +145,7 @@
   
     
     <li data-nav-id="/gcp/" title="GCP" class="dd-item
-        
+        parent
         
         
         ">
@@ -174,7 +174,7 @@
   
     
     <li data-nav-id="/gcp/cloudstorage-bigquery-bigtable/" title="CloudStorage Bigquery Bigtable" class="dd-item
-        
+        parent
         
         
         ">
@@ -200,7 +200,7 @@
  
   
     
-      <li data-nav-id="/gcp/cloudstorage-bigquery-bigtable/preprequisites/" title="Prerequisites" class="dd-item ">
+      <li data-nav-id="/gcp/cloudstorage-bigquery-bigtable/preprequisites/" title="Prerequisites" class="dd-item active">
         <a href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/preprequisites/">
         Prerequisites
         
@@ -423,7 +423,19 @@
             
           
           
-            <a href='https://confluentinc.github.io/live-labs/'></a> > Categories
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='https://confluentinc.github.io/live-labs/'></a> > <a href='https://confluentinc.github.io/live-labs/gcp/'>GCP</a> > <a href='https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/'>CloudStorage Bigquery Bigtable</a> > Prerequisites
+          
+        
+          
+        
           
         
           
@@ -434,7 +446,17 @@
                 
                     <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#sign-up-for-confluent-cloud-account">Sign up for Confluent Cloud Account</a></li>
+    <li><a href="#test-network-connectivity">Test Network Connectivity</a></li>
+    <li><a href="#sign-up-for-gcp-account">Sign up for GCP account</a></li>
+    <li><a href="#a-namestep1astep-1-log-into-confluent-cloud"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 1: Log into Confluent Cloud</a></li>
+    <li><a href="#a-namestep2astep-2-create-an-environment-and-cluster"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 2: Create an environment and cluster</a></li>
+    <li><a href="#a-namestep3astep-3-create-an-api-key-pair"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 3: Create an API key pair</a></li>
+    <li><a href="#a-namestep4astep-4-enable-schema-registery"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 4: Enable Schema Registery</a></li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -450,24 +472,108 @@
           
             <h1>
               
-                category ::
-              
-              Categories
+              Prerequisites
             </h1>
           
 
         
 
 
-
-
-
+<h2 id="sign-up-for-confluent-cloud-account">Sign up for Confluent Cloud Account</h2>
+<ol>
+<li>
+<p>Sign up for a Confluent Cloud account <a href="https://www.confluent.io/get-started/">here</a>.</p>
+</li>
+<li>
+<p>Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing &amp; payment”, then enter payment details under “Payment details &amp; contacts”.</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>Note:</strong> You will create resources during this lab that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the lab. More details on the specifics can be found <a href="https://www.confluent.io/get-started/">here</a>.</p>
+</blockquote>
+<h2 id="test-network-connectivity">Test Network Connectivity</h2>
+<ol>
+<li>Ports <code>443</code> and <code>9092</code> need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:</li>
+</ol>
 <ul>
-	
+<li>portquiz.net:443</li>
+<li>portquiz.net:9092</li>
 </ul>
+<h2 id="sign-up-for-gcp-account">Sign up for GCP account</h2>
+<ol>
+<li>In order to complete this lab, you need to have a GCP account. Sign up for an account <a href="https://cloud.google.com/">here</a>.</li>
+</ol>
+<hr>
+<h2 id="a-namestep1astep-1-log-into-confluent-cloud"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 1: Log into Confluent Cloud</h2>
+<ol>
+<li>First, access Confluent Cloud sign-in by navigating <a href="https://confluent.cloud">here</a>.</li>
+<li>When provided with the <em>username</em> and <em>password</em> prompts, fill in your credentials.
+<blockquote>
+<p><strong>Note:</strong> If you&rsquo;re logging in for the first time you will see a wizard that will walk you through the some tutorials. Minimize this as you will walk through these steps in this guide.</p>
+</blockquote>
+</li>
+</ol>
+<hr>
+<h2 id="a-namestep2astep-2-create-an-environment-and-cluster"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 2: Create an environment and cluster</h2>
+<p>An environment contains Confluent clusters and its deployed components such as Connect, ksqlDB, and Schema Registry. You have the ability to create different environments based on your company&rsquo;s requirements. Confluent has seen companies use environments to separate Development/Testing, Pre-Production, and Production clusters.</p>
+<ol>
+<li>
+<p>Click <strong>+ Add environment</strong>.</p>
+<blockquote>
+<p><strong>Note:</strong> There is a <em>default</em> environment ready in your account upon account creation. You can use this <em>default</em> environment for the purpose of this lab if you do not wish to create an additional environment.</p>
+</blockquote>
+<ul>
+<li>Specify a meaningful <code>name</code> for your environment and then click <strong>Create</strong>.
+<blockquote>
+<p><strong>Note:</strong> It will take a few minutes to assign the resources to make this new environment available for use.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p>Now that you have an environment, let&rsquo;s create a cluster. Select <strong>Create Cluster</strong>.</p>
+<blockquote>
+<p><strong>Note</strong>: Confluent Cloud clusters are available in 3 types: <strong>Basic</strong>, <strong>Standard</strong>, and <strong>Dedicated</strong>. Basic is intended for development use cases so you should use that for this lab. Basic clusters only support single zone availability. Standard and Dedicated clusters are intended for production use and support Multi-zone deployments. If you’re interested in learning more about the different types of clusters and their associated features and limits, refer to this <a href="https://docs.confluent.io/current/cloud/clusters/cluster-types.html">documentation</a>.</p>
+</blockquote>
+<ul>
+<li>
+<p>Choose the <strong>Basic</strong> cluster type.</p>
+</li>
+<li>
+<p>Click <strong>Begin Configuration</strong>.</p>
+</li>
+<li>
+<p>Choose <strong>GCP</strong> as your Cloud Provider and your preferred Region.</p>
+<blockquote>
+<p><strong>Note:</strong> We recommend you choose Las Vegas (west4) as the region for the purpose of this lab.</p>
+</blockquote>
+</li>
+<li>
+<p>Specify a meaningful <strong>Cluster Name</strong> and then review the associated <em>Configuration &amp; Cost</em>, <em>Usage Limits</em>, and <em>Uptime SLA</em> before clicking <strong>Launch Cluster</strong>.</p>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="a-namestep3astep-3-create-an-api-key-pair"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 3: Create an API key pair</h2>
+<ol>
+<li>Select API keys on the navigation menu.</li>
+<li>If this is your first API key within your cluster, click <strong>Create key</strong>. If you have set up API keys in your cluster in the past and already have an existing API key, click <strong>+ Add key</strong>.</li>
+<li>Select <strong>Global Access</strong>, then click Next.</li>
+<li>Save your API key and secret - you will need these during the lab.</li>
+<li>After creating and saving the API key, you will see this API key in the Confluent Cloud UI in the API keys tab. If you don’t see the API key populate right away, refresh the browser.</li>
+</ol>
+<hr>
+<h2 id="a-namestep4astep-4-enable-schema-registery"><!-- raw HTML omitted --><!-- raw HTML omitted -->Step 4: Enable Schema Registery</h2>
+<ol>
+<li>On the navigation menu, select <strong>Schema Registery</strong>.</li>
+<li>Click <strong>Set up on my own</strong>.</li>
+<li>Choose <strong>GCP</strong> as the cloud provider and a supported <strong>Region</strong></li>
+<li>Click on <strong>Enable Schema Registry</strong>.</li>
+</ol>
 
 
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
@@ -502,8 +608,6 @@
             
                 
                     
-                        
-                        
                     
                 
                 
@@ -520,6 +624,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -532,6 +637,7 @@
             
             
                 
+                    
                     
                 
                 
@@ -548,6 +654,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -655,8 +764,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/" title="CloudStorage Bigquery Bigtable"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="https://confluentinc.github.io/live-labs/gcp/" title="GCP" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/architecture-diagrams/" title="Architecture Diagrams" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -688,3 +799,4 @@
 
   </body>
 </html>
+

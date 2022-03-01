@@ -7,5 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 26 Feb 2022 06:28:04 +0000</lastBuildDate><atom:link href="https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Prerequisites</title>
+      <link>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/preprequisites/</link>
+      <pubDate>Mon, 28 Feb 2022 15:45:33 -0800</pubDate>
+      
+      <guid>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/preprequisites/</guid>
+      <description>Sign up for Confluent Cloud Account   Sign up for a Confluent Cloud account here.
+  Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing &amp;amp; payment”, then enter payment details under “Payment details &amp;amp; contacts”.
+   Note: You will create resources during this lab that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud.</description>
+    </item>
+    
+    <item>
+      <title>Architecture Diagrams</title>
+      <link>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/architecture-diagrams/</link>
+      <pubDate>Mon, 28 Feb 2022 15:47:59 -0800</pubDate>
+      
+      <guid>https://confluentinc.github.io/live-labs/gcp/cloudstorage-bigquery-bigtable/architecture-diagrams/</guid>
+      <description>   Source Connectors Sink Connectors      Datagen
+MySQL CDC  BigQuery
+Cloud Storage
+BigTable    FictionAir FictionMedia </description>
+    </item>
+    
   </channel>
 </rss>
