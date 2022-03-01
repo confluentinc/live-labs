@@ -12,8 +12,8 @@ theme = "hugo-theme-learn"
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
   themeVariant = "confluent"
 
-[[Languages.en.menu.shortcuts]]
-name = "<i class='fab fa-fw fa-github'></i> GitHub repo"
-identifier = "gh"
-url = "https://github.com/confluentinc/live-labs"
-weight = 10
+#[[Languages.en.menu.shortcuts]]
+#name = "<i class='fab fa-fw fa-github'></i> GitHub repo"
+#identifier = "gh"
+# url = "https://github.com/confluentinc/live-labs"
+# weight = 10
