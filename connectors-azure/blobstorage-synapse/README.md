@@ -2,16 +2,16 @@
    <img src="../../images/banner.png" width =75% heigth=75%>
 </div>
 
-# <div align="center">Building end-to-end streaming data pipeline with Confluent Cloud</div>
+# <div align="center">Building end-to-end streaming data pipelines with Confluent Cloud</div>
 ## <div align="center">Lab Guide</div>
 
-For this lab, we have two fictional companies. 
-1. An airline company: stores customer information in a MySQL database. It also has a website that customers can submit feedback in real time. 
+For this lab, we assume we own a fictional airline company called "FictionAir".
+
+FictionAir: stores customer information in a MySQL database. It also has a website that customers can submit feedback in real time. We will serve transformed and enriched data to 2 internal teams that have very different requirements
   * The analytics team decided to use Azure Synapse Analytics, a Cloud Data Warehouse. They want to be able to react to customers feedback as they become availabe. For example if a customer with Platinum club status had a bad experience, they want to reach out to them and sort things out. This team doesn't want to go to two different sources to get their data, they want the data to become available to them in a format and location they decided is the right choice for them. 
   * The AI team wants to use real world data to train and test their AI models. They don't want to go and find this data, so we are providing the customer rating data to them in Azure Blob Storage, which is a great solution to store large amounts of data for a long time.
-2. A media company: recently their userbase grew significantly and their database is struggling to keep up. They concluded that Azure Cosmos DB, a highly scalable NoSQL database, is the right choice for them, so they are migrating their users' information to Cosmos DB. 
 
-To keep things simple, we will utilize Datagen Source Connector to generate both **ratings** and **users** data ourseleves. Additionally, we will use MySQL CDC Source Connecter, Azure Synapse Analytics, Blob Storage, and Cosmos DB fully-managed connectors.  
+To keep things simple, we will utilize Datagen Source Connector to generate **ratings** data ourseleves. Additionally, we will use MySQL CDC Source Connecter, Azure Synapse Analytics, and Blob Storage fully-managed connectors.  
 
 ---
 
@@ -26,27 +26,20 @@ To keep things simple, we will utilize Datagen Source Connector to generate both
 1. [Create a Datagen Source connector](#step7)
 1. [Create customers topic](#step8)
 1. [Create a MySQL CDC Source connector](#step9)
-1. [Create "users" topic](#step10)
-1. [Create a Datagen Source connector](#step11)
-1. [Create Azure services](#step12)
-1. [Enrich data streams with ksqlDB](#step13)
-1. [Connect Synapse Analytics sink to Confluent Cloud](#step14)
-1. [Connect Blob Storage sink to Confluent Cloud](#step15)
-1. [Connect Cosmos DB sink to Confluent Cloud](#step16)
-1. [Clean up resources](#step17)
+1. [Create Azure services](#step10)
+1. [Enrich data streams with ksqlDB](#step11)
+1. [Connect Synapse Analytics sink to Confluent Cloud](#step12)
+1. [Connect Blob Storage sink to Confluent Cloud](#step13)
+1. [Confluent Cloud Stream Lineage](#step14)
+1. [Clean up resources](#step15)
 ---
 
 ## [Architecture Diagram](#architecture-diagram)
-This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (Azure Synapse Analytics, Blob Storage, and Cosmos DB). 
+This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and two fully-managed sink connectors (Azure Synapse Analytics and Blob Storage). 
 
 ## FictionAir
 <div align="center"> 
   <img src="../images/LiveLabs-Azure_Blob-Synapse.png" width =75% heigth=75%>
-</div>
-
-## FictionMedia
-<div align="center"> 
-  <img src="../images/LiveLabs-Azure_CosmosDB.png" width =75% heigth=75%>
 </div>
 
 ---
@@ -55,7 +48,6 @@ This lab will be utilizing two fully-managed source connectors (Datagen and MySQ
 ### Sign up for Confluent Cloud Account
 1. Sign up for a Confluent Cloud account [here](https://www.confluent.io/get-started/).
 
-2. Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”, then enter payment details under “Payment details & contacts”.
 
 > **Note:** You will create resources during this lab that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the lab. More details on the specifics can be found [here](https://www.confluent.io/get-started/).
 
@@ -113,7 +105,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 ## [Hands-on Lab](#handson)
 
-**You have successfully completed the prep work. You can stop at this point and complete the remaining steps during the live session**
+**You have successfully completed the prep work. You should stop at this point and complete the remaining steps during the live session**
 ---
 ## <a name="step5"></a>Step 1: Create a ksqlDB application
 > At Confluent we developed ksqlDB, the database purpose-built for stream processing applications. ksqlDB is built on top of Kafka Streams, powerful Java library for enriching, transforming, and processing real-time streams of data. Having Kafka Streams at its core means ksqlDB is built on well-designed and easily understood layers of abstractions. So now, beginners and experts alike can easily unlock and fully leverage the power of Kafka in a fun and accessible way.
@@ -184,33 +176,7 @@ An environment contains Confluent clusters and its deployed components such as C
 }
 ```
 ---
-## <a name="step10"></a>Step 6: Create "users" topic
-1. On the navigation menu, select **Topics**.
-> Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
-2. Type **users** as the Topic name and hit **Create with defaults**. 
----
-## <a name="step7"></a>Step 7: Create a Datagen Source connector
-1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
-1. In the search bar search for **Datagen** and select the **Datagen Source** which is a fully-managed connector. 
-1. Use the following parameters to configure your connector
-```
-{
-  "name": "DatagenSourceConnector_1",
-  "config": {
-    "connector.class": "DatagenSource",
-    "name": "DatagenSourceConnector_0",
-    "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<add_your_api_key>",
-    "kafka.api.secret": "<add_your_api_secret_key>",
-    "kafka.topic": "users",
-    "output.data.format": "AVRO",
-    "quickstart": "USERS",
-    "tasks.max": "1"
-  }
-}
-```
----
-## <a name="step11"></a>Step 8: Create Azure services
+## <a name="step10"></a>Step 8: Create Azure services
 
 ### Synapse
 1. Navigate to https://azure.microsoft.com/en-us/features/azure-portal/ and log into your account. 
@@ -293,34 +259,8 @@ Public level access: Private
 6. Click on **Review + create** and then click on **Create**.
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-azure-blob-sink.html).
 
-### Cosmos DB
-
-1. Create a **Cosmos DB** database with the following configurations and leave the remaining fields as default.
-```
-API option: Core (SQL) - Recommended
-Account name: confluent-cosmosdb-demo
-Location: East US 2
-Geo-Redundancy: Disable
-Multi-region Writes: Disable
-Availability Zones: Disable
-Backup storage redundancy: Locally-redundant backup storage
-```
-
-2. Click on **Review + create** and then click on **Create**.
-
-3. Once the deployment is completed successfully, click on **Go to resource**. 
-
-4. Use the left hand-side menu and navigate to **Data Explorer** and create a **Container** with the following configurations and leave the remaining fields as default.
-```
-Database id: confluent-cosmosdb-demo-database
-Container id: confluent-cosmosdb-demo-container
-Partition key: userid
-```
-4. Click on **OK**. 
-
-> For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-azure-cosmos-sink.html)
 ---
-## <a name="step12"></a>Step 9: Enrich data streams with ksqlDB
+## <a name="step11"></a>Step 9: Enrich data streams with ksqlDB
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
 With ksqlDB, you have the ability to leverage streams and tables from your topics in Confluent. A stream in ksqlDB is a topic with a schema and it records the history of what has happened in the world as a sequence of events. 
@@ -409,7 +349,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 
 14. Stop the running query by clicking on **Stop**.
 ---
-## <a name="step13"></a>Step 10: Connect Azure Synapse Analytics sink to Confluent Cloud
+## <a name="step12"></a>Step 10: Connect Azure Synapse Analytics sink to Confluent Cloud
 1. The next step is to sink data from Confluent Cloud into Synapse using the fully-managed Synapse Sink connector. The connector will continuosly run and send real time data into Synapse.
 2. First, you will create the connector that will automatically populate the SQL database in Azure Synapse Analytics with the **ratings-enriched** topic within Confluent Cloud. From the Confluent Cloud UI, click on the **Data Integration** tab on the navigation menu and select **+Add connector**. Search and click on the **Azure Synapse Analytics** icon.
 3. Enter the following configuration details. The remaining fields can be left blank.
@@ -448,7 +388,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 7. This should return you to the main Connectors landing page. Wait for your newly created connector to change status from **Provisioning** to **Running**.
 8. The instructor will show you how to query the BigQuery database and verify the data exist. 
 ---
-## <a name="step14"></a>Step 11: Connect Azure Blob Storage sink to Confluent Cloud
+## <a name="step13"></a>Step 11: Connect Azure Blob Storage sink to Confluent Cloud
 1. For this use case we only want to store the `ratings_live` stream in Azure Blob Storage and not the customers' information. 
 2. Use the left handside menu and navigate to **Data Integration** and go to **Connectors**. Click on **+Add connector**. Search for **Azure Blob** and click on the Azure Blob Storage Sink icon.
 3. Enter the following configuration details. The remaining fields can be left blank.
@@ -475,45 +415,30 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 ```
 4. The instructor will show you how to verify data exists in Storage Sink. 
 ---
-## <a name="step15"></a>Step 12: Connect Cosmos DB sink to Confluent Cloud
-1. For this use case, we will be streaming the **users** topic to BigTable database. 
-2.We will use Single Message Transforms (SMT) to convert the timestamp to `String`.
-3. Enter the following configuration details. The remaining fields can be left blank. 
-```
-{
-  "name": "CosmosDbSinkConnector_0",
-  "config": {
-    "connector.class": "CosmosDbSink",
-    "name": "CosmosDbSinkConnector_1",
-    "input.data.format": "AVRO",
-    "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "****************",
-    "kafka.api.secret": "****************************************************************",
-    "topics": "users",
-    "connect.cosmos.connection.endpoint": "https://confluent-cosmosdb-demo.documents.azure.com:443/",
-    "connect.cosmos.master.key": "****************************************************************************************",
-    "connect.cosmos.databasename": "confluent-cosmosdb-demo-database",
-    "connect.cosmos.containers.topicmap": "users#confluent-cosmosdb-demo-container",
-    "cosmos.id.strategy": ""KafkaMetadataStrategy",
-    "tasks.max": "1",
-    "transforms": "convert ",
-    "transforms.convert.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-    "transforms.convert.target.type": "string",
-    "transforms.convert.field": "registertime",
-    "transforms.convert.format": "yyyy-MM-dd"
-  }
-```
-5. The instructor will show you how to verify data exists in CosmosDB container.
+## <a name="step14"></a>Step 11: Confluent Cloud Stream Lineage
+Confluent gives you tools such as Stream Quality, Stream Catalog, and Stream Lineage to ensure your data is high quality, observable and discoverable. Learn more about the **Stream Governance** [here](https://www.confluent.io/product/stream-governance/) and refer to the [docs](https://docs.confluent.io/cloud/current/stream-governance/overview.html) page for detailed information. 
+1. Navigate to https://confluent.cloud
+2. Use the left hand-side menu and click on **Stream Lineage**. 
+Stream lineage provides a graphical UI of the end to end flow of your data. Both from the a bird’s eye view and drill-down magnification for answering questions like:
+    * Where did data come from?
+    * Where is it going?
+    * Where, when, and how was it transformed?
+In the bird's eye view you see how one stream feeds into another one. As your pipeline grows and becomes more complex, you can use Stream lineage to debug and see where things go wrong and break.
+<div align="center" padding=25px>
+   <img src="../images/stream-lineage.png" width =75% heigth=75%>
+</div>
+
 ---
-## <a name="step16"></a>Step 13: Clean up resources
+## <a name="step15"></a>Step 13: Clean up resources
 Deleting the resources you created during this lab will prevent you from incurring additional charges.
 1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
 1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
 1. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
 1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
-1. Go to https://azure.microsoft.com/en-us/features/azure-portal/ and delete Azure Synapse Analytics, Blob Storage, and Cosmos DB. Additionally, you can delete any additional services you created for this lab. 
+1. Go to https://azure.microsoft.com/en-us/features/azure-portal/ and delete Azure Synapse Analytics and Blob Storage. Additionally, you can delete any additional services you created for this lab. 
+
 ---
-## <a name="step17"></a>Confluent Resources and Further Testing
+## <a name="step16"></a>Confluent Resources and Further Testing
 
 Here are some links to check out if you are interested in further testing:
 
