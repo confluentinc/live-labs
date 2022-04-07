@@ -415,15 +415,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 ```
 4. The instructor will show you how to verify data exists in S3. 
 ---
-## <a name="step14"></a>Step 10: Clean up resources
-Deleting the resources you created during this lab will prevent you from incurring additional charges.
-1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
-1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
-1. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
-1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
-1. Go to https://aws.amazon.com/console/ and delete Redshift cluster and S3 bucket. Additionally, you can delete IAM policy and user you created for this lab. 
----
-## <a name="step15"></a>Step 11: Confluent Cloud Stream Lineage 
+## <a name="step14"></a>Step 10: Confluent Cloud Stream Lineage 
 Confluent gives you tools such as Stream Quality, Stream Catalog, and Stream Lineage to ensure your data is high quality, observable and discoverable. Learn more about the **Stream Governance** [here](https://www.confluent.io/product/stream-governance/) and refer to the [docs](https://docs.confluent.io/cloud/current/stream-governance/overview.html) page for detailed information. 
 1. Navigate to https://confluent.cloud
 2. Use the left hand-side menu and click on **Stream Lineage**. 
@@ -435,6 +427,15 @@ In the bird's eye view you see how one stream feeds into another one. As your pi
 <div align="center" padding=25px>
    <img src="../images/stream-lineage.png" width =75% heigth=75%>
 </div>
+
+---
+## <a name="step15"></a>Step 11: Clean up resources
+Deleting the resources you created during this lab will prevent you from incurring additional charges.
+1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
+1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
+1. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
+1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
+1. Go to https://aws.amazon.com/console/ and delete Redshift cluster and S3 bucket. Additionally, you can delete IAM policy and user you created for this lab. 
 ---
 ## <a name="step16"></a>Confluent Resources and Further Testing
 

@@ -176,7 +176,7 @@ An environment contains Confluent clusters and its deployed components such as C
 }
 ```
 ---
-## <a name="step11"></a>Step 8: Create Azure services
+## <a name="step10"></a>Step 8: Create Azure services
 
 ### Synapse
 1. Navigate to https://azure.microsoft.com/en-us/features/azure-portal/ and log into your account. 
@@ -260,7 +260,7 @@ Public level access: Private
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-azure-blob-sink.html).
 
 ---
-## <a name="step12"></a>Step 9: Enrich data streams with ksqlDB
+## <a name="step11"></a>Step 9: Enrich data streams with ksqlDB
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
 With ksqlDB, you have the ability to leverage streams and tables from your topics in Confluent. A stream in ksqlDB is a topic with a schema and it records the history of what has happened in the world as a sequence of events. 
@@ -349,7 +349,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 
 14. Stop the running query by clicking on **Stop**.
 ---
-## <a name="step13"></a>Step 10: Connect Azure Synapse Analytics sink to Confluent Cloud
+## <a name="step12"></a>Step 10: Connect Azure Synapse Analytics sink to Confluent Cloud
 1. The next step is to sink data from Confluent Cloud into Synapse using the fully-managed Synapse Sink connector. The connector will continuosly run and send real time data into Synapse.
 2. First, you will create the connector that will automatically populate the SQL database in Azure Synapse Analytics with the **ratings-enriched** topic within Confluent Cloud. From the Confluent Cloud UI, click on the **Data Integration** tab on the navigation menu and select **+Add connector**. Search and click on the **Azure Synapse Analytics** icon.
 3. Enter the following configuration details. The remaining fields can be left blank.
@@ -388,7 +388,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 7. This should return you to the main Connectors landing page. Wait for your newly created connector to change status from **Provisioning** to **Running**.
 8. The instructor will show you how to query the BigQuery database and verify the data exist. 
 ---
-## <a name="step14"></a>Step 11: Connect Azure Blob Storage sink to Confluent Cloud
+## <a name="step13"></a>Step 11: Connect Azure Blob Storage sink to Confluent Cloud
 1. For this use case we only want to store the `ratings_live` stream in Azure Blob Storage and not the customers' information. 
 2. Use the left handside menu and navigate to **Data Integration** and go to **Connectors**. Click on **+Add connector**. Search for **Azure Blob** and click on the Azure Blob Storage Sink icon.
 3. Enter the following configuration details. The remaining fields can be left blank.
@@ -415,15 +415,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 ```
 4. The instructor will show you how to verify data exists in Storage Sink. 
 ---
-## <a name="step16"></a>Step 13: Clean up resources
-Deleting the resources you created during this lab will prevent you from incurring additional charges.
-1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
-1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
-1. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
-1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
-1. Go to https://azure.microsoft.com/en-us/features/azure-portal/ and delete Azure Synapse Analytics, Blob Storage, and Cosmos DB. Additionally, you can delete any additional services you created for this lab. 
----
-## <a name="step15"></a>Step 11: Confluent Cloud Stream Lineage
+## <a name="step14"></a>Step 11: Confluent Cloud Stream Lineage
 Confluent gives you tools such as Stream Quality, Stream Catalog, and Stream Lineage to ensure your data is high quality, observable and discoverable. Learn more about the **Stream Governance** [here](https://www.confluent.io/product/stream-governance/) and refer to the [docs](https://docs.confluent.io/cloud/current/stream-governance/overview.html) page for detailed information. 
 1. Navigate to https://confluent.cloud
 2. Use the left hand-side menu and click on **Stream Lineage**. 
@@ -435,8 +427,17 @@ In the bird's eye view you see how one stream feeds into another one. As your pi
 <div align="center" padding=25px>
    <img src="../images/stream-lineage.png" width =75% heigth=75%>
 </div>
----
 
+---
+## <a name="step15"></a>Step 13: Clean up resources
+Deleting the resources you created during this lab will prevent you from incurring additional charges.
+1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
+1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
+1. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
+1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
+1. Go to https://azure.microsoft.com/en-us/features/azure-portal/ and delete Azure Synapse Analytics and Blob Storage. Additionally, you can delete any additional services you created for this lab. 
+
+---
 ## <a name="step16"></a>Confluent Resources and Further Testing
 
 Here are some links to check out if you are interested in further testing:
