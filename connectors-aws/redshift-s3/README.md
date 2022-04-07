@@ -5,7 +5,8 @@
 # <div align="center">Building end-to-end streaming data pipeline with Confluent Cloud</div>
 ## <div align="center">Lab Guide</div>
 
-For this lab, we assume we own a fictional airline company called "FictionAir" 
+For this lab, we assume we own a fictional airline company called "FictionAir".
+
 FictionAir: stores customer information in a MySQL database. It also has a website that customers can submit feedback in real time. We will serve transformed and enriched data to 2 internal teams that have very different requirements
   * The analytics team decided to use AWS Redshift, a Cloud Data Warehouse. They want to be able to react to customers feedback as they become availabe. For example if a customer with Platinum club status had a bad experience, they want to reach out to them and sort things out. This team doesn't want to go to two different sources to get their data, they want the data to become available to them in a format and location they decided is the right choice for them. 
   * The AI team wants to use real world data to train and test their AI models. They don't want to go and find this data, so we are providing the customer rating data to them in AWS S3, which is a great solution to store large amounts of data for a long time.
@@ -31,7 +32,8 @@ To keep things simple, we will utilize Datagen Source Connector to generate **ra
 1. [Connect Redshift sink to Confluent Cloud](#step12)
 1. [Connect S3 sink to Confluent Cloud](#step13)
 1. [Connect DynamoDB sink to Confluent Cloud](#step14)
-1. [Clean up resources](#step15)
+1. [Confluent Cloud Stream Lineage](#step15)
+1. [Clean up resources](#step16)
 ---
 
 ## [Architecture Diagram](#architecture-diagram)
@@ -104,7 +106,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 ## [Hands-on Lab](#handson)
 
-**You have successfully completed the prep work. You can stop at this point and complete the remaining steps during the live session**
+**You have successfully completed the prep work. You should stop at this point and complete the remaining steps during the live session**
 ---
 ## <a name="step5"></a>Step 1: Create a ksqlDB application
 > At Confluent we developed ksqlDB, the database purpose-built for stream processing applications. ksqlDB is built on top of Kafka Streams, powerful Java library for enriching, transforming, and processing real-time streams of data. Having Kafka Streams at its core means ksqlDB is built on well-designed and easily understood layers of abstractions. So now, beginners and experts alike can easily unlock and fully leverage the power of Kafka in a fun and accessible way.
@@ -257,26 +259,6 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 4. Create a key pair for `confluent-s3-demo-user` user and download the file to use it in later steps. 
 
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-s3-sink.html)
-
-5. Create a new **IAM Policy** with the following configurations and name it `confluent-dynamodb-demo-policy`. 
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "<optional-identifier>",
-            "Effect": "Allow",
-            "Action": [
-                "dynamodb:CreateTable",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:Scan",
-                "dynamodb:DescribeTable"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-```
 
 ---
 ## <a name="step11"></a>Step 7: Enrich data streams with ksqlDB
@@ -442,7 +424,21 @@ Deleting the resources you created during this lab will prevent you from incurri
 1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
 1. Go to https://aws.amazon.com/console/ and delete Redshift cluster and S3 bucket. Additionally, you can delete IAM policy and user you created for this lab. 
 ---
-## <a name="step15"></a>Confluent Resources and Further Testing
+## <a name="step15"></a>Step 11: Confluent Cloud Stream Lineage 
+Confluent gives you tools such as Stream Quality, Stream Catalog, and Stream Lineage to ensure your data is high quality, observable and discoverable. Learn more about the **Stream Governance** [here](https://www.confluent.io/product/stream-governance/) and refer to the [docs](https://docs.confluent.io/cloud/current/stream-governance/overview.html) page for detailed information. 
+1. Navigate to https://confluent.cloud
+2. Use the left hand-side menu and click on **Stream Lineage**. 
+Stream lineage provides a graphical UI of the end to end flow of your data. Both from the a bird’s eye view and drill-down magnification for answering questions like:
+    * Where did data come from?
+    * Where is it going?
+    * Where, when, and how was it transformed?
+In the bird's eye view you see how one stream feeds into another one. As your pipeline grows and becomes more complex, you can use Stream lineage to debug and see where things go wrong and break.
+<div align="center" padding=25px>
+   <img src="../images/stream-lineage.png" width =75% heigth=75%>
+</div>
+
+---
+## <a name="step16"></a>Confluent Resources and Further Testing
 
 Here are some links to check out if you are interested in further testing:
 
