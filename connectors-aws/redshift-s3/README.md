@@ -2,7 +2,7 @@
    <img src="../../images/banner.png" width =75% heigth=75%>
 </div>
 
-# <div align="center">Building end-to-end streaming data pipeline with Confluent Cloud</div>
+# <div align="center">Building end-to-end streaming data pipelines with Confluent Cloud</div>
 ## <div align="center">Lab Guide</div>
 
 For this lab, we assume we own a fictional airline company called "FictionAir".
@@ -31,9 +31,8 @@ To keep things simple, we will utilize Datagen Source Connector to generate **ra
 1. [Enrich data streams with ksqlDB](#step11)
 1. [Connect Redshift sink to Confluent Cloud](#step12)
 1. [Connect S3 sink to Confluent Cloud](#step13)
-1. [Connect DynamoDB sink to Confluent Cloud](#step14)
-1. [Confluent Cloud Stream Lineage](#step15)
-1. [Clean up resources](#step16)
+1. [Confluent Cloud Stream Lineage](#step14)
+1. [Clean up resources](#step15)
 ---
 
 ## [Architecture Diagram](#architecture-diagram)
@@ -436,7 +435,6 @@ In the bird's eye view you see how one stream feeds into another one. As your pi
 <div align="center" padding=25px>
    <img src="../images/stream-lineage.png" width =75% heigth=75%>
 </div>
-
 ---
 ## <a name="step16"></a>Confluent Resources and Further Testing
 

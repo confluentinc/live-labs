@@ -2,16 +2,15 @@
    <img src="../../images/banner.png" width =75% heigth=75%>
 </div>
 
-# <div align="center">Building end-to-end streaming data pipeline with Confluent Cloud</div>
+# <div align="center">Building end-to-end streaming data pipelines with Confluent Cloud</div>
 ## <div align="center">Lab Guide</div>
 
-For this lab, we have two fictional companies. 
-1. An airline company: stores customer information in a MySQL database. It also has a website that customers can submit feedback in real time. 
+For this lab, we assume we own a fictional airline company called "FictionAir".
+FictionAir: stores customer information in a MySQL database. It also has a website that customers can submit feedback in real time. We will serve transformed and enriched data to 2 internal teams that have very different requirements
   * The analytics team decided to use GCP BigQuery, a Cloud Data Warehouse. They want to be able to react to customers feedback as they become availabe. For example if a customer with Platinum club status had a bad experience, they want to reach out to them and sort things out. This team doesn't want to go to two different sources to get their data, they want the data to become available to them in a format and location they decided is the right choice for them. 
   * The AI team wants to use real world data to train and test their AI models. They don't want to go and find this data, so we are providing the customer rating data to them in GCP Cloud Storage, which is a great solution to store large amounts of data for a long time.
-2. A media company: recently their userbase grew significantly and their database is struggling to keep up. They concluded that GCP BigTable, a highly scalable NoSQL database, is the right choice for them, so they are migrating their users' information to BigTable. 
 
-To keep things simple, we will utilize Datagen Source Connector to generate both **ratings** and **users** data ourseleves. Additionally, we will use MySQL CDC Source Connecter, GCP BigQuery, Cloud Storage, and BigTable fully-managed connectors.  
+To keep things simple, we will utilize Datagen Source Connector to generate both **ratings** data ourseleves. Additionally, we will use MySQL CDC Source Connecter, GCP BigQuery and Cloud Storage fully-managed connectors.  
 
 ---
 
@@ -26,27 +25,20 @@ To keep things simple, we will utilize Datagen Source Connector to generate both
 1. [Create a Datagen Source connector](#step7)
 1. [Create customers topic](#step8)
 1. [Create a MySQL CDC Source connector](#step9)
-1. [Create "users" topic](#step10)
-1. [Create a Datagen Source connector](#step11)
-1. [Create GCP services](#step12)
-1. [Enrich data streams with ksqlDB](#step13)
-1. [Connect BigQuery sink to Confluent Cloud](#step14)
-1. [Connect Cloud Storage sink to Confluent Cloud](#step15)
-1. [Connect BigTable sink to Confluent Cloud](#step16)
-1. [Clean up resources](#step17)
+1. [Create GCP services](#step10)
+1. [Enrich data streams with ksqlDB](#step11)
+1. [Connect BigQuery sink to Confluent Cloud](#step12)
+1. [Connect Cloud Storage sink to Confluent Cloud](#step13)
+1. [Confluent Cloud Stream Lineage](#step14)
+1. [Clean up resources](#step15)
 ---
 
 ## [Architecture Diagram](#architecture-diagram)
-This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (GCP BigQuery, Cloud Storage, BigTable). 
+This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and two fully-managed sink connectors (GCP BigQuery and Cloud Storage). 
 
 ## FictionAir
 <div align="center"> 
   <img src="../images/LiveLabs-GCP_BigQuery-CloudStorage.png" width =75% heigth=75%>
-</div>
-
-## FictionMedia
-<div align="center"> 
-  <img src="../images/LiveLabs-GCP_BigTable.png" width =75% heigth=75%>
 </div>
 
 ---
@@ -113,7 +105,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 ## [Hands-on Lab](#handson)
 
-**You have successfully completed the prep work. You can stop at this point and complete the remaining steps during the live session**
+**You have successfully completed the prep work. You should stop at this point and complete the remaining steps during the live session**
 ---
 ## <a name="step5"></a>Step 1: Create a ksqlDB application
 > At Confluent we developed ksqlDB, the database purpose-built for stream processing applications. ksqlDB is built on top of Kafka Streams, powerful Java library for enriching, transforming, and processing real-time streams of data. Having Kafka Streams at its core means ksqlDB is built on well-designed and easily understood layers of abstractions. So now, beginners and experts alike can easily unlock and fully leverage the power of Kafka in a fun and accessible way.
@@ -184,32 +176,6 @@ An environment contains Confluent clusters and its deployed components such as C
 }
 ```
 ---
-## <a name="step10"></a>Step 6: Create "users" topic
-1. On the navigation menu, select **Topics**.
-> Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
-2. Type **users** as the Topic name and hit **Create with defaults**. 
----
-## <a name="step7"></a>Step 7: Create a Datagen Source connector
-1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
-1. In the search bar search for **Datagen** and select the **Datagen Source** which is a fully-managed connector. 
-1. Use the following parameters to configure your connector
-```
-{
-  "name": "DatagenSourceConnector_1",
-  "config": {
-    "connector.class": "DatagenSource",
-    "name": "DatagenSourceConnector_0",
-    "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<add_your_api_key>",
-    "kafka.api.secret": "<add_your_api_secret_key>",
-    "kafka.topic": "users",
-    "output.data.format": "AVRO",
-    "quickstart": "USERS",
-    "tasks.max": "1"
-  }
-}
-```
----
 ## <a name="step11"></a>Step 8: Create GCP services
 
 ### BigQuery
@@ -237,19 +203,6 @@ Storage class: Standard
 
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-gcs-sink.html).
 
-### BigTable
-
-1. Create a **BigTable** instance with the following configurations and leave the remaining fields as default.
-```
-Instance name: confluent-bigtable-demo
-Instance ID: <auto_generated>
-Storage type: SSD
-Location: Region. Pick the same region as your Confluent Cloud cluster (In this lab we use us-west-4).
-```
-2. Click on **CREATE**.
-
-> For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-gcp-bigtable-sink.html)
-
 ### Service Accounts
 
 1. You need to create a GCP Service Account so the Confluent Connectors can access GCP resources. For the purpose of this lab, we will create 1 Service Account and assign 3 roles to it. However, you should always follow best practices for production workloads. 
@@ -260,7 +213,7 @@ Location: Region. Pick the same region as your Confluent Cloud cluster (In this 
 ```
 Service account name: confluent-demo 
 Description: Account to be used during Confluent Cloud Live Lab
-Role: BigQuery Admin, Bigtable Administrator, Storage Admin
+Role: BigQuery Admin, Storage Admin
 ```
 
 4. Click **Grant** and then **Done**.
@@ -439,43 +392,20 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 ```
 4. The instructor will show you how to verify data exists in Storage Sink. 
 ---
-## <a name="step15"></a>Step 12: Connect BigTable sink to Confluent Cloud
-1. For this use case, we will be streaming the **users** topic to BigTable database. 
-2. We decided to concatenate `userid` and `regionid` fields to make the `rowkey` in BigTable
-3. Additionally, we will use Single Message Transforms (SMT) to convert the timestamp to `String`.
-4. Enter the following configuration details. The remaining fields can be left blank. 
-```
-{
-  "name": "BigTableSinkConnector_0",
-  "config": {
-    "topics": "users",
-    "input.data.format": "AVRO",
-    "input.key.format": "STRING",
-    "connector.class": "BigTableSink",
-    "name": "BigTableSinkConnector_0",
-    "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<add_your_api_key>",
-    "kafka.api.secret": "<add_your_api_secret_key>",
-    "gcp.bigtable.credentials.json": "<add_the_JSON_key_created_earlier>",
-    "gcp.bigtable.project.id": "<add_your_gcp_project_id>",
-    "gcp.bigtable.instance.id": "confluent-bigtable-demo",
-    "insert.mode": "UPSERT",
-    "table.name.format": "confluent-${topic}",
-    "bigtable.row.key.definition": "userid,regionid",
-    "bigtable.row.key.delimiter": "#",
-    "auto.create.tables": "true",
-    "tasks.max": "1",
-    "transforms": "Transform ",
-    "transforms.Transform.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-    "transforms.Transform.target.type": "string",
-    "transforms.Transform.field": "registertime",
-    "transforms.Transform.format": "yyyy-MM-dd"
-  }
-}
-
-```
-5. The instructor will show you how to verify data exists in BigTable table.
+## <a name="step15"></a>Step 11: Confluent Cloud Stream Lineage
+Confluent gives you tools such as Stream Quality, Stream Catalog, and Stream Lineage to ensure your data is high quality, observable and discoverable. Learn more about the **Stream Governance** [here](https://www.confluent.io/product/stream-governance/) and refer to the [docs](https://docs.confluent.io/cloud/current/stream-governance/overview.html) page for detailed information. 
+1. Navigate to https://confluent.cloud
+2. Use the left hand-side menu and click on **Stream Lineage**. 
+Stream lineage provides a graphical UI of the end to end flow of your data. Both from the a bird’s eye view and drill-down magnification for answering questions like:
+    * Where did data come from?
+    * Where is it going?
+    * Where, when, and how was it transformed?
+In the bird's eye view you see how one stream feeds into another one. As your pipeline grows and becomes more complex, you can use Stream lineage to debug and see where things go wrong and break.
+<div align="center" padding=25px>
+   <img src="../images/stream-lineage.png" width =75% heigth=75%>
+</div>
 ---
+
 ## <a name="step16"></a>Step 13: Clean up resources
 Deleting the resources you created during this lab will prevent you from incurring additional charges.
 1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
