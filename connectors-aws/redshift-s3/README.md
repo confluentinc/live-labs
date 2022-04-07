@@ -5,13 +5,13 @@
 # <div align="center">Building end-to-end streaming data pipeline with Confluent Cloud</div>
 ## <div align="center">Lab Guide</div>
 
-For this lab, we have two fictional companies. 
-1. An airline company: stores customer information in a MySQL database. It also has a website that customers can submit feedback in real time. 
+For this lab, we assume we own a fictional airline company called "FictionAir" 
+FictionAir: stores customer information in a MySQL database. It also has a website that customers can submit feedback in real time. We will serve transformed and enriched data to 2 internal teams that have very different requirements
   * The analytics team decided to use AWS Redshift, a Cloud Data Warehouse. They want to be able to react to customers feedback as they become availabe. For example if a customer with Platinum club status had a bad experience, they want to reach out to them and sort things out. This team doesn't want to go to two different sources to get their data, they want the data to become available to them in a format and location they decided is the right choice for them. 
   * The AI team wants to use real world data to train and test their AI models. They don't want to go and find this data, so we are providing the customer rating data to them in AWS S3, which is a great solution to store large amounts of data for a long time.
-2. A media company: recently their userbase grew significantly and their database is struggling to keep up. They concluded that AWS DynamoDB, a highly scalable NoSQL database, is the right choice for them, so they are migrating their users' information to DynamoDB. 
 
-To keep things simple, we will utilize Datagen Source Connector to generate both **ratings** and **users** data ourseleves. Additionally, we will use MySQL CDC Source Connecter, AWS Redshift, S3, and DynamoDB Sink fully-managed connectors.  
+
+To keep things simple, we will utilize Datagen Source Connector to generate **ratings** data ourseleves. Additionally, we will use MySQL CDC Source Connecter, AWS Redshift and S3 Sink fully-managed connectors.  
 
 ---
 
@@ -26,36 +26,27 @@ To keep things simple, we will utilize Datagen Source Connector to generate both
 1. [Create a Datagen Source connector](#step7)
 1. [Create customers topic](#step8)
 1. [Create a MySQL CDC Source connector](#step9)
-1. [Create "users" topic](#step10)
-1. [Create a Datagen Source connector](#step11)
-1. [Create AWS services](#step12)
-1. [Enrich data streams with ksqlDB](#step13)
-1. [Connect Redshift sink to Confluent Cloud](#step14)
-1. [Connect S3 sink to Confluent Cloud](#step15)
-1. [Connect DynamoDB sink to Confluent Cloud](#step16)
-1. [Clean up resources](#step17)
+1. [Create AWS services](#step10)
+1. [Enrich data streams with ksqlDB](#step11)
+1. [Connect Redshift sink to Confluent Cloud](#step12)
+1. [Connect S3 sink to Confluent Cloud](#step13)
+1. [Connect DynamoDB sink to Confluent Cloud](#step14)
+1. [Clean up resources](#step15)
 ---
 
 ## [Architecture Diagram](#architecture-diagram)
-This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and three fully-managed sink connectors (AWS Redshift, S3, and DynamoDB). 
+This lab will be utilizing two fully-managed source connectors (Datagen and MySQL CDC) and two fully-managed sink connectors (AWS Redshift and S3). 
 
 ## FictionAir
 <div align="center"> 
   <img src="../images/LiveLabs-AWS_S3-Redshift.png" width =75% heigth=75%>
 </div>
 
-## FictionMedia
-<div align="center"> 
-  <img src="../images/LiveLabs-AWS_DynamoDB.png" width =75% heigth=75%>
-</div>
-
 ---
 ## [Prerequisites](#prerequisites)
 
 ### Sign up for Confluent Cloud Account
-1. Sign up for a Confluent Cloud account [here](https://www.confluent.io/get-started/).
-
-2. Once you have signed up and logged in, click on the menu icon at the upper right hand corner, click on “Billing & payment”, then enter payment details under “Payment details & contacts”.
+Sign up for a Confluent Cloud account [here](https://www.confluent.io/get-started/).
 
 > **Note:** You will create resources during this lab that will incur costs. When you sign up for a Confluent Cloud account, you will get free credits to use in Confluent Cloud. This will cover the cost of resources created during the lab. More details on the specifics can be found [here](https://www.confluent.io/get-started/).
 
@@ -92,7 +83,7 @@ An environment contains Confluent clusters and its deployed components such as C
     * Click **Begin Configuration**.
 
     * Choose **AWS** as your Cloud Provider and your preferred Region.
-        > **Note:** AWS account with root permissions is required as your Cloud Provider since you will be utilizing Redshift, S3, and DynamoDB in this lab. We recommend you choose Oregon (west2) as the region. 
+        > **Note:** AWS account with root permissions is required as your Cloud Provider since you will be utilizing Redshift and S3 in this lab. We recommend you choose Oregon (US-West-2) as the region. 
 
     * Specify a meaningful **Cluster Name** and then review the associated *Configuration & Cost*, *Usage Limits*, and *Uptime SLA* before clicking **Launch Cluster**.
 
@@ -184,33 +175,7 @@ An environment contains Confluent clusters and its deployed components such as C
 }
 ```
 ---
-## <a name="step10"></a>Step 6: Create "users" topic
-1. On the navigation menu, select **Topics**.
-> Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
-2. Type **users** as the Topic name and hit **Create with defaults**. 
----
-## <a name="step7"></a>Step 7: Create a Datagen Source connector
-1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
-1. In the search bar search for **Datagen** and select the **Datagen Source** which is a fully-managed connector. 
-1. Use the following parameters to configure your connector
-```
-{
-  "name": "DatagenSourceConnector_1",
-  "config": {
-    "connector.class": "DatagenSource",
-    "name": "DatagenSourceConnector_0",
-    "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<add_your_api_key>",
-    "kafka.api.secret": "<add_your_api_secret_key>",
-    "kafka.topic": "users",
-    "output.data.format": "AVRO",
-    "quickstart": "USERS",
-    "tasks.max": "1"
-  }
-}
-```
----
-## <a name="step11"></a>Step 8: Create AWS services
+## <a name="step10"></a>Step 6: Create AWS services
 1. Navigate to https://aws.amazon.com/console/ and log into your account. 
 > Note: you will need root level permissions in order to complete this lab. 
 
@@ -313,15 +278,8 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 }
 ```
 
-6. Create another **IAM User** and name it `confluent-dynamodb-demo-user`. This one will be used for DynamoDB.
-
-7. Attach `confluent-dynamodb-demo-policy` policy to `confluent-dynamodb-demo-user` user. 
-
-8. Create a key pair for `confluent-dynamodb-demo-user` user and download the file to use it in later steps.
-
-> For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-amazon-dynamo-db-sink.html)
 ---
-## <a name="step12"></a>Step 9: Enrich data streams with ksqlDB
+## <a name="step11"></a>Step 7: Enrich data streams with ksqlDB
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
 With ksqlDB, you have the ability to leverage streams and tables from your topics in Confluent. A stream in ksqlDB is a topic with a schema and it records the history of what has happened in the world as a sequence of events. 
@@ -410,7 +368,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 
 14. Stop the running query by clicking on **Stop**.
 ---
-## <a name="step13"></a>Step 10: Connect Redshift sink to Confluent Cloud
+## <a name="step12"></a>Step 8: Connect Redshift sink to Confluent Cloud
 1. The next step is to sink data from Confluent Cloud into Redshift using the fully-managed Redshift Sink connector. The connector will continuosly run and send real time data into Redshift.
 2. First, you will create the connector that will automatically create a Redshift table and populate that table with the data from the **ratings-enriched** topic within Confluent Cloud. From the Confluent Cloud UI, click on the **Data Integration** tab on the navigation menu and select **+Add connector**. Search and click on the Redshift Sink icon.
 3. Enter the following configuration details. The remaining fields can be left blank.
@@ -449,7 +407,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 7. This should return you to the main Connectors landing page. Wait for your newly created connector to change status from **Provisioning** to **Running**.
 8. The instructor will show you how to query the Redshift database and verify the data exist. 
 ---
-## <a name="step14"></a>Step 11: Connect S3 sink to Confluent Cloud
+## <a name="step13"></a>Step 9: Connect S3 sink to Confluent Cloud
 1. For this use case we only want to store the `ratings_live` stream in S3 and not the customers' information. 
 2. Use the left handside menu and navigate to **Data Integration** and go to **Connectors**. Click on **+Add connector**. Search for **S3** and click on the S3 Sink icon.
 3. Enter the following configuration details. The remaining fields can be left blank.
@@ -476,47 +434,15 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 ```
 4. The instructor will show you how to verify data exists in S3. 
 ---
-## <a name="step15"></a>Step 12: Connect DynamoDB sink to Confluent Cloud
-1. For this use case, we will be streaming the **users** topic to DynamoDB database. 
-2. We decided to use `userid` as the **hash key** and `regionid` as the **sort key** in DynamoDB.
-3. Additionally, we will use Single Message Transforms (SMT) to convert the timestamp to `String`.
-4. Enter the following configuration details. The remaining fields can be left blank. 
-```
-{
-  "name": "DynamoDbSinkConnector_0",
-  "config": {
-    "topics": "users",
-    "input.data.format": "AVRO",
-    "connector.class": "DynamoDbSink",
-    "name": "DynamoDbSinkConnector_0",
-    "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<dd_your_api_key>",
-    "kafka.api.secret": "<add_your_api_secret_key>",
-    "aws.access.key.id": "<add_access_key_for_confluent-dynamodb-demo-user>",
-    "aws.secret.access.key": "<add_secret_access_key_for_confluent-dynamodb-demo-user>",
-    "aws.dynamodb.pk.hash": "value.userid",
-    "aws.dynamodb.pk.sort": "value.regionid",
-    "table.name.format": "confluent-${topic}",
-    "tasks.max": "1",
-    "transforms": "timestamp ",
-    "transforms.timestamp.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-    "transforms.timestamp.target.type": "string",
-    "transforms.timestamp.field": "registertime",
-    "transforms.timestamp.format": "yyyy-MM-dd"
-  }
-}
-```
-5. The instructor will show you how to verify data exists in DynamoDB table.
----
-## <a name="step16"></a>Step 13: Clean up resources
+## <a name="step14"></a>Step 10: Clean up resources
 Deleting the resources you created during this lab will prevent you from incurring additional charges.
 1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
 1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
 1. Delete the Cluster by going to the **Settings** tab and then selecting **Delete cluster**
 1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
-1. Go to https://aws.amazon.com/console/ and delete Redshift cluster, DynamoDB table, and S3 bucket. Additionally, you can delete IAM policy and users you created for this lab. 
+1. Go to https://aws.amazon.com/console/ and delete Redshift cluster and S3 bucket. Additionally, you can delete IAM policy and user you created for this lab. 
 ---
-## <a name="step17"></a>Confluent Resources and Further Testing
+## <a name="step15"></a>Confluent Resources and Further Testing
 
 Here are some links to check out if you are interested in further testing:
 
