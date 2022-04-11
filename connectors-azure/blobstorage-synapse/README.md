@@ -83,7 +83,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
     * Click **Begin Configuration**.
 
-    * Choose **GCP** as your Cloud Provider and your preferred Region.
+    * Choose **Azure** as your Cloud Provider and your preferred Region.
         > **Note:** We recommend you choose East US 2 as the region for the purpose of this lab. 
 
     * Specify a meaningful **Cluster Name** and then review the associated *Configuration & Cost*, *Usage Limits*, and *Uptime SLA* before clicking **Launch Cluster**.
@@ -99,7 +99,7 @@ An environment contains Confluent clusters and its deployed components such as C
 ## <a name="step4"></a>Step 4: Enable Schema Registery
 1. On the navigation menu, select **Schema Registery**.
 1. Click **Set up on my own**.
-1. Choose **GCP** as the cloud provider and a supported **Region**
+1. Choose **Azure** as the cloud provider and a supported **Region**
 1. Click on **Enable Schema Registry**. 
 ---
 
