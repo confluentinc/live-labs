@@ -164,6 +164,7 @@ An environment contains Confluent clusters and its deployed components such as C
     "kafka.api.secret": "<add_your_api_secret_key>",
     "database.hostname": "<will_be_given_during_lab>",
     "database.port": "3306",
+    "database.connectionTimeZone": "America/Los_Angeles",
     "database.user": "<will_be_given_during_lab>",
     "database.password": "<will_be_given_during_lab>",
     "database.server.name": "mysql",
