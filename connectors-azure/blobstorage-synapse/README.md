@@ -299,7 +299,7 @@ SELECT * FROM RATINGS_LIVE EMIT CHANGES;
 8. Create a stream from customers topic.
 ```SQL
 CREATE STREAM CUSTOMERS_INFORMATION
-WITH (KAFKA_TOPIC ='mysql.demo.CUSTOMERS_INFO',
+WITH (KAFKA_TOPIC ='mysql.demo.customers_info',
       KEY_FORMAT  ='JSON',
       VALUE_FORMAT='AVRO');
 ```
@@ -365,7 +365,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "kafka.api.key": "****************",
     "kafka.api.secret": "****************************************************************",
     "azure.sql.dw.server.name": "confluent-sql-server-demo.database.windows.net",
-    "azure.sql.dw.user": "lab_admin",
+    "azure.sql.dw.user": "confluent_admin",
     "azure.sql.dw.password": "********",
     "azure.sql.dw.database.name": "confluentsqlpooldemo",
     "auto.create": "true",
@@ -381,7 +381,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 }
 
 ```
-4. In this lab, we decided to mask customer's date of birth before sinking the stream to BigQuery. We are leveraging Single Message Transforms (SMT) to achieve this goal. Since date of birth is of type `DATE` and we want to replace it with a string pattern, we will achieve our goal in a 2 step process. First, we will cast the date of birth from `DATE` to `String`, then we will replace that `String` value with a pattern we have pre-defined. 
+4. In this lab, we decided to mask customer's date of birth before sinking the stream to Synapse. We are leveraging Single Message Transforms (SMT) to achieve this goal. Since date of birth is of type `DATE` and we want to replace it with a string pattern, we will achieve our goal in a 2 step process. First, we will cast the date of birth from `DATE` to `String`, then we will replace that `String` value with a pattern we have pre-defined. 
 > For more information on Single Message Transforms (SMT) refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/single-message-transforms.html) or watch the series by Robin Moffatt, staff developer advocate at Confluent [here](https://www.youtube.com/watch?v=3Gj_SoyuTYk&list=PL5T99fPsK7pq7LiaaL-S6b7wQqzxyjgya&ab_channel=RobinMoffatt).
 5. Click on **Next**.
 6. Before launching the connector, you will be brought to the summary page. Once you have reviewed the configs and everything looks good, select **Launch**.
