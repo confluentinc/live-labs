@@ -205,7 +205,7 @@ Storage class: Standard
 
 ### Service Accounts
 
-1. You need to create a GCP Service Account so the Confluent Connectors can access GCP resources. For the purpose of this lab, we will create 1 Service Account and assign 3 roles to it. However, you should always follow best practices for production workloads. 
+1. You need to create a GCP Service Account so the Confluent Connectors can access GCP resources. For the purpose of this lab, we will create 1 Service Account and assign 2 roles to it. However, you should always follow best practices for production workloads. 
 
 2. Use the search bar and search for **IAM & Admin** and click on the result.  
 
@@ -249,17 +249,19 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
 
 To write streaming queries against topics, you will need to register the topics with ksqlDB as a stream and/or table.
 
-3. Create a ksqlDB stream from `ratings` topic.
+3. Set `auto.offset.reset` to `Earliest`.
+
+4. Create a ksqlDB stream from `ratings` topic.
 ```SQL
 CREATE STREAM RATINGS_OG WITH (KAFKA_TOPIC='ratings', VALUE_FORMAT='AVRO');
 ```
 
-4. Change **auto.offset.reset** to **Earliest** and see what's inside the `RATINGS_OG` stream by running the following query.
+5. Change **auto.offset.reset** to **Earliest** and see what's inside the `RATINGS_OG` stream by running the following query.
 ```SQL
 SELECT * FROM RATINGS_OG EMIT CHANGES;
 ```
 
-5. Create a new stream that doesn't include messages from `test` channel.
+6. Create a new stream that doesn't include messages from `test` channel.
 ```SQL
 CREATE STREAM RATINGS_LIVE AS 
     SELECT *
@@ -267,21 +269,21 @@ CREATE STREAM RATINGS_LIVE AS
     WHERE LCASE(CHANNEL) NOT LIKE '%test%'
     EMIT CHANGES;
 ```
-6. See what's inside `RATINGS_LIVE` stream by running the following query. 
+7. See what's inside `RATINGS_LIVE` stream by running the following query. 
 ```SQL
 SELECT * FROM RATINGS_LIVE EMIT CHANGES;
 ```
 
-7. Stop the running query by clicking on **Stop**.
+8. Stop the running query by clicking on **Stop**.
 
-8. Create a stream from customers topic.
+9. Create a stream from customers topic.
 ```SQL
 CREATE STREAM CUSTOMERS_INFORMATION
 WITH (KAFKA_TOPIC ='mysql.demo.CUSTOMERS_INFO',
       KEY_FORMAT  ='JSON',
       VALUE_FORMAT='AVRO');
 ```
-9. Create `customers` table based on `customers_information` stream you just created. 
+10. Create `customers` table based on `customers_information` stream you just created. 
 ```SQL
 CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     SELECT id                            AS customer_id,
@@ -294,14 +296,14 @@ CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     FROM    CUSTOMERS_INFORMATION 
     GROUP BY id;
 ```
-10. Check to see what's inside the `customers` table by running the following query. 
+11. Check to see what's inside the `customers` table by running the following query. 
 ```SQL
 SELECT * FROM CUSTOMERS;
 ```
 
-11. Now that we have a stream of ratings data and customer information, we can perform a join query to enrich our data stream. 
+12. Now that we have a stream of ratings data and customer information, we can perform a join query to enrich our data stream. 
 
-12. Create a new stream by running the following statement.
+13. Create a new stream by running the following statement.
 ```SQL
 CREATE STREAM RATINGS_WITH_CUSTOMER_DATA WITH (KAFKA_TOPIC='ratings-enriched') AS
     SELECT C.CUSTOMER_ID,
@@ -320,12 +322,12 @@ CREATE STREAM RATINGS_WITH_CUSTOMER_DATA WITH (KAFKA_TOPIC='ratings-enriched') A
         ON R.USER_ID = C.CUSTOMER_ID
 EMIT CHANGES;
 ```
-13. Change the **auto.offset.reset** to **Earliest** and see what's inside the newly created stream by running the following command.
+14. Change the **auto.offset.reset** to **Earliest** and see what's inside the newly created stream by running the following command.
 ```SQL
 SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 ```
 
-14. Stop the running query by clicking on **Stop**.
+15. Stop the running query by clicking on **Stop**.
 ---
 ## <a name="step12"></a>Step 10: Connect BigQuery sink to Confluent Cloud
 1. The next step is to sink data from Confluent Cloud into BigQuery using the fully-managed BigQuery Sink connector. The connector will continuosly run and send real time data into BigQuery.
