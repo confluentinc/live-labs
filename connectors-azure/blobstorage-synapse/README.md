@@ -83,7 +83,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
     * Click **Begin Configuration**.
 
-    * Choose **GCP** as your Cloud Provider and your preferred Region.
+    * Choose **Azure** as your Cloud Provider and your preferred Region.
         > **Note:** We recommend you choose East US 2 as the region for the purpose of this lab. 
 
     * Specify a meaningful **Cluster Name** and then review the associated *Configuration & Cost*, *Usage Limits*, and *Uptime SLA* before clicking **Launch Cluster**.
@@ -99,7 +99,7 @@ An environment contains Confluent clusters and its deployed components such as C
 ## <a name="step4"></a>Step 4: Enable Schema Registery
 1. On the navigation menu, select **Schema Registery**.
 1. Click **Set up on my own**.
-1. Choose **GCP** as the cloud provider and a supported **Region**
+1. Choose **Azure** as the cloud provider and a supported **Region**
 1. Click on **Enable Schema Registry**. 
 ---
 
@@ -164,6 +164,7 @@ An environment contains Confluent clusters and its deployed components such as C
     "kafka.api.secret": "<add_your_api_secret_key>",
     "database.hostname": "<will_be_given_during_lab>",
     "database.port": "3306",
+    "database.connectionTimeZone": "America/Los_Angeles",
     "database.user": "<will_be_given_during_lab>",
     "database.password": "<will_be_given_during_lab>",
     "database.server.name": "mysql",
@@ -271,17 +272,19 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
 
 To write streaming queries against topics, you will need to register the topics with ksqlDB as a stream and/or table.
 
-3. Create a ksqlDB stream from `ratings` topic.
+3. Set `auto.offset.reset` to `Earliest`.
+
+4. Create a ksqlDB stream from `ratings` topic.
 ```SQL
 CREATE STREAM RATINGS_OG WITH (KAFKA_TOPIC='ratings', VALUE_FORMAT='AVRO');
 ```
 
-4. Change **auto.offset.reset** to **Earliest** and see what's inside the `RATINGS_OG` stream by running the following query.
+5. Change **auto.offset.reset** to **Earliest** and see what's inside the `RATINGS_OG` stream by running the following query.
 ```SQL
 SELECT * FROM RATINGS_OG EMIT CHANGES;
 ```
 
-5. Create a new stream that doesn't include messages from `test` channel.
+6. Create a new stream that doesn't include messages from `test` channel.
 ```SQL
 CREATE STREAM RATINGS_LIVE AS 
     SELECT *
@@ -289,21 +292,21 @@ CREATE STREAM RATINGS_LIVE AS
     WHERE LCASE(CHANNEL) NOT LIKE '%test%'
     EMIT CHANGES;
 ```
-6. See what's inside `RATINGS_LIVE` stream by running the following query. 
+7. See what's inside `RATINGS_LIVE` stream by running the following query. 
 ```SQL
 SELECT * FROM RATINGS_LIVE EMIT CHANGES;
 ```
 
-7. Stop the running query by clicking on **Stop**.
+8. Stop the running query by clicking on **Stop**.
 
-8. Create a stream from customers topic.
+9. Create a stream from customers topic.
 ```SQL
 CREATE STREAM CUSTOMERS_INFORMATION
-WITH (KAFKA_TOPIC ='mysql.demo.CUSTOMERS_INFO',
+WITH (KAFKA_TOPIC ='mysql.demo.customers_info',
       KEY_FORMAT  ='JSON',
       VALUE_FORMAT='AVRO');
 ```
-9. Create `customers` table based on `customers_information` stream you just created. 
+10. Create `customers` table based on `customers_information` stream you just created. 
 ```SQL
 CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     SELECT id                            AS customer_id,
@@ -316,14 +319,14 @@ CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
     FROM    CUSTOMERS_INFORMATION 
     GROUP BY id;
 ```
-10. Check to see what's inside the `customers` table by running the following query. 
+11. Check to see what's inside the `customers` table by running the following query. 
 ```SQL
 SELECT * FROM CUSTOMERS;
 ```
 
-11. Now that we have a stream of ratings data and customer information, we can perform a join query to enrich our data stream. 
+12. Now that we have a stream of ratings data and customer information, we can perform a join query to enrich our data stream. 
 
-12. Create a new stream by running the following statement.
+13. Create a new stream by running the following statement.
 ```SQL
 CREATE STREAM RATINGS_WITH_CUSTOMER_DATA WITH (KAFKA_TOPIC='ratings-enriched') AS
     SELECT C.CUSTOMER_ID,
@@ -342,12 +345,12 @@ CREATE STREAM RATINGS_WITH_CUSTOMER_DATA WITH (KAFKA_TOPIC='ratings-enriched') A
         ON R.USER_ID = C.CUSTOMER_ID
 EMIT CHANGES;
 ```
-13. Change the **auto.offset.reset** to **Earliest** and see what's inside the newly created stream by running the following command.
+14. Change the **auto.offset.reset** to **Earliest** and see what's inside the newly created stream by running the following command.
 ```SQL
 SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 ```
 
-14. Stop the running query by clicking on **Stop**.
+15. Stop the running query by clicking on **Stop**.
 ---
 ## <a name="step12"></a>Step 10: Connect Azure Synapse Analytics sink to Confluent Cloud
 1. The next step is to sink data from Confluent Cloud into Synapse using the fully-managed Synapse Sink connector. The connector will continuosly run and send real time data into Synapse.
@@ -364,8 +367,8 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
     "kafka.auth.mode": "KAFKA_API_KEY",
     "kafka.api.key": "****************",
     "kafka.api.secret": "****************************************************************",
-    "azure.sql.dw.server.name": "confluent-sql-server-demo.database.windows.net",
-    "azure.sql.dw.user": "lab_admin",
+    "azure.sql.dw.server.name": "<add_your_sql_server_endpoint>",
+    "azure.sql.dw.user": "confluent_admin",
     "azure.sql.dw.password": "********",
     "azure.sql.dw.database.name": "confluentsqlpooldemo",
     "auto.create": "true",
@@ -381,7 +384,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 }
 
 ```
-4. In this lab, we decided to mask customer's date of birth before sinking the stream to BigQuery. We are leveraging Single Message Transforms (SMT) to achieve this goal. Since date of birth is of type `DATE` and we want to replace it with a string pattern, we will achieve our goal in a 2 step process. First, we will cast the date of birth from `DATE` to `String`, then we will replace that `String` value with a pattern we have pre-defined. 
+4. In this lab, we decided to mask customer's date of birth before sinking the stream to Synapse. We are leveraging Single Message Transforms (SMT) to achieve this goal. Since date of birth is of type `DATE` and we want to replace it with a string pattern, we will achieve our goal in a 2 step process. First, we will cast the date of birth from `DATE` to `String`, then we will replace that `String` value with a pattern we have pre-defined. 
 > For more information on Single Message Transforms (SMT) refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/single-message-transforms.html) or watch the series by Robin Moffatt, staff developer advocate at Confluent [here](https://www.youtube.com/watch?v=3Gj_SoyuTYk&list=PL5T99fPsK7pq7LiaaL-S6b7wQqzxyjgya&ab_channel=RobinMoffatt).
 5. Click on **Next**.
 6. Before launching the connector, you will be brought to the summary page. Once you have reviewed the configs and everything looks good, select **Launch**.
