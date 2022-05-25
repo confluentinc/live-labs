@@ -53,13 +53,13 @@ This lab will be utilizing two fully-managed source connectors (Datagen and MySQ
 
 ### Test Network Connectivity
 
-1. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
+Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
   * portquiz.net:443
   * portquiz.net:9092
     
-## Sign up for GCP account
+### Sign up for GCP account
 
-1. In order to complete this lab, you need to have a GCP account and a valid project. Sign up for an account [here](https://cloud.google.com/).
+In order to complete this lab, you need to have a GCP account and a valid project. Sign up for an account [here](https://cloud.google.com/).
 
 ---
 ## [Hands-on Lab](#handson)
