@@ -57,7 +57,7 @@ Ports `443` and `9092` need to be open to the public internet for outbound traff
   * portquiz.net:443
   * portquiz.net:9092
     
-## Sign up for AWS account
+### Sign up for AWS account
 
 In order to complete this lab, you need to have an AWS account that has root level permissions. Sign up for an AWS account [here](https://aws.amazon.com/account/).
 
