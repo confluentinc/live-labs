@@ -268,7 +268,7 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
 
 1. Navigate to confluent.cloud 
 2. Use the left handside menu and go to the ksqlDB application you created at the beginning of the lab.
-> You can interact with ksqlDB through the Editor. You can create a stream by using the CREATE STREAM statement and a table using the CREATE TABLE statement. If you’re interested in learning more about ksqlDB and the differences between streams and tables, I recommend reading these two blogs [here](https://www.confluent.io/blog/kafka-streams-tables-part-3-event-processing-fundamentals/) and [here](https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/) or watch ksqlDB 101 course on Confluent Developer [webiste](https://developer.confluent.io/learn-kafka/ksqldb/intro/). 
+> You can interact with ksqlDB through the Editor. You can create a stream by using the CREATE STREAM statement and a table using the CREATE TABLE statement. If you’re interested in learning more about ksqlDB and the differences between streams and tables, I recommend reading these two blogs [here](https://www.confluent.io/blog/kafka-streams-tables-part-3-event-processing-fundamentals/) and [here](https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/) or watch ksqlDB 101 course on Confluent Developer [website](https://developer.confluent.io/learn-kafka/ksqldb/intro/). 
 
 To write streaming queries against topics, you will need to register the topics with ksqlDB as a stream and/or table.
 
