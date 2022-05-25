@@ -62,6 +62,10 @@ Sign up for a Confluent Cloud account [here](https://www.confluent.io/get-starte
 1. In order to complete this lab, you need to have an AWS account that has root level permissions. Sign up for an AWS account [here](https://aws.amazon.com/account/).
 
 ---
+## [Hands-on Lab](#handson)
+
+**You have successfully completed the prep work. You should stop at this point and complete the remaining steps during the live session**
+---
 ## <a name="step1"></a>Step 1: Log into Confluent Cloud
 1. First, access Confluent Cloud sign-in by navigating [here](https://confluent.cloud).
 1. When provided with the *username* and *password* prompts, fill in your credentials.
@@ -102,12 +106,7 @@ An environment contains Confluent clusters and its deployed components such as C
 1. Choose **AWS** as the cloud provider and a supported **Region**
 1. Click on **Enable Schema Registry**. 
 ---
-
-## [Hands-on Lab](#handson)
-
-**You have successfully completed the prep work. You should stop at this point and complete the remaining steps during the live session**
----
-## <a name="step5"></a>Step 1: Create a ksqlDB application
+## <a name="step5"></a>Step 5: Create a ksqlDB application
 > At Confluent we developed ksqlDB, the database purpose-built for stream processing applications. ksqlDB is built on top of Kafka Streams, powerful Java library for enriching, transforming, and processing real-time streams of data. Having Kafka Streams at its core means ksqlDB is built on well-designed and easily understood layers of abstractions. So now, beginners and experts alike can easily unlock and fully leverage the power of Kafka in a fun and accessible way.
 1. On the navigation menu, select **ksqlDB**.
 1. Click on **Create cluster myself**.
@@ -116,12 +115,12 @@ An environment contains Confluent clusters and its deployed components such as C
 1. Select **1** as the cluster size. 
 1. Hit **Launch Cluster!**. 
 ---
-## <a name="step6"></a>Step 2: Create "ratings" topic
+## <a name="step6"></a>Step 6: Create "ratings" topic
 1. On the navigation menu, select **Topics**.
 > Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
 2. Type **ratings** as the Topic name and hit **Create with defaults**. 
 ---
-## <a name="step7"></a>Step 3: Create a Datagen Source connector
+## <a name="step7"></a>Step 7: Create a Datagen Source connector
 > Confluent offers 120+ pre-built [connectors](https://www.confluent.io/product/confluent-connectors/), enabling you to modernize your entire data architecture even faster. These connectors also provide you peace-of-mind with enterprise-grade security, reliability, compatibility, and support.
 1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
 1. In the search bar search for **Datagen** and select the **Datagen Source** which is a fully-managed connector that we will use to generate sample data with it. 
@@ -143,13 +142,13 @@ An environment contains Confluent clusters and its deployed components such as C
 }
 ```
 ---
-## <a name="step8"></a>Step 4: Create customers topic
+## <a name="step8"></a>Step 8: Create customers topic
 1. On the navigation menu, select **Topics**.
 > Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
 2. Type **mysql.demo.CUSTOMERS_INFO** as the Topic name. The name of the topic is crucial so make sure you use the exact name and capitalization. 
 3. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and **Retention time → Indefinite** and then click on **Create**.
 ---
-## <a name="step9"></a>Step 5: Create a MySQL CDC Source connector
+## <a name="step9"></a>Step 9: Create a MySQL CDC Source connector
 1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
 1. In the search bar search for **MySQL CDC** and select the **MySQL CDC Source** which is a fully-managed source connector. 
 1. Use the following parameters to configure your connector
@@ -176,7 +175,7 @@ An environment contains Confluent clusters and its deployed components such as C
 }
 ```
 ---
-## <a name="step10"></a>Step 6: Create AWS services
+## <a name="step10"></a>Step 10: Create AWS services
 1. Navigate to https://aws.amazon.com/console/ and log into your account. 
 > Note: you will need root level permissions in order to complete this lab. 
 
@@ -260,7 +259,7 @@ GRANT CREATE ON DATABASE <DB_NAME> TO <DB_USER>;
 > For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-s3-sink.html)
 
 ---
-## <a name="step11"></a>Step 7: Enrich data streams with ksqlDB
+## <a name="step11"></a>Step 11: Enrich data streams with ksqlDB
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
 With ksqlDB, you have the ability to leverage streams and tables from your topics in Confluent. A stream in ksqlDB is a topic with a schema and it records the history of what has happened in the world as a sequence of events. 
@@ -351,7 +350,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 
 15. Stop the running query by clicking on **Stop**.
 ---
-## <a name="step12"></a>Step 8: Connect Redshift sink to Confluent Cloud
+## <a name="step12"></a>Step 12: Connect Redshift sink to Confluent Cloud
 1. The next step is to sink data from Confluent Cloud into Redshift using the fully-managed Redshift Sink connector. The connector will continuosly run and send real time data into Redshift.
 2. First, you will create the connector that will automatically create a Redshift table and populate that table with the data from the **ratings-enriched** topic within Confluent Cloud. From the Confluent Cloud UI, click on the **Data Integration** tab on the navigation menu and select **+Add connector**. Search and click on the Redshift Sink icon.
 3. Enter the following configuration details. The remaining fields can be left blank.
@@ -390,7 +389,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 7. This should return you to the main Connectors landing page. Wait for your newly created connector to change status from **Provisioning** to **Running**.
 8. The instructor will show you how to query the Redshift database and verify the data exist. 
 ---
-## <a name="step13"></a>Step 9: Connect S3 sink to Confluent Cloud
+## <a name="step13"></a>Step 13: Connect S3 sink to Confluent Cloud
 1. For this use case we only want to store the `ratings_live` stream in S3 and not the customers' information. 
 2. Use the left handside menu and navigate to **Data Integration** and go to **Connectors**. Click on **+Add connector**. Search for **S3** and click on the S3 Sink icon.
 3. Enter the following configuration details. The remaining fields can be left blank.
@@ -417,7 +416,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 ```
 4. The instructor will show you how to verify data exists in S3. 
 ---
-## <a name="step14"></a>Step 10: Confluent Cloud Stream Lineage 
+## <a name="step14"></a>Step 14: Confluent Cloud Stream Lineage 
 Confluent gives you tools such as Stream Quality, Stream Catalog, and Stream Lineage to ensure your data is high quality, observable and discoverable. Learn more about the **Stream Governance** [here](https://www.confluent.io/product/stream-governance/) and refer to the [docs](https://docs.confluent.io/cloud/current/stream-governance/overview.html) page for detailed information. 
 1. Navigate to https://confluent.cloud
 2. Use the left hand-side menu and click on **Stream Lineage**. 
@@ -431,7 +430,7 @@ In the bird's eye view you see how one stream feeds into another one. As your pi
 </div>
 
 ---
-## <a name="step15"></a>Step 11: Clean up resources
+## <a name="step15"></a>Step 15: Clean up resources
 Deleting the resources you created during this lab will prevent you from incurring additional charges.
 1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
 1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
