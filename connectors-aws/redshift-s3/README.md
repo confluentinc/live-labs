@@ -53,19 +53,21 @@ Sign up for a Confluent Cloud account [here](https://www.confluent.io/get-starte
 
 ### Test Network Connectivity
 
-1. Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
+Ports `443` and `9092` need to be open to the public internet for outbound traffic. To check, try accessing the following from your web browser:
   * portquiz.net:443
   * portquiz.net:9092
     
 ## Sign up for AWS account
 
-1. In order to complete this lab, you need to have an AWS account that has root level permissions. Sign up for an AWS account [here](https://aws.amazon.com/account/).
+In order to complete this lab, you need to have an AWS account that has root level permissions. Sign up for an AWS account [here](https://aws.amazon.com/account/).
 
 ---
 ## [Hands-on Lab](#handson)
 
 **You have successfully completed the prep work. You should stop at this point and complete the remaining steps during the live session**
+
 ---
+
 ## <a name="step1"></a>Step 1: Log into Confluent Cloud
 1. First, access Confluent Cloud sign-in by navigating [here](https://confluent.cloud).
 1. When provided with the *username* and *password* prompts, fill in your credentials.
