@@ -1,8 +1,6 @@
 create database demo;
 use demo;
 
-select * from USERS_INFO; 
-
 create table USERS_INFO (
         id VARCHAR(6) PRIMARY KEY,
         first_name VARCHAR(50),
@@ -22,3 +20,5 @@ insert into USERS_INFO (id, first_name, last_name, dob, email, gender, trading_s
 insert into USERS_INFO (id, first_name, last_name, dob, email, gender, trading_status) values ('User_7', 'Fay', 'Huc', '1953-05-13', 'fhuc6@quantcast.com', 'Female', 'bronze');
 insert into USERS_INFO (id, first_name, last_name, dob, email, gender, trading_status) values ('User_8', 'Patti', 'Rosten', '1984-05-09', 'prosten7@ihg.com', 'Female', 'silver');
 insert into USERS_INFO (id, first_name, last_name, dob, email, gender, trading_status) values ('User_9', 'Even', 'Tinham', '1987-12-20', 'etinham8@facebook.com', 'Male', 'silver');
+
+select * from USERS_INFO; 
