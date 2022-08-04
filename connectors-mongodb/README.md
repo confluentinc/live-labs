@@ -8,11 +8,9 @@
 
 For this lab, we assume we own a fictional stock trading company called "Stocklia".
 
-Stocklia: stores clients' information in a MySQL database. It also has a website that clients can trade stocks in real time. We will serve transformed and enriched data to an internal audting team.
+Stocklia: stores clients' information in a MySQL database. It also has a website that clients can trade stocks in real time. We will serve transformed and enriched data to an internal team who will then be able to send instant notifications to users about their stock exchange request. Additionally, the team can store these transactions for auditing purposes.
 
-- The auditing team decided to use MongoDB Atlas. They want to be able to store stock exchange data for auditing purposes. They want to be able to capture stock trade and exchange request in real time and send notifications to each client instantly.
-
-To keep things simple, we will utilize Datagen Source Connector to generate **stock trades** data ourseleves. Additionally, we will use MySQL CDC Source Connecter and MongoDB Atlas Sink fully-managed connectors.
+To keep things simple, we will utilize Datagen Source Connector to generate **stock trades** data ourseleves. Additionally, we will use MySQL CDC Source Connecter and MongoDB Atlas Sink fully-managed connector.
 
 ---
 
@@ -69,7 +67,7 @@ In order to complete this lab, you need to have a MongoDB account. The free tier
 
 ### MySQL database
 
-In this lab, you will be connecting to a MySQL database that your instructor has set up earlier. However, you can follow [this](https://github.com/confluentinc/learn-kafka-courses/blob/main/data-pipelines/aws_rds_mysql.adoc) guide to set up your instance and use [`populate_mysql.sql](populate_mysql.sql) script to populate with user data.
+In this lab, you will be connecting to a MySQL database that your instructor has set up earlier. However, you can follow [this](https://github.com/confluentinc/learn-kafka-courses/blob/main/data-pipelines/aws_rds_mysql.adoc) guide to set up your instance and use [`populate_mysql.sql`](populate_mysql.sql) script to populate with user data.
 
 ---
 
@@ -181,18 +179,18 @@ An environment contains Confluent clusters and its deployed components such as C
 
    ```
     {
-    "name": "DatagenSourceConnector_0",
-    "config": {
-        "connector.class": "DatagenSource",
         "name": "DatagenSourceConnector_0",
-        "kafka.auth.mode": "KAFKA_API_KEY",
-        "kafka.api.key": "<add_your_api_key>",
-        "kafka.api.secret": "<add_your_api_secret_key>",
-        "kafka.topic": "stock_trades",
-        "output.data.format": "AVRO",
-        "quickstart": "STOCK_TRADES",
-        "tasks.max": "1"
-    }
+        "config": {
+            "connector.class": "DatagenSource",
+            "name": "DatagenSourceConnector_0",
+            "kafka.auth.mode": "KAFKA_API_KEY",
+            "kafka.api.key": "<add_your_api_key>",
+            "kafka.api.secret": "<add_your_api_secret_key>",
+            "kafka.topic": "stock_trades",
+            "output.data.format": "AVRO",
+            "quickstart": "STOCK_TRADES",
+            "tasks.max": "1"
+        }
     }
    ```
 
@@ -220,24 +218,24 @@ An environment contains Confluent clusters and its deployed components such as C
 
    ```
    {
-   "name": "MySql_CustomersInfo",
-   "config": {
-       "connector.class": "MySqlCdcSource",
-       "name": "MySql_CustomersInfo",
-       "kafka.auth.mode": "KAFKA_API_KEY",
-       "kafka.api.key": "<add_your_api_key>",
-       "kafka.api.secret": "<add_your_api_secret_key>",
-       "database.hostname": "kafka-data-pipelines.***.amazonaws.com",
-       "database.port": "3306",
-       "database.user": "admin",
-       "database.password": "<will_be_given_during_lab>",
-       "database.server.name": "mysql",
-       "database.ssl.mode": "preferred",
-       "snapshot.mode": "when_needed",
-       "output.data.format": "AVRO",
-       "after.state.only": "true",
-       "tasks.max": "1"
-   }
+    "name": "MySql_CustomersInfo",
+    "config": {
+        "connector.class": "MySqlCdcSource",
+        "name": "MySql_CustomersInfo",
+        "kafka.auth.mode": "KAFKA_API_KEY",
+        "kafka.api.key": "<add_your_api_key>",
+        "kafka.api.secret": "<add_your_api_secret_key>",
+        "database.hostname": "kafka-data-pipelines.***.amazonaws.com",
+        "database.port": "3306",
+        "database.user": "admin",
+        "database.password": "<will_be_given_during_lab>",
+        "database.server.name": "mysql",
+        "database.ssl.mode": "preferred",
+        "snapshot.mode": "when_needed",
+        "output.data.format": "AVRO",
+        "after.state.only": "true",
+        "tasks.max": "1"
+    }
    }
    ```
 
@@ -381,27 +379,27 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
 
    ```
    {
-   "name": "MongoDbAtlasSinkConnector_0",
-   "config": {
-    "connector.class": "MongoDbAtlasSink",
     "name": "MongoDbAtlasSinkConnector_0",
-    "input.data.format": "AVRO",
-    "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<dd_your_api_key>",
-    "kafka.api.secret": "<add_your_api_secret_key>",
-    "topics": "trades-enriched",
-    "connection.host": "<MongoDB_database_host_address>",
-    "connection.user": "<MongoDB_database_username>",
-    "connection.password": "<MongoDB_database_password>",
-    "database": "<MongoDB_database_name>",
-    "tasks.max": "1",
-    "transforms": "Transform0,Transform1",
-    "transforms.Transform0.type": "org.apache.kafka.connect.transforms.Cast$Value",
-    "transforms.Transform0.spec": "DOB:string",
-    "transforms.Transform1.type": "org.apache.kafka.connect.transforms.MaskField$Value",
-    "transforms.Transform1.fields": "DOB",
-    "transforms.Transform1.replacement": "<MASKED>"
-   }
+    "config": {
+        "connector.class": "MongoDbAtlasSink",
+        "name": "MongoDbAtlasSinkConnector_0",
+        "input.data.format": "AVRO",
+        "kafka.auth.mode": "KAFKA_API_KEY",
+        "kafka.api.key": "<dd_your_api_key>",
+        "kafka.api.secret": "<add_your_api_secret_key>",
+        "topics": "trades-enriched",
+        "connection.host": "<MongoDB_database_host_address>",
+        "connection.user": "<MongoDB_database_username>",
+        "connection.password": "<MongoDB_database_password>",
+        "database": "<MongoDB_database_name>",
+        "tasks.max": "1",
+        "transforms": "Transform0,Transform1",
+        "transforms.Transform0.type": "org.apache.kafka.connect.transforms.Cast$Value",
+        "transforms.Transform0.spec": "DOB:string",
+        "transforms.Transform1.type": "org.apache.kafka.connect.transforms.MaskField$Value",
+        "transforms.Transform1.fields": "DOB",
+        "transforms.Transform1.replacement": "<MASKED>"
+    }
    }
    ```
 
