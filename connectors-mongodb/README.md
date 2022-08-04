@@ -43,7 +43,7 @@ This lab will be utilizing two fully-managed source connectors (Datagen and MySQ
 ## Stocklia
 
 <div align="center"> 
-  <img src="../images/LiveLabs-MongoDBAtlasSink.png" width =75% heigth=75%>
+  <img src="images/LiveLabs-MongoDBAtlasSink.png" width =75% heigth=75%>
 </div>
 
 ---
@@ -430,7 +430,7 @@ _ Where did data come from?
 _ Where is it going? \* Where, when, and how was it transformed?
 In the bird's eye view you see how one stream feeds into another one. As your pipeline grows and becomes more complex, you can use Stream lineage to debug and see where things go wrong and break.
 <div align="center" padding=25px>
-   <img src="../images/stream-lineage.png" width =75% heigth=75%>
+   <img src="images/stream-lineage.png" width =75% heigth=75%>
 </div>
 
 ---
