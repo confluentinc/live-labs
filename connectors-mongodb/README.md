@@ -275,7 +275,7 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
    CREATE STREAM TRADES WITH(KAFKA_TOPIC='stock_trades', VALUE_FORMAT='AVRO');
    ```
 
-1. Change **auto.offset.reset** to **Earliest** and see what's inside the `TRADES` stream by running the following query.
+1. Make sure **auto.offset.reset** is set to **Earliest** and see what's inside the `TRADES` stream by running the following query.
 
    ```SQL
    SELECT * FROM TRADES EMIT CHANGES;
@@ -289,7 +289,7 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
    CREATE STREAM USERS_STREAM WITH (KAFKA_TOPIC ='mysql.demo.USERS_INFO', KEY_FORMAT  ='JSON', VALUE_FORMAT='AVRO');
    ```
 
-1. You can verify the `USERS_STREAM` stream below, but depending on when you provision the connector, you may miss it.
+1. Make sure **auto.offset.reset** is set to **Earliest** and verify the `USERS_STREAM` stream below.
 
    ```SQL
    SELECT * FROM USERS_STREAM EMIT CHANGES;
@@ -313,7 +313,7 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
 
    ```
 
-1. Check to see what's inside the `USERS` table by running the following query.
+1. Make sure **auto.offset.reset** is set to **Earliest** and check to see what's inside the `USERS` table by running the following query.
 
    ```SQL
    SELECT * FROM USERS;
@@ -329,7 +329,7 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
    EMIT CHANGES;
    ```
 
-1. Verify the `TRADES_REKEYED` stream is populated correctly.
+1. Make sure **auto.offset.reset** is set to **Earliest** and verify the `TRADES_REKEYED` stream is populated correctly.
 
    ```SQL
    SELECT * FROM TRADES_REKEYED EMIT CHANGES;
@@ -361,7 +361,7 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
 
    ```
 
-1. Verify the `TRADES_WITH_CUSTOMER_DATA` stream is populated correctly.
+1. Make sure **auto.offset.reset** is set to **Earliest** and verify the `TRADES_WITH_CUSTOMER_DATA` stream is populated correctly.
 
    ```SQL
    SELECT * FROM TRADES_WITH_CUSTOMER_DATA EMIT CHANGES;
