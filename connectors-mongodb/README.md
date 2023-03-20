@@ -239,6 +239,7 @@ An environment contains Confluent clusters and its deployed components such as C
     }
    }
    ```
+  1. This will take a while to provision. While provisioning, continue and create MongoDB Atlas cluster.
 
 ---
 
