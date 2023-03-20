@@ -289,7 +289,7 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
    CREATE STREAM USERS_STREAM WITH (KAFKA_TOPIC ='mysql.demo.USERS_INFO', KEY_FORMAT  ='JSON', VALUE_FORMAT='AVRO');
    ```
 
-1. Verify the `USERS_STREAM` stream is populated correctly.
+1. You can verify the `USERS_STREAM` stream below, but depending on when you provision the connector, you may miss it.
 
    ```SQL
    SELECT * FROM USERS_STREAM EMIT CHANGES;
