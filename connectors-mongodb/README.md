@@ -204,6 +204,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 1. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and **Retention time → Infinite** and then click on **Create**.
 
+1. When prompted to create a schema, click "Skip"
 ---
 
 ## <a name="step8"></a>Step 8: Create a MySQL CDC Source connector
