@@ -108,7 +108,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
    - Click **Begin Configuration**.
 
-   - Choose **AWS** as your Cloud Provider and your preferred Region.
+   - Choose **AWS** as your Cloud Provider and your preferred Region. For this lab, single zone availability is fine.
 
      > **Note:** All resources in this lab are created in Oregon (US-West-2) region and we recommend you choose the same.
 
