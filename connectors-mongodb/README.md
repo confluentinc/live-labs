@@ -168,7 +168,11 @@ An environment contains Confluent clusters and its deployed components such as C
 
 1. In the search bar search for **Datagen** and select the **Datagen Source** which is a fully-managed connector that we will use to generate sample data with it.
 
-1. Use the following parameters to configure your connector
+1. Select **Avro** for the **Output record value format** and **Stock Trades** for the **Template**. 
+
+1. For **Connector Sizing** Select 1 task.
+
+3. . The generated configuration should look something like this: 
 
    ```
     {
