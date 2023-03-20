@@ -249,7 +249,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 1. Create a cluster in AWS-US-West-2 (Oregon) and store the endpoint. **MongoDB Atlas must run in the same CSP and region as your Confluent Cloud cluster**. 
 
-1. By default, MongoDB Atlas does not allow external network connections from the Internet. To allow external connections, you can add a specific IP or a CIDR IP range using the IP Whitelist entry dialog box under the Network Access menu in MongoDB. In order for Confluent Cloud to connect to MongoDB Atlas, you need to specify the public IP address of your Confluent Cloud cluster. Add all of the Confluent Cloud egress IP addresses to the whitelist entry to your MongoDB Atlas cluster. For more information refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-mongo-db-sink.html#adding-an-ip-whitelist-entry).
+1. Under **Security -> Network Access**, add an **IP Whitelist Entry** of **0.0.0.0/0** for the purposes of this lab. By default, MongoDB Atlas does not allow external network connections from the Internet. More realistically, you should add a specific IP or a CIDR IP range using for Confluent Cloud. In order for Confluent Cloud to connect to MongoDB Atlas, you can specify the public IP address of your Confluent Cloud cluster. For more information refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-mongo-db-sink.html#adding-an-ip-whitelist-entry).
 
 ---
 
