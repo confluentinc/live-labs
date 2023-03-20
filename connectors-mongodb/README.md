@@ -156,6 +156,8 @@ An environment contains Confluent clusters and its deployed components such as C
 
 1. Type **stock_trades** as the Topic name and hit **Create with defaults**.
 
+1. When prompted to create a schema, click "Skip"
+
 ---
 
 ## <a name="step6"></a>Step 6: Create a Datagen Source connector
