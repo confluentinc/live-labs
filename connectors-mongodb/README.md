@@ -213,9 +213,9 @@ An environment contains Confluent clusters and its deployed components such as C
 
 1. In the search bar search for **MySQL CDC** and select the **MySQL CDC Source** which is a fully-managed source connector.
 
-1. You can click "Use an Existing API key" and enter the key you created, or you can create a new key here just for Datagen.
+1. You can click "Use an Existing API key" and enter the key you created, or you can create a new key here just for MySQL.
  
-1. Use the following parameters to configure your connector
+1. Use the following parameters to configure your connector. 
 
    ```
    {
