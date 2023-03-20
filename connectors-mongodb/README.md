@@ -156,7 +156,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 1. Type **stock_trades** as the Topic name and hit **Create with defaults**.
 
-1. When prompted to create a schema, click "Skip"
+1. When prompted to create a schema, click "Skip". We're using Avro which will automatically register with Schema Registry. 
 
 ---
 
@@ -204,7 +204,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 1. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and **Retention time → Infinite** and then click on **Create**.
 
-1. When prompted to create a schema, click "Skip"
+1. When prompted to create a schema, click "Skip".  We're using Avro which will automatically register with Schema Registry. 
 ---
 
 ## <a name="step8"></a>Step 8: Create a MySQL CDC Source connector
