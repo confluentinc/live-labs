@@ -202,7 +202,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 1. Type **mysql.demo.USERS_INFO** as the Topic name. The name of the topic is crucial so make sure you use the exact name and capitalization.
 
-1. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and **Retention time → Indefinite** and then click on **Create**.
+1. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and **Retention time → Infinite** and then click on **Create**.
 
 ---
 
