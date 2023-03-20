@@ -95,7 +95,10 @@ An environment contains Confluent clusters and its deployed components such as C
    > **Note:** There is a _default_ environment ready in your account upon account creation. You can use this _default_ environment for the purpose of this lab if you do not wish to create an additional environment.
 
    - Specify a meaningful `name` for your environment and then click **Create**.
-     > **Note:** It will take a few minutes to assign the resources to make this new environment available for use.
+     > **Note:** It could take a few minutes to assign the resources to make this new environment available for use.
+
+   - Select a **Stream Governance Package** to enable **Schema Registry**. The **essentials** package is fine.
+     > For this lab, choose **AWS** as the cloud provider and a supported **Region**.
 
 1. Now that you have an environment, let's create a cluster. Select **Create Cluster**.
 
@@ -127,19 +130,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 ---
 
-## <a name="step4"></a>Step 4: Enable Schema Registery
-
-1. On the navigation menu, select **Schema Registery**.
-
-1. Click **Set up on my own**.
-
-1. Choose **AWS** as the cloud provider and a supported **Region**.
-
-1. Click on **Enable Schema Registry**.
-
----
-
-## <a name="step5"></a>Step 5: Create a ksqlDB application
+## <a name="step4"></a>Step 4: Create a ksqlDB application
 
 > At Confluent we developed ksqlDB, the database purpose-built for stream processing applications. ksqlDB is built on top of Kafka Streams, powerful Java library for enriching, transforming, and processing real-time streams of data. Having Kafka Streams at its core means ksqlDB is built on well-designed and easily understood layers of abstractions. So now, beginners and experts alike can easily unlock and fully leverage the power of Kafka in a fun and accessible way.
 
@@ -157,7 +148,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 ---
 
-## <a name="step6"></a>Step 6: Create "stock_trades" topic
+## <a name="step5"></a>Step 5: Create "stock_trades" topic
 
 1. On the navigation menu, select **Topics**.
 
@@ -167,7 +158,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 ---
 
-## <a name="step7"></a>Step 7: Create a Datagen Source connector
+## <a name="step6"></a>Step 6: Create a Datagen Source connector
 
 > Confluent offers 120+ pre-built [connectors](https://www.confluent.io/product/confluent-connectors/), enabling you to modernize your entire data architecture even faster. These connectors also provide you peace-of-mind with enterprise-grade security, reliability, compatibility, and support.
 
@@ -196,7 +187,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 ---
 
-## <a name="step8"></a>Step 8: Create users topic
+## <a name="step7"></a>Step 7: Create users topic
 
 1. On the navigation menu, select **Topics**.
 
@@ -208,7 +199,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 ---
 
-## <a name="step9"></a>Step 9: Create a MySQL CDC Source connector
+## <a name="step8"></a>Step 8: Create a MySQL CDC Source connector
 
 1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
 
@@ -241,7 +232,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 ---
 
-## <a name="step10"></a>Step 10: Create MongoDB account
+## <a name="step9"></a>Step 9: Create MongoDB account
 
 1. Navigate to https://www.mongodb.com/ and log into your account.
 
@@ -251,7 +242,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 ---
 
-## <a name="step11"></a>Step 11: Enrich data streams with ksqlDB
+## <a name="step10"></a>Step 10: Enrich data streams with ksqlDB
 
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
@@ -369,7 +360,7 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
 
 ---
 
-## <a name="step12"></a>Step 12: Connect MongoDB sink to Confluent Cloud
+## <a name="step11"></a>Step 11: Connect MongoDB sink to Confluent Cloud
 
 1. The next step is to sink data from Confluent Cloud into MongoDB Atlas using the fully-managed MongoDB Sink connector. The connector will continuosly run and send real time data into MongoDB Atlas.
 
@@ -417,7 +408,7 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
 
 ---
 
-## <a name="step13"></a>Step 13: Confluent Cloud Stream Lineage
+## <a name="step12"></a>Step 12: Confluent Cloud Stream Lineage
 
 Confluent gives you tools such as Stream Quality, Stream Catalog, and Stream Lineage to ensure your data is high quality, observable and discoverable. Learn more about the **Stream Governance** [here](https://www.confluent.io/product/stream-governance/) and refer to the [docs](https://docs.confluent.io/cloud/current/stream-governance/overview.html) page for detailed information.
 
@@ -433,7 +424,7 @@ In the bird's eye view you see how one stream feeds into another one. As your pi
 
 ---
 
-## <a name="step14"></a>Step 14: Clean up resources
+## <a name="step13"></a>Step 13: Clean up resources
 
 Deleting the resources you created during this lab will prevent you from incurring additional charges.
 
@@ -449,7 +440,7 @@ Deleting the resources you created during this lab will prevent you from incurri
 
 ---
 
-## <a name="step15"></a>Confluent Resources and Further Testing
+## <a name="step14"></a>Confluent Resources and Further Testing
 
 Here are some links to check out if you are interested in further testing:
 
