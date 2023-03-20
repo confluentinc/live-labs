@@ -172,7 +172,7 @@ An environment contains Confluent clusters and its deployed components such as C
 
 1. For **Connector Sizing** Select 1 task.
 
-3. . The generated configuration should look something like this: 
+1. The generated configuration should look something like this: 
 
    ```
     {
@@ -190,6 +190,7 @@ An environment contains Confluent clusters and its deployed components such as C
         }
     }
    ```
+ 1. The datagen connector should provision fairly quickly. Select **topics** and **stock_trades** to see the rate of production to this topic. Select **messages** to see the data.
 
 ---
 
