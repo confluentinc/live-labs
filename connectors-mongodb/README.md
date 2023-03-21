@@ -216,28 +216,49 @@ An environment contains Confluent clusters and its deployed components such as C
 1. You can click "Use an Existing API key" and enter the key you created, or you can create a new key here just for MySQL.
  
 1. Use the following parameters to configure your connector. 
+    > **NOTE** snapshot.mode is an advanced configuration on the second screen
+    > **NOTE** **output.data.format** _must_ be avro, but the **output record key format** should be JSON. 
+    > **NOTE** MySQL Standard port number is **3306**
 
    ```
-   {
-    "name": "MySql_CustomersInfo",
-    "config": {
-        "connector.class": "MySqlCdcSource",
-        "name": "MySql_CustomersInfo",
-        "kafka.auth.mode": "KAFKA_API_KEY",
-        "kafka.api.key": "<add_your_api_key>",
-        "kafka.api.secret": "<add_your_api_secret_key>",
-        "database.hostname": "kafka-data-pipelines.***.amazonaws.com",
-        "database.port": "3306",
-        "database.user": "admin",
-        "database.password": "<will_be_given_during_lab>",
-        "database.server.name": "mysql",
-        "database.ssl.mode": "preferred",
-        "snapshot.mode": "when_needed",
-        "output.data.format": "AVRO",
-        "after.state.only": "true",
-        "tasks.max": "1"
-    }
-   }
+{
+  "name": "MySqlCdcSourceConnector_0",
+  "config": {
+    "connector.class": "MySqlCdcSource",
+    "name": "MySqlCdcSourceConnector_0",
+    "kafka.auth.mode": "KAFKA_API_KEY",
+    "kafka.api.key": "YAYZK2KRXU7UHVQE",
+    "kafka.api.secret": "****************************************************************",
+    "database.hostname": "kafka-data-pipelines.****.us-west-2.rds.amazonaws.com",
+    "database.port": "3306",
+    "database.user": "admin",
+    "database.password": "********************",
+    "database.server.name": "mysql",
+    "database.ssl.mode": "preferred",
+    "snapshot.mode": "when_needed",
+    "snapshot.locking.mode": "minimal",
+    "tombstones.on.delete": "true",
+    "poll.interval.ms": "1000",
+    "max.batch.size": "1000",
+    "event.processing.failure.handling.mode": "fail",
+    "heartbeat.interval.ms": "0",
+    "database.history.skip.unparseable.ddl": "false",
+    "event.deserialization.failure.handling.mode": "fail",
+    "inconsistent.schema.handling.mode": "fail",
+    "provide.transaction.metadata": "false",
+    "decimal.handling.mode": "precise",
+    "binary.handling.mode": "bytes",
+    "time.precision.mode": "connect",
+    "cleanup.policy": "delete",
+    "bigint.unsigned.handling.mode": "long",
+    "enable.time.adjuster": "true",
+    "output.data.format": "AVRO",
+    "after.state.only": "true",
+    "output.key.format": "JSON",
+    "json.output.decimal.format": "BASE64",
+    "tasks.max": "1"
+  }
+}
    ```
   1. This could take a while to provision. While provisioning, continue and create MongoDB Atlas cluster.
 
@@ -405,7 +426,7 @@ With ksqlDB, you have the ability to leverage streams and tables from your topic
    }
    ```
 
-1. In this lab, we decided to mask customer's date of birth before sinking the stream to MongoDB Atlas. We are leverage Single Message Transforms (SMT) to achieve this goal. Since date of birth is of type `DATE` and we want to replace it with a string pattern, we will achieve our goal in a 2 step process. First, we will cast the date of birth from `DATE` to `String`, then we will replace that `String` value with a pattern we have pre-defined.
+1. In this lab, we decided to mask customer's date of birth before sinking the stream to MongoDB Atlas. We are leverage Single Message Transforms (SMT) to achieve this goal. Since date of birth is of type `DATE` and we want to replace it with a string pattern, we will achieve our goal in a 2 step process. First, we will cast the date of birth from `DATE` to `String`, then we will replace that `String` value with a pattern we have pre-defined. The Single Message Transforms are available in the configuration UI of the MongoDB Connector.
 
    > For more information on Single Message Transforms (SMT) refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/single-message-transforms.html) or watch the series by Robin Moffatt, staff developer advocate at Confluent [here](https://www.youtube.com/watch?v=3Gj_SoyuTYk&list=PL5T99fPsK7pq7LiaaL-S6b7wQqzxyjgya&ab_channel=RobinMoffatt).
 
