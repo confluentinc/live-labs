@@ -215,24 +215,21 @@ An environment contains Confluent clusters and its deployed components such as C
 
 1. You can click "Use an Existing API key" and enter the key you created, or you can create a new key here just for MySQL.
  
-1. Use the following parameters to configure your connector. 
-    > **NOTE** snapshot.mode is an advanced configuration on the second screen
-    > **NOTE** **output.data.format** _must_ be avro, but the **output record key format** should be JSON. 
-    > **NOTE** MySQL Standard port number is **3306**
+1. Use the following parameters to configure your connector. **snapshot.mode** is an advanced configuration on the second screen. **output.data.format** _must_ be avro, but the **output record key format** should be JSON. The MySQL Standard port number is **3306**.
 
-   ```
+```
 {
   "name": "MySqlCdcSourceConnector_0",
   "config": {
     "connector.class": "MySqlCdcSource",
     "name": "MySqlCdcSourceConnector_0",
     "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<your-key>",
-    "kafka.api.secret": "<your-secret>",
-    "database.hostname": "kafka-data-pipelines.xxx.us-west-2.rds.amazonaws.com",
+    "kafka.api.key": "<your_key>",
+    "kafka.api.secret": "<your_secret>",
+    "database.hostname": "kafka-data-pipelines.<hostname>.us-west-2.rds.amazonaws.com",
     "database.port": "3306",
     "database.user": "admin",
-    "database.password": "<your password>",
+    "database.password": "<your_password>",
     "database.server.name": "mysql",
     "database.ssl.mode": "preferred",
     "snapshot.mode": "when_needed",
@@ -259,8 +256,7 @@ An environment contains Confluent clusters and its deployed components such as C
     "tasks.max": "1"
   }
 }
-   ```
-  1. This could take a while to provision. While provisioning, continue and create MongoDB Atlas cluster.
+```
 
 ---
 
