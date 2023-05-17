@@ -333,7 +333,7 @@ In the bird's eye view you see how one stream feeds into another one. As your pi
 </div>
 
 ---
-## <a name="step15"></a>Step 15: Clean up resources
+## <a name="step14"></a>Step 14: Clean up resources
 Deleting the resources you created during this lab will prevent you from incurring additional charges.
 1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
 1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
@@ -341,7 +341,7 @@ Deleting the resources you created during this lab will prevent you from incurri
 1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
 1. Go to https://console.cloud.google.com and delete BigQuery dataset and Storage Sink bucket. Additionally, you can delete Service Account User and credential file you created for this lab. 
 ---
-## <a name="step16"></a>Confluent Resources and Further Testing
+## <a name="step16"></a>Step 15: Confluent Resources and Further Testing
 
 Here are some links to check out if you are interested in further testing:
 
