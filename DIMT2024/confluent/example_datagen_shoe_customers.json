@@ -1,0 +1,14 @@
+{
+  "connector.class": "DatagenSource",
+  "name": "Datagen_Shoe_Customers",
+  "kafka.auth.mode": "KAFKA_API_KEY",
+  "kafka.api.key": "<add_your_api_key>",
+  "kafka.api.secret": "<add_your_api_secret_key>",
+  "kafka.topic": "customers",
+  "schema.context.name": "default",
+  "output.data.format": "AVRO",
+  "json.output.decimal.format": "BASE64",
+  "quickstart": "SHOE_CUSTOMERS",
+  "max.interval": "1000",
+  "tasks.max": "1"
+}
