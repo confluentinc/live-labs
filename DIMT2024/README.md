@@ -162,7 +162,7 @@ You can create the connector either through CLI or Confluent Cloud web UI.
    confluent kafka cluster use <your_cluster_id>
    ```
 
-1. Run the following commands to create Oracle CDC Source Premium and RabbitMQ Source connectors.
+1. Run the following commands to create Datagen source connectors.
 
    ```bash
    cd DIMT2024/confluent
