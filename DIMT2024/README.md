@@ -3,7 +3,7 @@
 Welcome to HappyFeet store - Where Every Step Matters! In this workshop, we harness the power of customer data, clickstreams, and order information to identify customers who spend minimal time on our website. Our goal is to launch a targeted marketing campaign that re-engages these customers, ensuring that every second they spend on our website is worthwhile. Join us in this journey to provide a personalized and memorable shopping experience at HappyFeet, where style, comfort, and exceptional customer service converge.
 
 <div align="center"> 
-  <img src="images/arch_diagram.png" width =100% heigth=100%>
+  <img src="images/arch_diagram_updated.png" width =100% heigth=100%>
 </div>
 
 ---
