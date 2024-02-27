@@ -387,7 +387,6 @@ Once the connector is in **Running** state navigate to **cloud.mongodb.com → C
 Refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-mongo-db-sink.html) for detailed instructions about this connector.
 
 ---
-
 ## CONGRATULATIONS
 
 Congratulations on building your streaming data pipelines in Confluent Cloud! Your complete pipeline should resemble the following one.
