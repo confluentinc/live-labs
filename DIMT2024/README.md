@@ -388,6 +388,16 @@ Refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/
 
 ---
 
+## CONGRATULATIONS
+
+Congratulations on building your streaming data pipelines in Confluent Cloud! Your complete pipeline should resemble the following one.
+
+   <div align="center"> 
+      <img src="images/stream_lineage.png">
+   </div>
+
+---
+
 # Teardown
 
 1. Run the following command to delete all connectors
