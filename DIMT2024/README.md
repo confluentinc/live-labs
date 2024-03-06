@@ -46,7 +46,16 @@ Create Confluent Cloud API keys by following [this](https://registry.terraform.i
 
 ### MongoDB Atlas
 
-Create an API key pair so Terraform can create resources in the Atlas cluster. Follow the instructions [here](https://registry.terraform.io/providers/mongodb/mongodbatlas/latest/docs#configure-atlas-programmatic-access).
+1. Log into [MongoDB web UI](cloud.mongodb.com).
+
+1. Use the left-hand side menu an navigate to **Settings** and copy the **Organization ID**. You'll update the `.accounts` file later with this value.
+
+1. Create an API key pair so Terraform can create resources in the Atlas cluster. To do this, use the left-hand and click on **Access Manager** then **Create API Key** on the top right-side of the screen.
+1. Add a description and select **Organization Owner** for the permission level.
+
+1. For detailed instructions and troubleshooting visit the [docs](https://registry.terraform.io/providers/mongodb/mongodbatlas/latest/docs#configure-atlas-programmatic-access).
+
+### Update the accounts file
 
 Update the `.accounts` file for the following variables with your credentials.
 
@@ -246,7 +255,7 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
     SELECT * FROM sales_per_minute;
     ```
 
-1.  Let's see how many records we have in the `shoes` table with the `id = '3586de8a-10a3-4997-96bf-9e08a3a7fb82'`. Since there are more than 1 records, you need to deduplicate the table.
+1.  Let's see how many records we have in the `shoes` table with the `id = '3586de8a-10a3-4997-96bf-9e08a3a7fb82'`. The connector generates random events which results in duplicated `id`. Since there are more than 1 records, you need to deduplicate the table.
 
     ```sql
     SELECT * FROM shoes WHERE id = '3586de8a-10a3-4997-96bf-9e08a3a7fb82';
@@ -304,7 +313,7 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
         INNER JOIN deduplicated_shoes s ON c.product_id = s.id;
     ```
 
-1.  Create a table to find all users with average view time of less then 30.
+1.  Create a table to find all users with average view time of less then 30 seconds. You'll achieve this by using Pattern Recognition. Refer to the [doc](https://docs.confluent.io/cloud/current/flink/reference/queries/match_recognize.html) for detailed information about Pattern Recoginition and how `MATCH_RECOGNIZE` works.
 
     ```sql
     CREATE TABLE inactive_users(
