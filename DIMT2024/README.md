@@ -14,7 +14,7 @@ In order to successfully complete this demo you need to install few tools before
 
 - If you don't have a Confluent Cloud account, sign up for a free trial [here](https://www.confluent.io/confluent-cloud/tryfree).
 - Install Confluent Cloud CLI by following the instructions [here](https://docs.confluent.io/confluent-cli/current/install.html).
-- Sign up for a free MongoDB Atlas account [here](https://www.mongodb.com/).
+- Sign up for a free MongoDB Atlas account [here](https://www.mongodb.com/cloud/atlas/register?utm_campaign=devrel&utm_source=workshop&utm_medium=cta&utm_content=Confluent%20x%20AWS%20x%20MongoDB%20Workshop%20%40%20Data%20in%20Motion%20Tour%20FY25&utm_term=jade.furubayashi).
 - Download and Install Terraform [here](https://developer.hashicorp.com/terraform/downloads?ajs_aid=837a4ee4-253b-4b3d-bf11-952575792ad1&product_intent=terraform)
 
   > **Note:** This demo was built and validate on a Mac (x86).
@@ -387,6 +387,7 @@ Once the connector is in **Running** state navigate to **cloud.mongodb.com → C
 Refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-mongo-db-sink.html) for detailed instructions about this connector.
 
 ---
+
 ## CONGRATULATIONS
 
 Congratulations on building your streaming data pipelines in Confluent Cloud! Your complete pipeline should resemble the following one.
