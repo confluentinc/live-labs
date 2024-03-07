@@ -57,8 +57,6 @@ Create Confluent Cloud API keys by following [this](https://registry.terraform.i
 
 ### Update the accounts file
 
-Create an API key pair so Terraform can create resources in the Atlas cluster. Follow the instructions [here](https://registry.terraform.io/providers/mongodb/mongodbatlas/latest/docs#configure-atlas-programmatic-access).
-
 Update the `.accounts` file for the following variables with your credentials.
 
 ```bash
@@ -247,7 +245,7 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
     INSERT INTO sales_per_minute
         SELECT window_start, window_end, COUNT(DISTINCT order_id) as nr_of_orders
         FROM TABLE(
-            TUMBLE(TABLE orders, DESCRIPTOR($rowtime), INTERVAL '1' MINUTE))
+            TUMBLE(TABLE orders, DESCRIPTOR(`$rowtime`), INTERVAL '1' MINUTE))
         GROUP BY window_start, window_end;
     ```
 
