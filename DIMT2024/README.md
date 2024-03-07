@@ -245,7 +245,7 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
     INSERT INTO sales_per_minute
         SELECT window_start, window_end, COUNT(DISTINCT order_id) as nr_of_orders
         FROM TABLE(
-            TUMBLE(TABLE orders, DESCRIPTOR($rowtime), INTERVAL '1' MINUTE))
+            TUMBLE(TABLE orders, DESCRIPTOR(`$rowtime`), INTERVAL '1' MINUTE))
         GROUP BY window_start, window_end;
     ```
 
