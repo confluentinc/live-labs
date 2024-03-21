@@ -205,7 +205,7 @@ Now that you have data flowing through Confluent, you can now easily build strea
 
 If you’re interested in learning more about Flink, you can take the Apache Flink 101 course on Confluent Developer [website](https://developer.confluent.io/courses/apache-flink/intro/).
 
-1.  Log into [Confluent Cloud web UI](confluent.cloud), then click on **Data_In_Motion_Tour** environment.
+1.  Log into Confluent Cloud web UI, then click on **Data_In_Motion_Tour** environment.
 1.  Click on **Flink (preview)** and then **Open SQL workspace**.
 1.  On the top right corner of your workspace select **Data_In_Motion_Tour** as the catalog and **dimt_kafka_cluster** as your database.
 
