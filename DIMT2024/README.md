@@ -40,7 +40,7 @@ In order to successfully complete this demo you need to install few tools before
 
 ### Confluent Cloud
 
-Create Confluent Cloud API keys by following [this](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/guides/sample-project#summary) guide.
+Create Confluent Cloud API keys by following [this](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/guides/sample-project#create-a-cloud-api-key) guide.
 
 > **Note:** This is different than Kafka cluster API keys.
 
@@ -187,7 +187,7 @@ You can create the connector either through CLI or Confluent Cloud web UI.
 <details>
     <summary><b>Confluent Cloud Web UI</b></summary>
 
-1. Log into Confluent Cloud by navigating to https://confluent.cloud
+1. Log into Confluent Cloud by navigating to confluent.io and click on the **Login** on the top right corner.
 1. Step into **Data_In_Motion_Tour** environment.
 1. Step into **dimt_kafka_cluster**.
 1. On the navigation menu, select **Connectors** and then **+ Add connector**.
