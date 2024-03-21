@@ -46,7 +46,7 @@ Create Confluent Cloud API keys by following [this](https://registry.terraform.i
 
 ### MongoDB Atlas
 
-1. Log into [MongoDB web UI](cloud.mongodb.com).
+1. Log into [MongoDB web UI](https://www.mongodb.com/).
 
 1. Use the left-hand side menu an navigate to **Settings** and copy the **Organization ID**. You'll update the `.accounts` file later with this value.
 
