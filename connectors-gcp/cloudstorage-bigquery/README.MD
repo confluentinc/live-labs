@@ -148,7 +148,7 @@ An environment contains Confluent clusters and its deployed components such as C
 1. On the navigation menu, select **Topics**.
 > Click **Create topic on my own** or if you already created a topic, click on the **+ Add topic** button on the top right side of the table.
 2. Type **mysql.demo.CUSTOMERS_INFO** as the Topic name. The name of the topic is crucial so make sure you use the exact name and capitalization. 
-3. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and **Retention time → Indefinite** and then click on **Create**.
+3. Click on **Show advanced settings** and under **Storage → Cleanup policy → Compact** and **Retention time → Infinite** and then click on **Create**.
 ---
 ## <a name="step9"></a>Step 9: Create a MySQL CDC Source connector
 1. On the navigation menu, select **Data Integration** and then **Connectors** and **+ Add connector**.
@@ -176,70 +176,19 @@ An environment contains Confluent clusters and its deployed components such as C
   }
 }
 ```
+
+```
+# DB Connection Info
+hostname: demo-users-db.cmeexwqmbbve.ca-central-1.rds.amazonaws.com
+username: admin
+password: WErXA$VgR2tLZE
+port: 3306
+database server name: mysql
+```
+
+
 ---
-## <a name="step10"></a>Step 10: Create GCP services
-
-### BigQuery
-1. Navigate to https://console.cloud.google.com and log into your account. 
-2. Use the search bar and search for **BigQuery**
-> You should have a valid project in Google Cloud in order to complete this lab. 
-3. Use the 3 dots next to your project name and click on **Create a new dataset** with following configuration. 
-```
-Dataset ID: confluent_bigquery_demo
-Data location: same as your Confluent Cloud Cluster (in this lab us-west-4).
-```
-4. Click on **CREATE DATASET**.
-
-> For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-gcp-bigquery-sink.html).
-
-### Cloud Storage
-
-1. Create a **Cloud Storage** bucket with the following configuration and leave the remaining fields as default.
-```
-Name: confluent-bucket-demo
-Location type: Region. Pick the same region as your Confluent Cloud cluster (In this lab we use us-west-4).
-Storage class: Standard
-```
-2. Click on **CREATE**.
-
-> For detailed instructions refer to our [documentation](https://docs.confluent.io/cloud/current/connectors/cc-gcs-sink.html).
-
-### Service Accounts
-
-1. You need to create a GCP Service Account so the Confluent Connectors can access GCP resources. For the purpose of this lab, we will create 1 Service Account and assign 2 roles to it. However, you should always follow best practices for production workloads. 
-
-2. Use the search bar and search for **IAM & Admin** and click on the result.  
-
-3. Expand the left hand side menu and go to Service Accounts and click on the **Create Service Account** and enter the following 
-```
-Service account name: confluent-demo 
-Description: Account to be used during Confluent Cloud Live Lab
-Role: BigQuery Admin, Storage Admin
-```
-
-4. Click **Grant** and then **Done**.
-
-5. Once the account is created, click on the 3 dots in **Actions** columns and hit **Manage Keys**.
-
-6. Click on **Add Key** and then on **Create a new key**. 
-
-7. Select `JSON` as key type. Keep this key somewhere safe as you will need it in later steps. The key resembles the example below:
-```
-{
- "type": "service_account",
- "project_id": "confluent-842583",
- "private_key_id": "...omitted...",
- "private_key": "-----BEGIN PRIVATE ...omitted... =\n-----END PRIVATE KEY-----\n",
- "client_email": "confluent2@confluent-842583.iam.gserviceaccount.com",
- "client_id": "...omitted...",
- "auth_uri": "https://accounts.google.com/oauth2/auth",
- "token_uri": "https://oauth2.googleapis.com/token",
- "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/certs",
- "client_x509_cert_url": "https://www.googleapis.com/robot/metadata/confluent2%40confluent-842583.iam.gserviceaccount.com"
-}
-```
----
-## <a name="step11"></a>Step 11: Enrich data streams with ksqlDB
+## <a name="step10"></a>Step 10: Enrich data streams with ksqlDB
 Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
 With ksqlDB, you have the ability to leverage streams and tables from your topics in Confluent. A stream in ksqlDB is a topic with a schema and it records the history of what has happened in the world as a sequence of events. 
@@ -267,7 +216,7 @@ SELECT * FROM RATINGS_OG EMIT CHANGES;
 CREATE STREAM RATINGS_LIVE AS 
     SELECT *
     FROM RATINGS_OG
-    WHERE LCASE(CHANNEL) NOT LIKE '%test%'
+    WHERE LCASE(CHANNEL) NOT LIKE '%test%' and USER_ID < 13
     EMIT CHANGES;
 ```
 7. See what's inside `RATINGS_LIVE` stream by running the following query. 
@@ -287,7 +236,7 @@ WITH (KAFKA_TOPIC ='mysql.demo.CUSTOMERS_INFO',
 10. Create `customers` table based on `customers_information` stream you just created. 
 ```SQL
 CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
-    SELECT id                            AS customer_id,
+    SELECT user_id                            AS customer_id,
            LATEST_BY_OFFSET(first_name)  AS first_name,
            LATEST_BY_OFFSET(last_name)   AS last_name,
            LATEST_BY_OFFSET(dob)         AS dob,
@@ -295,8 +244,9 @@ CREATE TABLE CUSTOMERS WITH (FORMAT='AVRO') AS
            LATEST_BY_OFFSET(gender)      AS gender,
            LATEST_BY_OFFSET(club_status) AS club_status
     FROM    CUSTOMERS_INFORMATION 
-    GROUP BY id;
+    GROUP BY user_id;
 ```
+
 11. Check to see what's inside the `customers` table by running the following query. 
 ```SQL
 SELECT * FROM CUSTOMERS;
@@ -330,7 +280,7 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 
 15. Stop the running query by clicking on **Stop**.
 ---
-## <a name="step12"></a>Step 12: Connect BigQuery sink to Confluent Cloud
+## <a name="step11"></a>Step 11: Connect BigQuery sink to Confluent Cloud
 1. The next step is to sink data from Confluent Cloud into BigQuery using the fully-managed BigQuery Sink connector. The connector will continuosly run and send real time data into BigQuery.
 2. First, you will create the connector that will automatically create a BigQuery table and populate that table with the data from the **ratings-enriched** topic within Confluent Cloud. From the Confluent Cloud UI, click on the **Data Integration** tab on the navigation menu and select **+Add connector**. Search and click on the BigQuery Sink icon.
 3. Enter the following configuration details. The remaining fields can be left blank.
@@ -368,34 +318,8 @@ SELECT * FROM RATINGS_WITH_CUSTOMER_DATA EMIT CHANGES;
 7. This should return you to the main Connectors landing page. Wait for your newly created connector to change status from **Provisioning** to **Running**.
 8. The instructor will show you how to query the BigQuery database and verify the data exist. 
 ---
-## <a name="step13"></a>Step 13: Connect Cloud Storage sink to Confluent Cloud
-1. For this use case we only want to store the `ratings_live` stream in Cloud Storage and not the customers' information. 
-2. Use the left handside menu and navigate to **Data Integration** and go to **Connectors**. Click on **+Add connector**. Search for **Google Cloud Storage Sink** and click on the Google Cloud Storage Sink icon.
-3. Enter the following configuration details. The remaining fields can be left blank.
-```
-{
-  "name": "GcsSinkConnector_0",
-  "config": {
-    "topics": "pksqlc**-RATINGS_LIVE",
-    "input.data.format": "AVRO",
-    "connector.class": "GcsSink",
-    "name": "GcsSinkConnector_0",
-    "kafka.auth.mode": "KAFKA_API_KEY",
-    "kafka.api.key": "<add_your_api_key>",
-    "kafka.api.secret": "<add_your_api_secret_key>",
-    "gcs.credentials.config": "<add_the_JSON_key_created_earlier>”,
-    "gcs.bucket.name": "confluent-bucket-demo",
-    "output.data.format": "JSON",
-    "time.interval": "HOURLY",
-    "flush.size": "1000",
-    "tasks.max": "1"
-  }
-}
 
-```
-4. The instructor will show you how to verify data exists in Storage Sink. 
----
-## <a name="step14"></a>Step 14: Confluent Cloud Stream Lineage
+## <a name="step13"></a>Step 13: Confluent Cloud Stream Lineage
 Confluent gives you tools such as Stream Quality, Stream Catalog, and Stream Lineage to ensure your data is high quality, observable and discoverable. Learn more about the **Stream Governance** [here](https://www.confluent.io/product/stream-governance/) and refer to the [docs](https://docs.confluent.io/cloud/current/stream-governance/overview.html) page for detailed information. 
 1. Navigate to https://confluent.cloud
 2. Use the left hand-side menu and click on **Stream Lineage**. 
@@ -409,7 +333,7 @@ In the bird's eye view you see how one stream feeds into another one. As your pi
 </div>
 
 ---
-## <a name="step15"></a>Step 15: Clean up resources
+## <a name="step14"></a>Step 14: Clean up resources
 Deleting the resources you created during this lab will prevent you from incurring additional charges.
 1. The first item to delete is the ksqlDB application. Select the **Delete** button under **Actions** and enter the Application Name to confirm the deletion.
 1. Delete the all source and sink connectors by navigating to **Connectors** in the navigation panel, clicking your connector name, then clicking the trash can icon in the upper right and entering the connector name to confirm the deletion.
@@ -417,7 +341,7 @@ Deleting the resources you created during this lab will prevent you from incurri
 1. Delete the Environment by expanding right hand menu and going to **Environments** tab and then clicking on **Delete** for the associated Environment you would like to delete
 1. Go to https://console.cloud.google.com and delete BigQuery dataset and Storage Sink bucket. Additionally, you can delete Service Account User and credential file you created for this lab. 
 ---
-## <a name="step16"></a>Confluent Resources and Further Testing
+## <a name="step16"></a>Step 15: Confluent Resources and Further Testing
 
 Here are some links to check out if you are interested in further testing:
 
