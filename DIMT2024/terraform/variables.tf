@@ -18,7 +18,7 @@ variable "sg_package" {
 variable "region" {
   description = "AWS region"
   type        = string
-  default     = "us-west-2"
+  default     = "ap-southeast-2"
 }
 
 variable "mongodbatlas_public_key" {
