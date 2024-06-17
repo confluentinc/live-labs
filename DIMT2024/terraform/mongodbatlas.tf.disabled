@@ -1,11 +1,3 @@
-terraform {
-    mongodbatlas = {
-      source  = "mongodb/mongodbatlas"
-      version = "1.14"
-    }
-  }
-}
-
 # Configure the MongoDB Atlas Provider 
 provider "mongodbatlas" {
   public_key  = var.mongodbatlas_public_key

@@ -47,7 +47,7 @@ variable "mongodbatlas_project_name" {
 variable "mongodbatlas_region" {
   description = "MongoDB Atlas region https://www.mongodb.com/docs/atlas/reference/amazon-aws/#std-label-amazon-aws"
   type        = string
-  default     = "US_WEST_2"
+  default     = "AP_SOUTHEAST_2"
 }
 
 variable "mongodbatlas_database_username" {
