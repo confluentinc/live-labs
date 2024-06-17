@@ -27,7 +27,7 @@ In order to successfully complete this demo you need to install few tools before
 
    ```bash
    git clone https://github.com/confluentinc/live-labs.git
-   cd DIMT2024
+   cd live-labs/DIMT2024
    ```
 
 1. Create an `.accounts` file by running the following command.
