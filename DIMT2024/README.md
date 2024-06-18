@@ -110,7 +110,7 @@ Update the `.accounts` file for the following variables with your credentials.
 4.1. Navigate to the `confluent` directory of the project and run `create_env.sh` script. This bash script copies the content of `.accounts` file into a new file called `.env` and append additional variables to it.
 
    ```bash
-   cd DIMT2024/confluent
+   cd confluent
    ./create_env.sh
    ```
 
@@ -127,7 +127,7 @@ Update the `.accounts` file for the following variables with your credentials.
 5.1. Navigate to the repo's terraform directory.
 
    ```bash
-   cd DIMT2024/terraform
+   cd ../terraform
    ```
 
 5.2. Initialize Terraform within the directory.
@@ -154,7 +154,7 @@ Update the `.accounts` file for the following variables with your credentials.
 
 5.6. Run the `setup.sh` script.
    ```bash
-   cd DIMT2024/confluent
+   cd ../confluent
    ./setup.sh
    ```
 5.7. This script achieves the following:
@@ -181,7 +181,6 @@ You can use Confluent Cloud CLI to submit all the source connectors automaticall
 Run a script that uses your `.env` file to generate real connector configuration json files from the example files located in the `confluent` folder.
 
 ```bash
-cd DIMT2024/confluent
 ./create_connector_files.sh
 ```
 
@@ -210,7 +209,6 @@ You can create the connector either through CLI or Confluent Cloud web UI.
 6.3.3. Run the following commands to create Datagen source connectors.
 
    ```bash
-   cd DIMT2024/confluent
    confluent connect cluster create --config-file actual_datagen_clickstream.json
    confluent connect cluster create --config-file actual_datagen_shoe_customers.json
    confluent connect cluster create --config-file actual_datagen_shoe_orders.json
