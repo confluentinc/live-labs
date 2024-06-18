@@ -53,7 +53,7 @@ Create Confluent Cloud API keys by following steps.
     Right Side bar -> Click on API Keys
     ![alt text](images/image-7.png)
 
-    Select Service Account -> Existing Account -> choose 'tf-runner' as a service account -> Click Next
+    Select Service Account -> Existing Account -> choose 'tf-runner' as a service account -> Click Save & Next
 ![alt text](images/image-9.png)
 
     Select Resource Scope -> **Cloud Resource Management**
@@ -251,7 +251,7 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
 7.2.  Click on **Flink (preview)** and then **Open SQL workspace**.
 7.3.  On the top right corner of your workspace select **Data_In_Motion_Tour** as the catalog and **dimt_kafka_cluster** as your database.
 
-    > **Note:** Refer to the [docs](https://docs.confluent.io/cloud/current/flink/index.html#metadata-mapping-between-ak-cluster-topics-schemas-and-af) to understand the mapping between Kafka and Flink.
+> **Note:** Refer to the [docs](https://docs.confluent.io/cloud/current/flink/index.html#metadata-mapping-between-ak-cluster-topics-schemas-and-af) to understand the mapping between Kafka and Flink.
 
 7.4.  On the left-hand side under **Navigator** menu, click the arrow to expand the **Data_In_Motion_Tour** Kafka environment, and expand the **dimt_kafka_cluster** to see existing Kafka topics.
 
@@ -262,57 +262,57 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
     > **Note:** For your convenience, all Flink queries are availble in the [flink.sql](./confluent/flink.sql) file.
 
 7.7.  See how `orders` table was created
-    ```sql
+```sql
     SHOW CREATE TABLE orders;
-    ```
+```
 7.8.  Explore the `orders` table
 
-    ```sql
+```sql
     SELECT * FROM orders;
-    ```
+```
 
 7.9.  Create a table to count the unique purchases per minute. In a real world scenario an hourly window is probably more appropriate, but for the purpose of this lab we'll use minute.
 
-    ```sql
+```sql
     CREATE TABLE sales_per_minute (
         window_start TIMESTAMP(3),
         window_end   TIMESTAMP(3),
         nr_of_orders BIGINT
     );
-    ```
+```
 
 7.10.  Confluent Cloud introduces the concept of system columns. You will use the `SYSTEM` column `$rowtime` for `DESCRIPTOR` parameter when performing windowed aggregations with Flink SQL in Confluent Cloud. Otherwise you can define your own `WATERMARK` [strategy](https://docs.confluent.io/cloud/current/flink/concepts/timely-stream-processing.html#time-and-watermarks-in-af) when creating new tables. [Tumbling windows](https://docs.confluent.io/cloud/current/flink/reference/queries/window-tvf.html#tumble) is a table-valued function (TVF) for dividing data into non-overlapping, fixed-size windows. This is useful when you want to analyze data in discrete time intervals. Now you can materialize number of unique purchase per minute in the newly created topic.
 
-    ```sql
+```sql
     INSERT INTO sales_per_minute
         SELECT window_start, window_end, COUNT(DISTINCT order_id) as nr_of_orders
         FROM TABLE(
             TUMBLE(TABLE orders, DESCRIPTOR(`$rowtime`), INTERVAL '1' MINUTE))
         GROUP BY window_start, window_end;
-    ```
+ ```
 
 7.11.  Query the `sales_per_minute` table and review the data
 
-    ```sql
+ ```sql
     SELECT * FROM sales_per_minute;
-    ```
+```
 
 7.12.  Let's see how many records we have in the `shoes` table with the `id = '3586de8a-10a3-4997-96bf-9e08a3a7fb82'`. The connector generates random events which results in duplicated `id`. Since there are more than 1 records, you need to deduplicate the table.
 
-    ```sql
+ ```sql
     SELECT * FROM shoes WHERE id = '3586de8a-10a3-4997-96bf-9e08a3a7fb82';
-    ```
+```
 
 7.13.  [Deduplication](https://docs.confluent.io/cloud/current/flink/reference/queries/deduplication.html) removes duplicate rows over a set of columns, keeping only the first or last row. Flink SQL uses the `ROW_NUMBER()` function to remove duplicates, similar to its usage in [Top-N Queries](https://docs.confluent.io/cloud/current/flink/reference/queries/topn.html#flink-sql-top-n). Deduplication is a special case of the Top-N query, in which `N` is `1` and row order is by processing time or event time. In some cases, an upstream ETL job isn’t end-to-end exactly-once, which may cause duplicate records in the sink, in case of failover. Duplicate records affect the correctness of downstream analytical jobs, like `SUM` and `COUNT`, so deduplication is required before further analysis can continue.
 
-    ```sql
+```sql
     SELECT id, name, brand
     FROM (
         SELECT *,
             ROW_NUMBER() OVER (PARTITION BY id ORDER BY $rowtime DESC) AS row_num
         FROM `shoes`)
     WHERE row_num = 1
-    ```
+```
 
     Let's take a look at different parts of the above query:
 
@@ -322,7 +322,7 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
 
 7.14.  Since the output of the transient query looks right, the next step is to make the query persistent. This looks exactly like the transient query, except you first create a new table and then execute an `INSERT INTO` statement to populate the table. The `INSERT INTO` statement returns to the CLI prompt right away, having created a persistent stream processing program running in the Flink cluster, continuously processing input records and updating the resulting `deduplicated_shoes` table. A primary key constraint is a hint for Flink SQL to leverage for optimizations which specifies that a column or a set of columns in a table or a view are unique and they do not contain null. No columns in a primary key can be nullable. A primary key uniquely identifies a row in a table.
 
-    ```sql
+```sql
     CREATE TABLE deduplicated_shoes(
         id STRING,
         brand STRING,
@@ -331,9 +331,9 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
         rating DOUBLE,
         PRIMARY KEY (id) NOT ENFORCED
     );
-    ```
+```
 
-    ```sql
+```sql
     INSERT INTO deduplicated_shoes(
         SELECT id, brand, name, sale_price, rating
         FROM (
@@ -342,11 +342,11 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
             FROM `shoes`)
         WHERE row_num = 1
     );
-    ```
+```
 
 7.15.  Now that you have `deduplicated_shoes` table you can join it with `clickstream`.
 
-    ```sql
+```sql
     SELECT
         c.`$rowtime`,
         c.product_id,
@@ -355,20 +355,20 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
     FROM
         clickstream c
         INNER JOIN deduplicated_shoes s ON c.product_id = s.id;
-    ```
+```
 
 7.16.  Create a table to find all users with average view time of less then 30 seconds. You'll achieve this by using Pattern Recognition. Refer to the [doc](https://docs.confluent.io/cloud/current/flink/reference/queries/match_recognize.html) for detailed information about Pattern Recoginition and how `MATCH_RECOGNIZE` works.
 
-    ```sql
+```sql
     CREATE TABLE inactive_users(
         user_id STRING,
         start_tstamp TIMESTAMP(3),
         end_tstamp TIMESTAMP(3),
         avgViewTime INT
     );
-    ```
+```
 
-    ```sql
+```sql
     INSERT INTO inactive_users
     SELECT *
     FROM clickstream
@@ -385,10 +385,10 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
             DEFINE
                 A AS AVG(A.view_time) < 30
         ) MR;
-    ```
+```
 
 7.17.  Now that you have a table of users who spend less than 30 seconds on the website, you can join it with `customers` table to retrive their contact information. Then you can stream this data in real time to MongoDB Atlas database where your marketing department can use this data to build a new campaign.
-    ```sql
+```sql
     CREATE TABLE inactive_customers_enriched(
         user_id STRING,
         avgViewTime INT,
@@ -396,9 +396,9 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
         last_name STRING,
         email STRING
     );
-    ```
+```
 
-    ```sql
+```sql
     INSERT INTO inactive_customers_enriched
     	SELECT
     		u.user_id,
@@ -409,7 +409,7 @@ If you’re interested in learning more about Flink, you can take the Apache Fli
     	FROM
     		inactive_users u
     		INNER JOIN customers c ON u.user_id = c.id;
-    ```
+ ```
 
 ---
 
@@ -422,10 +422,10 @@ You can create the MongoDB Atlas Sink connector either through CLI or Confluent 
 
 8.1. Run the following command to create the MongoDB Atlas Sink connector.
 
-   ```bash
+```bash
    cd DIMT2024/confluent
    confluent connect cluster create --config-file actual_mongodb_sink.json
-   ```
+```
 
 </details>
 <br>
@@ -460,16 +460,16 @@ Congratulations on building your streaming data pipelines in Confluent Cloud! Yo
 
 9.1. Run the following command to delete all connectors
 
-   ```bash
+```bash
    cd DIMT2024/confluent
    ./teardown_connectors.sh
-   ```
+```
 
 9.2. Run the following command to delete all resources created by Terraform
-   ```bash
+```bash
    cd DIMT2024/terraform
    terraform destroy -auto-approve
-   ```
+```
 
 # Resources
 
